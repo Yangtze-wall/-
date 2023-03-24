@@ -1,6 +1,5 @@
 package com.retail.bargain.domain;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -28,7 +27,7 @@ public class SeckillEntity implements Serializable {
 	/**
 	 * 秒杀表id
 	 */
-	@TableId(type = IdType.AUTO)
+	@TableId
 	private Long id;
 	/**
 	 * 商品id

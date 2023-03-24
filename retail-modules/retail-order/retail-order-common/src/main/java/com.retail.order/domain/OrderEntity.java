@@ -1,6 +1,5 @@
 package com.retail.order.domain;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -28,7 +27,7 @@ public class OrderEntity implements Serializable {
 	/**
 	 * 商品id
 	 */
-	@TableId(type = IdType.AUTO)
+	@TableId
 	private Long id;
 	/**
 	 * 用户id

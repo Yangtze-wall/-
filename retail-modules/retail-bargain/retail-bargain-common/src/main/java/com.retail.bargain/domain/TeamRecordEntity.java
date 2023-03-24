@@ -1,6 +1,5 @@
 package com.retail.bargain.domain;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -27,7 +26,7 @@ public class TeamRecordEntity implements Serializable {
 	/**
 	 * 拼团记录表主键
 	 */
-	@TableId(type = IdType.AUTO)
+	@TableId
 	private Long id;
 	/**
 	 * 拼团表id

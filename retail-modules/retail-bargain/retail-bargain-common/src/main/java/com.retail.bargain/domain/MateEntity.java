@@ -1,6 +1,5 @@
 package com.retail.bargain.domain;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -27,7 +26,7 @@ public class MateEntity implements Serializable {
 	/**
 	 * 配送编号
 	 */
-	@TableId(type = IdType.AUTO)
+	@TableId
 	private Long id;
 	/**
 	 * 单号

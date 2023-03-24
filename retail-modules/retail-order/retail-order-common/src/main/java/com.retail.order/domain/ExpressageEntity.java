@@ -1,6 +1,5 @@
 package com.retail.order.domain;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -27,7 +26,7 @@ public class ExpressageEntity implements Serializable {
 	/**
 	 * 快递公司主键
 	 */
-	@TableId(type = IdType.AUTO)
+	@TableId
 	private Long id;
 	/**
 	 * 快递公司名称

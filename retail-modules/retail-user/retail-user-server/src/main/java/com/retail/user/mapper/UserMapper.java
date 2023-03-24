@@ -2,7 +2,6 @@ package com.retail.user.mapper;
 
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-
 import com.retail.user.domain.UserEntity;
 import org.apache.ibatis.annotations.Mapper;
 

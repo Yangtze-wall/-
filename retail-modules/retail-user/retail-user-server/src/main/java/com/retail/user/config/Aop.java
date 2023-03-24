@@ -20,7 +20,7 @@ import java.util.Enumeration;
  * aop日志打印
  */
 @Aspect
-//@Component
+@Component
 @Log4j2
 public class Aop {
     /**

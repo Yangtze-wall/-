@@ -1,6 +1,5 @@
 package com.retail.colonel.domain;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -27,7 +26,7 @@ public class WarehouseEntity implements Serializable {
 	/**
 	 * 仓库表主键
 	 */
-	@TableId(type = IdType.AUTO)
+	@TableId
 	private Long id;
 	/**
 	 * 仓库名称

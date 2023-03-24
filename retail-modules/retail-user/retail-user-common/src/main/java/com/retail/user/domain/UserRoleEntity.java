@@ -1,6 +1,5 @@
 package com.retail.user.domain;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -27,7 +26,7 @@ public class UserRoleEntity implements Serializable {
 	/**
 	 *  权限中间表
 	 */
-	@TableId(type = IdType.AUTO)
+	@TableId
 	private Long id;
 	/**
 	 * 权限id
@@ -37,6 +36,6 @@ public class UserRoleEntity implements Serializable {
 	/**
 	 * 用户id
 	 */
-	private Long userId;
+	private Integer userId;
 
 }
