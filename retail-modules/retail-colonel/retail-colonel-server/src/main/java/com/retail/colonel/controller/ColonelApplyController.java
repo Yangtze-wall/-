@@ -3,6 +3,8 @@ package com.retail.colonel.controller;
 import java.util.List;
 
 
+import com.retail.colonel.domain.ColonelApplyEntity;
+import com.retail.common.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,4 +31,23 @@ public class ColonelApplyController {
 
     @Autowired
     private ColonelApplyService colonelApplyService;
+
+
+    @PostMapping("/addColonelApply")
+    public Result colonelApplyService(@RequestBody ColonelApplyEntity colonelApplyEntity){
+
+
+        if (colonelApplyEntity==null){
+            return Result.error(502,"申请条件为空");
+        }
+
+      Result result=  colonelApplyService.colonelApplyService(colonelApplyEntity);
+
+
+        return Result.success(result);
+
+
+    }
+
+
 }
