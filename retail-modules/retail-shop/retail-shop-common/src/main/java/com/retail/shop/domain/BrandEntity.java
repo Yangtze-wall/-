@@ -22,8 +22,8 @@ public class BrandEntity implements Serializable {
 	/**
 	 *
 	 */
-	@TableId
-	private Integer id;
+	@TableId(type = IdType.AUTO)
+	private Long id;
 	/**
 	 * 商品名称
 	 */

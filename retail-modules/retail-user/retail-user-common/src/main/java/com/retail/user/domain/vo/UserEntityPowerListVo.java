@@ -1,13 +1,15 @@
-package com.retail.common.domain.vo;
+package com.retail.user.domain.vo;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.retail.user.domain.PowerUserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 用户表
@@ -19,7 +21,9 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserEntityVo implements Serializable {
+
+public class UserEntityPowerListVo implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * id
@@ -33,10 +37,6 @@ public class UserEntityVo implements Serializable {
 	 * 密码
 	 */
 	private String password;
-	/**
-	 * 确认密码
-	 */
-	private String passwordVerify;
 	/**
 	 * 盐
 	 */
@@ -101,5 +101,7 @@ public class UserEntityVo implements Serializable {
 	 * 备注
 	 */
 	private String remark;
+
+	private List<PowerUserEntity> powerUserEntityList;
 
 }

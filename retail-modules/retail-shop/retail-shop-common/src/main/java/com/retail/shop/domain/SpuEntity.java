@@ -22,7 +22,7 @@ public class SpuEntity implements Serializable {
 	/**
 	 * 商品表
 	 */
-	@TableId
+	@TableId(type = IdType.AUTO)
 	private Long id;
 	/**
 	 * 商品名称
