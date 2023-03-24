@@ -3,17 +3,16 @@ package com.retail.common.domain.response;
 import lombok.Data;
 
 /**
+ * @author JwtResponse
  * @BelongsProject: retail-cloud
  * @BelongsPackage: com.retail.common.domain.response
- * @Classname: JwtResponse
- * @CreateTime: 2023-03-23  22:09
- * @Created by: 喵喵
+ * @date: 2023-03-24  09:34
+ * @Created by:  12871
  * @Description:
  * @Version:
  */
 @Data
 public class JwtResponse {
-
     private String token;
     private String expireTime;
 }

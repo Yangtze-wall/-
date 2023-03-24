@@ -7,6 +7,8 @@ import com.retail.auth.feign.UserFeignService;
 import com.retail.auth.service.AuthService;
 import com.retail.common.constant.JwtConstants;
 import com.retail.common.constant.TokenConstants;
+import com.retail.common.domain.request.UserEntityRequest;
+
 import com.retail.common.domain.response.JwtResponse;
 import com.retail.common.domain.vo.UserEntityVo;
 import com.retail.common.domain.vo.UserLoginPasswordVo;
@@ -40,6 +42,38 @@ public class AuthSerivceImpl implements AuthService {
 
     @Autowired
     private RedisTemplate<String,String> redisTemplate;
+
+    @Override
+    public Result register(UserEntityRequest userEntityRequest) {
+        if (StringUtils.isEmpty(userEntityRequest.getUsername())){
+            throw new  BizException(501,"请输入账号");
+        }
+        if (StringUtils.isEmpty(userEntityRequest.getPassword())){
+            throw new  BizException(501,"请输入密码");
+        }
+        if (StringUtils.isEmpty(userEntityRequest.getPasswordVerify())){
+            throw new  BizException(501,"确认密码不能为空");
+        }
+        if (userEntityRequest.getUsername().equals(userEntityRequest.getPasswordVerify())){
+            throw new  BizException(501,"密码与确认密码不同");
+        }
+        if (StringUtils.isEmpty(userEntityRequest.getPhone())){
+            throw new  BizException(501,"手机号不能为空");
+        }
+        if (StringUtils.isEmpty(userEntityRequest.getCode())){
+            throw new  BizException(501,"短信不能为空");
+        }
+
+        Result result=userFeignService.register(userEntityRequest);
+        return result;
+    }
+
+    @Override
+    public Result<UserEntityVo> userInfo() {
+        Result<UserEntityVo> userEntityVoResult = userFeignService.userInfo();
+        return userEntityVoResult;
+    }
+
 
     @Override
     public Result<JwtResponse>  loginPassword(UserLoginPasswordVo userLoginPasswordVo) {
@@ -79,4 +113,5 @@ public class AuthSerivceImpl implements AuthService {
         jwtResponse.setExpireTime("1Days");
         return Result.success(jwtResponse);
     }
+
 }

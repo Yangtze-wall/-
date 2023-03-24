@@ -3,17 +3,16 @@ package com.retail.common.domain.vo;
 import lombok.Data;
 
 /**
+ * @author UserLoginPasswordVo
  * @BelongsProject: retail-cloud
  * @BelongsPackage: com.retail.common.domain.vo
- * @Classname: UserLoginPasswordVo
- * @CreateTime: 2023-03-23  18:50
- * @Created by: 喵喵
- * @Description: 用户密码登录
+ * @date: 2023-03-24  09:34
+ * @Created by:  12871
+ * @Description:
  * @Version:
  */
 @Data
 public class UserLoginPasswordVo {
-
     /**
      * 手机号
      */
@@ -23,6 +22,4 @@ public class UserLoginPasswordVo {
      * 密码
      */
     private String password;
-
-
 }
