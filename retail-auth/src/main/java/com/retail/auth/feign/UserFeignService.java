@@ -25,4 +25,5 @@ public interface UserFeignService {
 
     @PostMapping("user/user/loginPassword")
     Result<UserEntityVo> loginPassword(@RequestBody UserLoginPasswordVo userLoginPasswordVo);
+
 }
