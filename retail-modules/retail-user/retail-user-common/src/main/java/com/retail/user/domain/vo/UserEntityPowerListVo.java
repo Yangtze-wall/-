@@ -2,10 +2,12 @@ package com.retail.user.domain.vo;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.retail.user.domain.PowerUserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -34,21 +36,9 @@ public class UserEntityPowerListVo implements Serializable {
 	 */
 	private String username;
 	/**
-	 * 密码
-	 */
-	private String password;
-	/**
-	 * 盐
-	 */
-	private String salt;
-	/**
 	 * 昵称
 	 */
 	private String nickName;
-	/**
-	 * 手机号
-	 */
-	private String phone;
 	/**
 	 * 真实姓名
 	 */
@@ -72,36 +62,21 @@ public class UserEntityPowerListVo implements Serializable {
 	/**
 	 * 生日
 	 */
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date birthday;
 	/**
 	 * 城市
 	 */
 	private String city;
 	/**
-	 * 购物积分
-	 */
-	private Integer integration;
-	/**
-	 * 帐号状态（0正常 1停用）
-	 */
-	private Integer status;
-	/**
-	 * 注册时间
-	 */
-	private Date createTime;
-	/**
-	 * 用户余额
-	 */
-	private Integer balance;
-	/**
-	 * 最后登录时间
-	 */
-	private Date loginDate;
-	/**
 	 * 备注
 	 */
 	private String remark;
 
 	private List<PowerUserEntity> powerUserEntityList;
+
+	private String ids;
+
 
 }

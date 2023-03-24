@@ -51,7 +51,7 @@ public class PowerUserController {
      * @return
      */
     @GetMapping("/findByIdUserPower/{id}")
-    public Result<UserEntityPowerListVo> findByIdUserPower(@RequestParam("id") Long id){
+    public Result<UserEntityPowerListVo> findByIdUserPower(@PathVariable("id") Long id){
         UserEntityPowerListVo userEntityPowerListVo =powerUserService.findByIdUserPower(id);
         return Result.success(userEntityPowerListVo);
     }
@@ -70,7 +70,7 @@ public class PowerUserController {
      * @return
      */
     @GetMapping("/delUserPower/{id}")
-    public Result delUserPower(@RequestParam("id") Long id){
+    public Result delUserPower(@PathVariable("id") Long id){
         return powerUserService.delUserPower(id);
     }
 

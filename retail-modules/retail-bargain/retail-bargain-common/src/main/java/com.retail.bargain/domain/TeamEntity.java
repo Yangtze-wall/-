@@ -1,5 +1,6 @@
 package com.retail.bargain.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -52,7 +53,7 @@ public class TeamEntity implements Serializable {
 	/**
 	 * 状态
 	 */
-	private Long status;
+	private Integer status;
 	/**
 	 * 团长id
 	 */
