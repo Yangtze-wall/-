@@ -4,8 +4,8 @@
 .gradle
 /build/
 !gradle/wrapper/gradle-wrapper.jar
-
 target/
+target/*
 !.mvn/wrapper/maven-wrapper.jar
 
 ######################################################################
@@ -35,6 +35,7 @@ dist/
 nbdist/
 .nb-gradle/
 
+.idea/*
 ######################################################################
 # Others
 *.log

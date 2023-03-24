@@ -4,6 +4,9 @@ package com.retail.user.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.retail.user.domain.UserEntity;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 用户表
@@ -15,4 +18,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface UserMapper extends BaseMapper<UserEntity> {
 
+    List<UserEntity> list(@Param("realName") String realName);
+
+    void updateStatus(@Param("id") Long id);
 }

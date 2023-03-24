@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.retail.user.domain.UserAddressEntity;
 
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,5 +17,16 @@ import java.util.Map;
 public interface UserAddressService extends IService<UserAddressEntity> {
 
 
+    List<UserAddressEntity> selectUserAddressEntity(Long id);
+
+    UserAddressEntity findById(Long id);
+
+    void insert(UserAddressEntity params);
+
+    void delete(Long id);
+
+    void updateAddress(UserAddressEntity params);
+
+    void upateStatus(Long id, Long userId);
 }
 
