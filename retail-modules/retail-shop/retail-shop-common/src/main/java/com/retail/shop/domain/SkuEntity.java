@@ -23,7 +23,7 @@ public class SkuEntity implements Serializable {
 	/**
 	 *
 	 */
-	@TableId
+	@TableId(type = IdType.AUTO)
 	private Long id;
 	/**
 	 * 商品图片

@@ -27,7 +27,7 @@ public class TeamEntity implements Serializable {
 	/**
 	 * 拼团表主键
 	 */
-	@TableId
+	@TableId(type = IdType.AUTO)
 	private Long id;
 	/**
 	 * 商品id

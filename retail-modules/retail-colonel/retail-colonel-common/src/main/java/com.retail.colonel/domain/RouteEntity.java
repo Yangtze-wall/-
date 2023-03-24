@@ -26,7 +26,7 @@ public class RouteEntity implements Serializable {
 	/**
 	 * 团长路线
 	 */
-	@TableId
+	@TableId(type = IdType.AUTO)
 	private Long id;
 	/**
 	 * 团长id

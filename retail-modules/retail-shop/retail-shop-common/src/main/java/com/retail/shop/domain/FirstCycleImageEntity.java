@@ -26,8 +26,8 @@ public class FirstCycleImageEntity implements Serializable {
 	/**
 	 * id
 	 */
-	@TableId
-	private Integer id;
+	@TableId(type = IdType.AUTO)
+	private Long id;
 	/**
 	 * 轮播图片地址
 	 */

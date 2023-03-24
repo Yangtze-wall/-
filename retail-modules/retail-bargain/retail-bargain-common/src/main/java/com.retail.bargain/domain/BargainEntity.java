@@ -27,7 +27,7 @@ public class BargainEntity implements Serializable {
 	/**
 	 * 砍价表主键
 	 */
-	@TableId
+	@TableId(type = IdType.AUTO)
 	private Long id;
 	/**
 	 * 砍价活动名称
