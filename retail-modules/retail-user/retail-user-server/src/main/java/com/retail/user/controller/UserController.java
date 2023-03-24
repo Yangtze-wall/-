@@ -7,6 +7,7 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.lang.Validator;
 import com.retail.common.domain.request.UserEntityRequest;
 import com.retail.common.domain.vo.UserEntityVo;
+import com.retail.common.domain.vo.UserLoginCodeVo;
 import com.retail.common.domain.vo.UserLoginPasswordVo;
 import com.retail.common.exception.BizException;
 import com.retail.common.result.Result;
@@ -58,7 +59,7 @@ public class UserController {
     }
 
     /**
-     * 登陆
+     * 密码登陆
      * @param userLoginPasswordVo
      * @return
      */
@@ -83,4 +84,26 @@ public class UserController {
         BeanUtil.copyProperties(data,userEntityVo);
         return  Result.success(userEntityVo);
     }
+
+    @PostMapping("/loginCode")
+    public Result<UserEntityVo> loginCode(@RequestBody UserLoginCodeVo userLoginCodeVo){
+        //判断不为空
+        if (StringUtils.isBlank(userLoginCodeVo.getPhone())){
+            throw new BizException(502,"手机号不能为空");
+        }
+        //判断是否合法
+        if (!Validator.isMobile(userLoginCodeVo.getPhone())){
+            throw new BizException(502,"手机号不合法");
+        }
+        if (StringUtils.isBlank(userLoginCodeVo.getCode())){
+            throw new BizException(502,"验证码不能为空");
+        }
+        Result<UserEntity> userEntityResult = userService.loginCode(userLoginCodeVo);
+        UserEntity data = userEntityResult.getData();
+        UserEntityVo userEntityVo = new UserEntityVo();
+        BeanUtil.copyProperties(data,userEntityVo);
+        return  Result.success(userEntityVo);
+    }
+
+
 }

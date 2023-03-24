@@ -1,17 +1,23 @@
 package com.retail.auth.controller;
 
 import cn.hutool.core.lang.Validator;
+import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.RandomUtil;
+import com.alibaba.fastjson.JSON;
 import com.retail.auth.service.AuthService;
 import com.retail.auth.service.SmsService;
+import com.retail.auth.vo.SmsParamVo;
 import com.retail.common.constant.Constants;
 import com.retail.common.domain.request.UserEntityRequest;
 import com.retail.common.domain.response.JwtResponse;
 import com.retail.common.domain.vo.UserEntityVo;
+import com.retail.common.domain.vo.UserLoginCodeVo;
 import com.retail.common.domain.vo.UserLoginPasswordVo;
 import com.retail.common.exception.BizException;
 import com.retail.common.result.Result;
 import com.retail.common.utils.StringUtils;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +35,7 @@ import java.util.concurrent.TimeUnit;
  */
 @RestController
 @RequestMapping
+@Log4j2
 public class AuthController {
 
     @Autowired
@@ -36,6 +43,9 @@ public class AuthController {
 
     @Autowired
     private SmsService smsService;
+
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
     @Autowired
     private RedisTemplate<String,String>  redisTemplate;
 
@@ -51,12 +61,33 @@ public class AuthController {
         return authService.userInfo();
     }
 
-
+    /**
+     * 手机号密码登录
+     * @param userLoginPasswordVo
+     * @return
+     */
     @PostMapping("/loginPassword")
     public Result<JwtResponse> loginPassword(@RequestBody UserLoginPasswordVo userLoginPasswordVo){
         Result<JwtResponse> jwtResponseResult =  authService.loginPassword(userLoginPasswordVo);
         return jwtResponseResult;
     }
+
+    /**
+     * 短信验证码 登录
+     * @param userLoginCodeVo
+     * @return
+     */
+    @PostMapping("/loginCode")
+    public Result<JwtResponse> loginCode(@RequestBody UserLoginCodeVo userLoginCodeVo){
+        Result<JwtResponse> jwtResponseResult =  authService.loginCode(userLoginCodeVo);
+        return jwtResponseResult;
+    }
+
+    /**
+     * 发送短信验证码
+     * @param phone
+     * @return
+     */
     @PostMapping("/sendSms")
     public Result sendSms(String phone){
         if (StringUtils.isBlank(phone)){
@@ -68,8 +99,15 @@ public class AuthController {
         //随机生成验证码
         String code = RandomUtil.randomNumbers(6);
         redisTemplate.opsForValue().set(Constants.CODE_MSG+phone,code,5,TimeUnit.MINUTES);
-        System.out.println(code);
-        smsService.sendSms(phone,code);
+        log.info("验证码"+code);
+        //        smsService.sendSms(phone,code);
+        SmsParamVo smsParamVo = new SmsParamVo();
+        //设置id 唯一性(UUID)
+        smsParamVo.setMsgId(IdUtil.randomUUID());
+        smsParamVo.setPhone(phone);
+        smsParamVo.setCode(code);
+        rabbitTemplate.convertAndSend("retail.exchange.sms","retail.queue.sms", JSON.toJSONString(smsParamVo));
+
         return Result.success("成功");
 
     }
