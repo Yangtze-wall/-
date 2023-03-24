@@ -26,8 +26,8 @@ public class SpecificationEntity implements Serializable {
 	/**
 	 *
 	 */
-	@TableId
-	private Integer id;
+	@TableId(type = IdType.AUTO)
+	private Long id;
 	/**
 	 * 规格名
 	 */

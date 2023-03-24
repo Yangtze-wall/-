@@ -27,7 +27,7 @@ public class CoverTemplateEntity implements Serializable {
 	/**
 	 *  运费配置模板
 	 */
-	@TableId
+	@TableId(type = IdType.AUTO)
 	private Long id;
 	/**
 	 * 模板名称

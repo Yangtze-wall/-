@@ -26,7 +26,7 @@ public class MateEntity implements Serializable {
 	/**
 	 * 配送编号
 	 */
-	@TableId
+	@TableId(type = IdType.AUTO)
 	private Long id;
 	/**
 	 * 单号

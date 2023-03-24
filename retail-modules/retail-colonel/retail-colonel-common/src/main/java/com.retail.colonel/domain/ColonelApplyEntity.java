@@ -26,8 +26,8 @@ public class ColonelApplyEntity implements Serializable {
 	/**
 	 * 团长申请id
 	 */
-	@TableId
-	private Integer id;
+	@TableId(type = IdType.AUTO)
+	private Long id;
 	/**
 	 * 头像
 	 */

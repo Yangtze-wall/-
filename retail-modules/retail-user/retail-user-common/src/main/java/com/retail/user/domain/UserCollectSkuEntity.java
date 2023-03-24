@@ -26,7 +26,7 @@ public class UserCollectSkuEntity implements Serializable {
 	/**
 	 * id
 	 */
-	@TableId
+	@TableId(type = IdType.AUTO)
 	private Long id;
 	/**
 	 * 用户id
