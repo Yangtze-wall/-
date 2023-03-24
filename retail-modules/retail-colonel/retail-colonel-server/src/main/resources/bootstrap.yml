@@ -19,6 +19,7 @@ spring:
       discovery:
         # 服务注册地址
         server-addr: 139.196.95.132:8848
+        namespace: caa0de9e-c89e-46c3-b41b-e66112bad693
       config:
         # 配置中心地址
         server-addr: 139.196.95.132:8848

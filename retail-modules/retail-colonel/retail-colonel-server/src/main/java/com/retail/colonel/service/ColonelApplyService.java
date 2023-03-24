@@ -2,6 +2,7 @@ package com.retail.colonel.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.retail.colonel.domain.ColonelApplyEntity;
+import com.retail.common.result.Result;
 
 
 import java.util.Map;
@@ -15,6 +16,8 @@ import java.util.Map;
  */
 public interface ColonelApplyService extends IService<ColonelApplyEntity> {
 
+
+    Result colonelApplyService(ColonelApplyEntity colonelApplyEntity);
 
 }
 
