@@ -26,8 +26,8 @@ public class RetaiUserCouponCenterEntity implements Serializable {
 	/**
 	 * id
 	 */
-	@TableId
-	private Integer id;
+	@TableId(type = IdType.AUTO)
+	private Long id;
 	/**
 	 * 用户id
 	 */

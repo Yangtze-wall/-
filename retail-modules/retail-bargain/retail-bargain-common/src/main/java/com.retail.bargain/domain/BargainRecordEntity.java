@@ -27,7 +27,7 @@ public class BargainRecordEntity implements Serializable {
 	/**
 	 * 砍价记录表主键
 	 */
-	@TableId
+	@TableId(type = IdType.AUTO)
 	private Long id;
 	/**
 	 * 砍价表id

@@ -26,7 +26,7 @@ public class WarehouseEntity implements Serializable {
 	/**
 	 * 仓库表主键
 	 */
-	@TableId
+	@TableId(type = IdType.AUTO)
 	private Long id;
 	/**
 	 * 仓库名称

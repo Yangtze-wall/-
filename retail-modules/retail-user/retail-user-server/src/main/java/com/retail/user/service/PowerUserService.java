@@ -1,9 +1,12 @@
 package com.retail.user.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.retail.common.result.Result;
+import com.retail.user.domain.vo.UserEntityPowerListVo;
+import com.retail.user.domain.vo.UserEntryPowerVo;
 import com.retail.user.domain.PowerUserEntity;
 
-import java.util.Map;
+import java.util.List;
 
 /**
  * 权限  用户 中间表
@@ -15,5 +18,12 @@ import java.util.Map;
 public interface PowerUserService extends IService<PowerUserEntity> {
 
 
+    List<UserEntryPowerVo> getPowerUserEntryList();
+
+    UserEntityPowerListVo findByIdUserPower(Long id);
+
+    Result insertUserPower(UserEntityPowerListVo userEntityPowerListVo);
+
+    Result delUserPower(Long id);
 }
 

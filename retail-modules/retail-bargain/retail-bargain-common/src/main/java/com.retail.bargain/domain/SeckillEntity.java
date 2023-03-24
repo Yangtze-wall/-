@@ -27,7 +27,7 @@ public class SeckillEntity implements Serializable {
 	/**
 	 * 秒杀表id
 	 */
-	@TableId
+	@TableId(type = IdType.AUTO)
 	private Long id;
 	/**
 	 * 商品id
@@ -77,5 +77,15 @@ public class SeckillEntity implements Serializable {
 	 * 是否包邮
 	 */
 	private Integer postFree;
+    /**
+	 * 秒杀商品描述介绍
+	 */
+
+	private String seckillIntroduce;
+
+	/**
+	 * 秒杀配置id
+	 */
+	private Integer seckillConfigId;
 
 }

@@ -26,8 +26,8 @@ public class GradeEntity implements Serializable {
 	/**
 	 * 团长等级id
 	 */
-	@TableId
-	private Integer id;
+	@TableId(type = IdType.AUTO)
+	private Long id;
 	/**
 	 * 等级名称
 	 */

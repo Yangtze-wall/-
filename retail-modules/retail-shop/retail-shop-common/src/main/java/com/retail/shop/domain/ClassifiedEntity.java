@@ -27,7 +27,7 @@ public class ClassifiedEntity implements Serializable {
 	/**
 	 *
 	 */
-	@TableId
+	@TableId(type = IdType.AUTO)
 	private Long id;
 	/**
 	 * 父级id

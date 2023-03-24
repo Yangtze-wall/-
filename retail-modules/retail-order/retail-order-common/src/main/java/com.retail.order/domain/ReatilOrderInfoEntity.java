@@ -27,8 +27,8 @@ public class ReatilOrderInfoEntity implements Serializable {
 	/**
 	 * 订单详情表
 	 */
-	@TableId
-	private Integer id;
+	@TableId(type = IdType.AUTO)
+	private Long id;
 	/**
 	 * 订单id
 	 */

@@ -48,15 +48,6 @@ public class UserController {
         return userService.register(userEntityRequest);
     }
 
-
-    @PostMapping("/userInfo")
-    public Result<UserEntityVo> userInfo(){
-        UserEntity userEntity = userService.userInfo();
-        UserEntityVo userEntityVo = new UserEntityVo();
-        BeanUtil.copyProperties(userEntity,userEntityVo);
-        return Result.success(userEntityVo);
-    }
-
     /**
      * 登陆
      * @param userLoginPasswordVo

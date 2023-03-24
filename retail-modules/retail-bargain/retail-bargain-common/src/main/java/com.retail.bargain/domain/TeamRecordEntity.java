@@ -26,7 +26,7 @@ public class TeamRecordEntity implements Serializable {
 	/**
 	 * 拼团记录表主键
 	 */
-	@TableId
+	@TableId(type = IdType.AUTO)
 	private Long id;
 	/**
 	 * 拼团表id

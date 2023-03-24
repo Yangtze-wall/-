@@ -26,7 +26,7 @@ public class ExpressageEntity implements Serializable {
 	/**
 	 * 快递公司主键
 	 */
-	@TableId
+	@TableId(type = IdType.AUTO)
 	private Long id;
 	/**
 	 * 快递公司名称

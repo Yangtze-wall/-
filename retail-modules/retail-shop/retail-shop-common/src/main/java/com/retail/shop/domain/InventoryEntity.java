@@ -26,8 +26,8 @@ public class InventoryEntity implements Serializable {
 	/**
 	 * 库存表主键
 	 */
-	@TableId
-	private Integer id;
+	@TableId(type = IdType.AUTO)
+	private Long id;
 	/**
 	 * 商品id
 	 */

@@ -27,7 +27,7 @@ public class GroupConfigEntity implements Serializable {
 	/**
 	 * 编号
 	 */
-	@TableId
+	@TableId(type = IdType.AUTO)
 	private Long id;
 	/**
 	 * 是否开启社区团购（0.开启， 1.关闭
