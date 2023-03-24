@@ -1,6 +1,6 @@
 package com.retail.user.domain.vo;
 
-import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.IdType;import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.retail.user.domain.PowerUserEntity;
 import lombok.AllArgsConstructor;

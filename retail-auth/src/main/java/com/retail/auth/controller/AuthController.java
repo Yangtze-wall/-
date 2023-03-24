@@ -2,11 +2,10 @@ package com.retail.auth.controller;
 
 import cn.hutool.core.lang.Validator;
 import cn.hutool.core.util.RandomUtil;
+import com.alibaba.fastjson.JSON;
 import com.retail.auth.service.AuthService;
 import com.retail.auth.service.SmsService;
 import com.retail.common.constant.Constants;
-import com.alibaba.fastjson.JSON;
-import com.retail.auth.service.AuthService;
 import com.retail.common.constant.TokenConstants;
 import com.retail.common.domain.request.UserEntityRequest;
 import com.retail.common.domain.response.JwtResponse;
@@ -14,14 +13,14 @@ import com.retail.common.domain.vo.UserEntityVo;
 import com.retail.common.domain.vo.UserLoginPasswordVo;
 import com.retail.common.exception.BizException;
 import com.retail.common.result.Result;
-import com.retail.common.utils.StringUtils;
 import com.retail.common.utils.JwtUtils;
+import com.retail.common.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.concurrent.TimeUnit;
 import javax.servlet.http.HttpServletRequest;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author AuthController
@@ -43,12 +42,8 @@ public class AuthController {
     private SmsService smsService;
     @Autowired
     private RedisTemplate<String,String>  redisTemplate;
-
-
-    private HttpServletRequest request;
-
     @Autowired
-    private RedisTemplate<String,String> redisTemplate;
+    private HttpServletRequest request;
 
     @PostMapping("/register")
     public Result register(@RequestBody UserEntityRequest userEntityRequest){
