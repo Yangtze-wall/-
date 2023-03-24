@@ -1,5 +1,6 @@
 com\retail\common\config\XxlJobConfig.class
 com\retail\common\constant\JwtConstants.class
+com\retail\common\domain\response\JwtResponse.class
 com\retail\common\utils\HttpUtils$1.class
 com\retail\common\exception\BizCodeEnum.class
 com\retail\common\utils\XxlJob.class
@@ -7,6 +8,7 @@ com\retail\common\utils\StringUtils.class
 com\retail\common\domain\request\UserEntityRequest.class
 com\retail\common\utils\OssUtil.class
 com\retail\common\utils\JwtUtils.class
+com\retail\common\domain\vo\UserLoginPasswordVo.class
 com\retail\common\constant\TokenConstants.class
 com\retail\common\domain\vo\UserEntityVo.class
 com\retail\common\result\Result.class

@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.retail.common.constant.TokenConstants;
 import com.retail.common.domain.request.UserEntityRequest;
 import com.retail.common.domain.vo.UserEntityVo;
+import com.retail.common.domain.vo.UserLoginPasswordVo;
 import com.retail.common.exception.BizException;
 import com.retail.common.result.Result;
 import com.retail.common.utils.JwtUtils;
@@ -101,6 +102,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         powerUserService.save(powerUserEntity);
         return Result.success("注册成功");
     }
+
+    @Override
+    public Result<UserEntity> loginPassword(UserLoginPasswordVo userLoginPasswordVo) {
+        //判断用户是否存在
+
+        UserEntity userEntity = baseMapper.selectOne(new QueryWrapper<UserEntity>().lambda()
+                .eq(UserEntity::getPhone, userLoginPasswordVo.getPhone()));
+        if (userEntity==null){
+            throw  new BizException(502,"用户没有注册，请注册");
+        }
+        return Result.success(userEntity);
+    }
+
     @Override
     public UserEntity userInfo(){
         String token = request.getHeader("token");

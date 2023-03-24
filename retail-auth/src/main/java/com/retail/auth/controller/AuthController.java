@@ -2,12 +2,12 @@ package com.retail.auth.controller;
 
 import com.retail.auth.service.AuthService;
 import com.retail.common.domain.request.UserEntityRequest;
+import com.retail.common.domain.response.JwtResponse;
 import com.retail.common.domain.vo.UserEntityVo;
+import com.retail.common.domain.vo.UserLoginPasswordVo;
 import com.retail.common.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author AuthController
@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestBody;
  * @Description:
  * @Version:
  */
+@RestController
+@RequestMapping
 public class AuthController {
 
     @Autowired
@@ -32,4 +34,12 @@ public class AuthController {
     public Result<UserEntityVo> userInfo(){
         return authService.userInfo();
     }
+
+
+    @PostMapping("/loginPassword")
+    public Result<JwtResponse> loginPassword(@RequestBody UserLoginPasswordVo userLoginPasswordVo){
+        Result<JwtResponse> jwtResponseResult =  authService.loginPassword(userLoginPasswordVo);
+        return jwtResponseResult;
+    }
+
 }

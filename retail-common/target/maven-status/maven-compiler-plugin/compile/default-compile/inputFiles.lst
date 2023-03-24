@@ -5,6 +5,7 @@ E:\java\practical\retail-cloud\retail-common\src\main\java\com\retail\common\uti
 E:\java\practical\retail-cloud\retail-common\src\main\java\com\retail\common\result\PageResult.java
 E:\java\practical\retail-cloud\retail-common\src\main\java\com\retail\common\constant\Constants.java
 E:\java\practical\retail-cloud\retail-common\src\main\java\com\retail\common\utils\MsgUtil.java
+E:\java\practical\retail-cloud\retail-common\src\main\java\com\retail\common\domain\vo\UserLoginPasswordVo.java
 E:\java\practical\retail-cloud\retail-common\src\main\java\com\retail\common\exception\BizException.java
 E:\java\practical\retail-cloud\retail-common\src\main\java\com\retail\common\utils\JwtUtils.java
 E:\java\practical\retail-cloud\retail-common\src\main\java\com\retail\common\utils\StringUtils.java
@@ -14,3 +15,4 @@ E:\java\practical\retail-cloud\retail-common\src\main\java\com\retail\common\uti
 E:\java\practical\retail-cloud\retail-common\src\main\java\com\retail\common\domain\vo\UserEntityVo.java
 E:\java\practical\retail-cloud\retail-common\src\main\java\com\retail\common\constant\TokenConstants.java
 E:\java\practical\retail-cloud\retail-common\src\main\java\com\retail\common\utils\XxlJob.java
+E:\java\practical\retail-cloud\retail-common\src\main\java\com\retail\common\domain\response\JwtResponse.java
