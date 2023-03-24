@@ -1,5 +1,6 @@
 package com.retail.shop.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -31,7 +32,7 @@ public class RetaiUserCouponCenterEntity implements Serializable {
 	/**
 	 * 用户id
 	 */
-	private Integer userId;
+	private Long userId;
 	/**
 	 * 优惠卷id
 	 */

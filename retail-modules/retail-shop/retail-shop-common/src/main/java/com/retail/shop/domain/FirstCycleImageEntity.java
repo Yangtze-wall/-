@@ -1,5 +1,6 @@
 package com.retail.shop.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -39,7 +40,7 @@ public class FirstCycleImageEntity implements Serializable {
 	/**
 	 * 排序
 	 */
-	private String sort;
+	private Integer sort;
 	/**
 	 * 跳转地址
 	 */
@@ -51,6 +52,6 @@ public class FirstCycleImageEntity implements Serializable {
 	/**
 	 * 商品spuId
 	 */
-	private Integer spuId;
+	private Long spuId;
 
 }

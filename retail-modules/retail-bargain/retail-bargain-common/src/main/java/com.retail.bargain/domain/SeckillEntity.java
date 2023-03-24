@@ -1,5 +1,6 @@
 package com.retail.bargain.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -36,7 +37,7 @@ public class SeckillEntity implements Serializable {
 	/**
 	 * 轮播图
 	 */
-	private String slideshow;
+	private String slideShow;
 	/**
 	 * 秒杀商品标题
 	 */
@@ -60,7 +61,7 @@ public class SeckillEntity implements Serializable {
 	/**
 	 * 状态
 	 */
-	private Long status;
+	private Integer status;
 	/**
 	 * 秒杀库存
 	 */

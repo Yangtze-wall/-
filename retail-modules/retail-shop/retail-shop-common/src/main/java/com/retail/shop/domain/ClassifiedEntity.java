@@ -1,5 +1,6 @@
 package com.retail.shop.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -32,7 +33,7 @@ public class ClassifiedEntity implements Serializable {
 	/**
 	 * 父级id
 	 */
-	private Integer pid;
+	private Long pid;
 	/**
 	 * 分类名称
 	 */
