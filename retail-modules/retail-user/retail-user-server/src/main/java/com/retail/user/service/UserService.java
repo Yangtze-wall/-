@@ -20,5 +20,6 @@ public interface UserService extends IService<UserEntity> {
 
     Result<UserEntity> loginPassword(UserLoginPasswordVo userLoginPasswordVo);
 
+    UserEntity userInfo();
 }
 

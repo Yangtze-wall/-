@@ -3,6 +3,9 @@ package com.retail.user.controller;
 import java.util.List;
 
 
+import com.retail.common.domain.vo.CommissionVo;
+import com.retail.common.domain.vo.UserEntityVo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,8 +27,25 @@ import com.retail.user.service.UserRecordService;
  */
 @RestController
 @RequestMapping("user/userrecord")
+@Slf4j
 public class UserRecordController {
 
     @Autowired
     private UserRecordService userRecordService;
+
+    @RequestMapping("/selectCommission")
+    public List<CommissionVo> selectCommission(@RequestBody UserEntityVo userEntityVo){
+
+        if (userEntityVo==null){
+            log.error("佣金流水 参数为空");
+            return null;
+        }
+        List<CommissionVo> commissionVoList=  userRecordService.selectCommission(userEntityVo);
+
+        return commissionVoList;
+    }
+
+
+
+
 }

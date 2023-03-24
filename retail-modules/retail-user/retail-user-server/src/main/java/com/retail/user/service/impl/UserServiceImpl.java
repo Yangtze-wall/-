@@ -137,6 +137,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         return Result.success(userEntity);
     }
 
+    @Override
+    public UserEntity userInfo(){
+        String token = request.getHeader("token");
+        String userKey = JwtUtils.getUserKey(token);
+        String s = redisTemplate.opsForValue().get(TokenConstants.LOGIN_TOKEN_KEY + userKey);
+        UserEntity user = JSON.parseObject(s, UserEntity.class);
+        return  user;
+    }
 
 
 }

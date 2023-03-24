@@ -27,7 +27,7 @@ public class PowerUserEntity implements Serializable {
 	/**
 	 * 主键
 	 */
-	@TableId(type = IdType.AUTO)(type = IdType.AUTO)
+	@TableId(type = IdType.AUTO)
 	private Long id;
 	/**
 	 *

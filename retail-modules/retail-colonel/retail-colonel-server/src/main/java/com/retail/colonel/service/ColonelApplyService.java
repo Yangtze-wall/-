@@ -2,9 +2,11 @@ package com.retail.colonel.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.retail.colonel.domain.ColonelApplyEntity;
+import com.retail.common.domain.vo.CommissionVo;
 import com.retail.common.result.Result;
 
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -18,6 +20,8 @@ public interface ColonelApplyService extends IService<ColonelApplyEntity> {
 
 
     Result colonelApplyService(ColonelApplyEntity colonelApplyEntity);
+
+    List<CommissionVo> selectCommission();
 
 }
 

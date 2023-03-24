@@ -3,7 +3,11 @@ package com.retail.colonel.controller;
 import java.util.List;
 
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.retail.colonel.domain.ColonelApplyEntity;
+import com.retail.common.domain.vo.CommissionVo;
+import com.retail.common.result.PageResult;
 import com.retail.common.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,6 +36,11 @@ public class ColonelApplyController {
     @Autowired
     private ColonelApplyService colonelApplyService;
 
+    /**
+     * 申请团长
+     * @param colonelApplyEntity
+     * @return
+     */
 
     @PostMapping("/addColonelApply")
     public Result colonelApplyService(@RequestBody ColonelApplyEntity colonelApplyEntity){
@@ -43,8 +52,25 @@ public class ColonelApplyController {
 
       Result result=  colonelApplyService.colonelApplyService(colonelApplyEntity);
 
-
         return Result.success(result);
+
+    }
+
+    /**
+     * 团长佣金流水
+     * @param commissionVo
+     * @return
+     */
+    @PostMapping("/selectCommission")
+    public Result<PageResult<CommissionVo>> selectCommission(@RequestBody CommissionVo commissionVo){
+
+        PageHelper.startPage(commissionVo.getPageNum(),commissionVo.getPageSize());
+
+        List<CommissionVo> commissionVoList=colonelApplyService.selectCommission();
+
+        PageInfo<CommissionVo> pageInfo = new PageInfo<>(commissionVoList);
+
+        return PageResult.toResult(pageInfo.getTotal(),commissionVoList);
 
 
     }

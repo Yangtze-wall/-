@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.retail.user.domain.UserRecordEntity;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * 账户记录流水表
  *
@@ -13,5 +15,7 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface UserRecordMapper extends BaseMapper<UserRecordEntity> {
+
+    List<UserRecordEntity> selectCommission(UserRecordEntity userRecordEntity);
 
 }

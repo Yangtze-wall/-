@@ -1,9 +1,12 @@
 package com.retail.user.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.retail.common.domain.vo.CommissionVo;
+import com.retail.common.domain.vo.UserEntityVo;
 import com.retail.user.domain.UserRecordEntity;
 
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,5 +19,6 @@ import java.util.Map;
 public interface UserRecordService extends IService<UserRecordEntity> {
 
 
+    List<CommissionVo> selectCommission(UserEntityVo userEntityVo);
 }
 
