@@ -1,19 +1,18 @@
 package com.retail.user.service.impl;
 
+import cn.hutool.core.lang.Validator;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.crypto.SecureUtil;
-import cn.hutool.crypto.digest.MD5;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.retail.common.constant.Constants;
 import com.retail.common.constant.TokenConstants;
 import com.retail.common.domain.request.UserEntityRequest;
-import com.retail.common.domain.vo.UserEntityVo;
 import com.retail.common.domain.vo.UserLoginPasswordVo;
 import com.retail.common.exception.BizException;
 import com.retail.common.result.Result;
 import com.retail.common.utils.JwtUtils;
 import com.retail.common.utils.StringUtils;
-import com.retail.user.constant.Constant;
 import com.retail.user.domain.PowerUserEntity;
 import com.retail.user.domain.RoleEntity;
 import com.retail.user.domain.UserEntity;
@@ -68,13 +67,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         if (StringUtils.isEmpty(userEntityRequest.getPhone())){
             throw new  BizException(501,"手机号不能为空");
         }
-//        if (StringUtils.isEmpty(userEntityRequest.getCode())){
-//            throw new  BizException(501,"短信不能为空");
-//        }
-//        String s = redisTemplate.opsForValue().get(Constant.CODE_MSG + userEntityRequest.getPhone());
-//        if (!userEntityRequest.getCode().equals(s)){
-//            throw new  BizException(501,"短信不一致");
-//        }
+        if (!Validator.isMobile(userEntityRequest.getPhone())){
+            throw new  BizException(501,"手机号不合法");
+        }
+        if (StringUtils.isEmpty(userEntityRequest.getCode())){
+            throw new  BizException(501,"短信不能为空");
+        }
+        String s = redisTemplate.opsForValue().get(Constants.CODE_MSG + userEntityRequest.getPhone());
+        if (!userEntityRequest.getCode().equals(s)){
+            throw new  BizException(501,"短信不一致");
+        }
         UserEntity userEntityUserName = baseMapper.selectOne(new QueryWrapper<UserEntity>().lambda().eq(UserEntity::getUsername, userEntityRequest.getUsername()));
         if (userEntityUserName!=null){
             throw new  BizException(501,"账号存在,请重新注册");
