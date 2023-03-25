@@ -3,6 +3,8 @@ package com.retail.bargain.controller;
 import java.util.List;
 
 
+import com.retail.bargain.domain.request.SeckillRequest;
+import com.retail.bargain.vo.SeckillEntityVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,4 +31,13 @@ public class SeckillController {
 
     @Autowired
     private SeckillService seckillService;
+
+    /**
+     * 秒杀商品首页列表
+     */
+    @PostMapping
+    public List<SeckillEntityVo> list(@RequestBody SeckillRequest seckillRequest){
+        return seckillService.seckillList(seckillRequest);
+    }
+
 }

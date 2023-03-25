@@ -2,7 +2,10 @@ package com.retail.bargain.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.retail.bargain.domain.SeckillEntity;
+import com.retail.bargain.domain.request.SeckillRequest;
+import com.retail.bargain.vo.SeckillEntityVo;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -14,6 +17,11 @@ import java.util.Map;
  */
 public interface SeckillService extends IService<SeckillEntity> {
 
-
+    /**
+     * 秒杀商品列表
+     * @param seckillRequest
+     * @return
+     */
+    List<SeckillEntityVo> seckillList(SeckillRequest seckillRequest);
 }
 

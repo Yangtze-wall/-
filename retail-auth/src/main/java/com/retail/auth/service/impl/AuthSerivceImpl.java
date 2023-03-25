@@ -3,22 +3,35 @@ package com.retail.auth.service.impl;
 import cn.hutool.core.lang.Validator;
 import cn.hutool.crypto.SecureUtil;
 import com.alibaba.fastjson.JSON;
+import cn.hutool.core.lang.Validator;
+import cn.hutool.crypto.SecureUtil;
+import com.alibaba.fastjson.JSON;
 import com.retail.auth.feign.UserFeignService;
 import com.retail.auth.service.AuthService;
 import com.retail.common.constant.JwtConstants;
 import com.retail.common.constant.TokenConstants;
 import com.retail.common.domain.request.UserEntityRequest;
-
 import com.retail.common.domain.response.JwtResponse;
 import com.retail.common.domain.vo.UserEntityVo;
 import com.retail.common.domain.vo.UserLoginPasswordVo;
 import com.retail.common.exception.BizException;
 import com.retail.common.result.Result;
 import com.retail.common.utils.JwtUtils;
+import com.retail.common.utils.JwtUtils;
 import com.retail.common.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -67,14 +80,6 @@ public class AuthSerivceImpl implements AuthService {
         Result result=userFeignService.register(userEntityRequest);
         return result;
     }
-
-    @Override
-    public Result<UserEntityVo> userInfo() {
-        Result<UserEntityVo> userEntityVoResult = userFeignService.userInfo();
-        return userEntityVoResult;
-    }
-
-
     @Override
     public Result<JwtResponse>  loginPassword(UserLoginPasswordVo userLoginPasswordVo) {
 
@@ -113,5 +118,9 @@ public class AuthSerivceImpl implements AuthService {
         jwtResponse.setExpireTime("1Days");
         return Result.success(jwtResponse);
     }
-
+    @Override
+    public Result<UserEntityVo> userInfo() {
+        Result<UserEntityVo> userEntityVoResult = userFeignService.userInfo();
+        return userEntityVoResult;
+    }
 }

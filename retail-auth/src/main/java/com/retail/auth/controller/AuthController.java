@@ -9,6 +9,7 @@ import com.retail.common.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+
 /**
  * @author AuthController
  * @BelongsProject: retail-cloud

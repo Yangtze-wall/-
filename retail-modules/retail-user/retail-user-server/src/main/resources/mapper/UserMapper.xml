@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.retail.user.mapper.UserMapper">
+    <update id="updateStatus">
+        update retail_user set status=2 where id=#{id}
+    </update>
 
+    <select id="list" resultType="com.retail.user.domain.UserEntity">
+        select u.* from retail_user u
+                            left join retail_power_user pu on u.id= pu.user_id
+                            left join retail_power p on p.id = pu.power_id where 1=1 p.id=1
+        <if test="realName != null and  realName!=''">
+            and  real_name like concat('%',#{realName},'%')
+        </if>
+    </select>
 </mapper>

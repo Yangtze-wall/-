@@ -14,7 +14,6 @@ import lombok.NoArgsConstructor;
  * 秒杀商品表
  *
  * @author fengge
- * @email 1287137373@qq.com
  * @date 2023-03-23 11:22:38
  */
 @Data
@@ -87,5 +86,4 @@ public class SeckillEntity implements Serializable {
 	 * 秒杀配置id
 	 */
 	private Integer seckillConfigId;
-
 }
