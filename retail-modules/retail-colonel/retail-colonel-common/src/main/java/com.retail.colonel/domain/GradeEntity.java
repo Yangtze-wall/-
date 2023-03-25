@@ -1,9 +1,11 @@
 package com.retail.colonel.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import lombok.Data;
 import lombok.AllArgsConstructor;
@@ -26,8 +28,8 @@ public class GradeEntity implements Serializable {
 	/**
 	 * 团长等级id
 	 */
-	@TableId
-	private Integer id;
+	@TableId(type = IdType.AUTO)
+	private Long id;
 	/**
 	 * 等级名称
 	 */
@@ -39,7 +41,7 @@ public class GradeEntity implements Serializable {
 	/**
 	 * 比例为%
 	 */
-	private Double scale;
+	private BigDecimal scale;
 	/**
 	 * 状态
 	 */

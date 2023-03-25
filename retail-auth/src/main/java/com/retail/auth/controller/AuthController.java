@@ -8,6 +8,9 @@ import com.retail.auth.service.AuthService;
 import com.retail.auth.service.SmsService;
 import com.retail.auth.vo.SmsParamVo;
 import com.retail.common.constant.Constants;
+import com.alibaba.fastjson.JSON;
+import com.retail.auth.service.AuthService;
+import com.retail.common.constant.TokenConstants;
 import com.retail.common.domain.request.UserEntityRequest;
 import com.retail.common.domain.response.JwtResponse;
 import com.retail.common.domain.vo.UserEntityVo;
@@ -18,11 +21,15 @@ import com.retail.common.result.Result;
 import com.retail.common.utils.StringUtils;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+=======
+import com.retail.common.utils.JwtUtils;
+>>>>>>> master
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.TimeUnit;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author AuthController
@@ -50,6 +57,10 @@ public class AuthController {
     private RedisTemplate<String,String>  redisTemplate;
 
 
+    private HttpServletRequest request;
+
+    @Autowired
+    private RedisTemplate<String,String> redisTemplate;
 
     @PostMapping("/register")
     public Result register(@RequestBody UserEntityRequest userEntityRequest){
@@ -58,7 +69,11 @@ public class AuthController {
 
     @GetMapping("/userInfo")
     public Result<UserEntityVo> userInfo(){
-        return authService.userInfo();
+        String token = request.getHeader("token");
+        String userKey = JwtUtils.getUserKey(token);
+        String s = redisTemplate.opsForValue().get(TokenConstants.LOGIN_TOKEN_KEY + userKey);
+        UserEntityVo user = JSON.parseObject(s, UserEntityVo.class);
+        return Result.success(user);
     }
 
     /**

@@ -2,8 +2,11 @@ package com.retail.colonel.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.retail.colonel.domain.ColonelApplyEntity;
+import com.retail.colonel.domain.ColonelEntity;
+import com.retail.common.result.Result;
 
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,5 +19,15 @@ import java.util.Map;
 public interface ColonelApplyService extends IService<ColonelApplyEntity> {
 
 
+    Result colonelApplyInsert(ColonelApplyEntity colonelApplyEntity);
+
+    List<ColonelApplyEntity> select();
+
+    Result coloneApplyUpdate(ColonelApplyEntity colonelApplyEntity);
+
+
+    Result deleteColonelApplyEntity(Long id);
+
+    Result<ColonelApplyEntity> findByIdColoneApplyEntity(Long id);
 }
 

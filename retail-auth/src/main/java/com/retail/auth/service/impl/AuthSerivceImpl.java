@@ -70,12 +70,6 @@ public class AuthSerivceImpl implements AuthService {
         return result;
     }
 
-    @Override
-    public Result<UserEntityVo> userInfo() {
-        Result<UserEntityVo> userEntityVoResult = userFeignService.userInfo();
-        return userEntityVoResult;
-    }
-
 
     @Override
     public Result<JwtResponse>  loginPassword(UserLoginPasswordVo userLoginPasswordVo) {

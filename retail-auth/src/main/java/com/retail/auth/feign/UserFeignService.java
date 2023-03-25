@@ -23,8 +23,6 @@ public interface UserFeignService {
     @PostMapping("user/user/register")
     Result register(@RequestBody UserEntityRequest userEntityRequest);
 
-    @PostMapping("user/user/userInfo")
-    public Result<UserEntityVo> userInfo();
 
     @PostMapping("user/user/loginPassword")
     Result<UserEntityVo> loginPassword(@RequestBody UserLoginPasswordVo userLoginPasswordVo);

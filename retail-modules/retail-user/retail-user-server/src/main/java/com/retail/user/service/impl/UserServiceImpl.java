@@ -15,8 +15,12 @@ import com.retail.common.result.Result;
 import com.retail.common.utils.JwtUtils;
 import com.retail.common.utils.StringUtils;
 import com.retail.user.domain.PowerUserEntity;
+import com.retail.user.domain.RoleEntity;
 import com.retail.user.domain.UserEntity;
+import com.retail.user.domain.UserRoleEntity;
 import com.retail.user.service.PowerUserService;
+import com.retail.user.service.RoleService;
+import com.retail.user.service.UserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -39,6 +43,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
 
     @Autowired
     private PowerUserService powerUserService;
+
+    @Autowired
+    private UserRoleService userRoleService;
 
     @Autowired
     private HttpServletRequest request;
@@ -97,12 +104,21 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         userEntity.setBalance(0);
         //购物积分
         userEntity.setIntegration(0);
+        // 初始状态  正常
+        userEntity.setStatus(0);
+        // 介绍
+        userEntity.setRemark("用户很懒什么都没有写");
         baseMapper.insert(userEntity);
-
+        // 权限
         PowerUserEntity powerUserEntity = new PowerUserEntity();
         powerUserEntity.setUserId(userEntity.getId());
         powerUserEntity.setPowerId(1L);
         powerUserService.save(powerUserEntity);
+        //角色
+        UserRoleEntity userRoleEntity = new UserRoleEntity();
+        userRoleEntity.setRoleId(1L);
+        userRoleEntity.setUserId(userEntity.getId());
+        userRoleService.save(userRoleEntity);
         return Result.success("注册成功");
     }
 
@@ -114,6 +130,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         if (userEntity==null){
             throw  new BizException(502,"用户没有注册，请注册");
         }
+        //写入最后登录时间
+        userEntity.setLoginDate(new Date());
+        baseMapper.update(userEntity,new QueryWrapper<UserEntity>().lambda().eq(UserEntity::getId,userEntity.getId()));
+
         return Result.success(userEntity);
     }
 
@@ -128,15 +148,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         return Result.success(userEntity);
     }
 
-    @Override
-    public UserEntity userInfo(){
-        String token = request.getHeader("token");
-        String userKey = JwtUtils.getUserKey(token);
-        String s = redisTemplate.opsForValue().get(TokenConstants.LOGIN_TOKEN_KEY + userKey);
-        UserEntity user = JSON.parseObject(s, UserEntity.class);
-
-        return  user;
-    }
 
 
 }
