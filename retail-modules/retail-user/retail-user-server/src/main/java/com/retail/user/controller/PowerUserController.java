@@ -3,16 +3,16 @@ package com.retail.user.controller;
 import java.util.List;
 
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.retail.user.domain.request.UserEntryPowerRequest;
+import com.retail.user.domain.vo.UserEntityPowerListVo;
+import com.retail.user.domain.vo.UserEntryPowerVo;
+import com.retail.common.result.PageResult;
+import com.retail.common.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.retail.user.domain.PowerUserEntity;
 import com.retail.user.service.PowerUserService;
 
 
@@ -29,4 +29,52 @@ public class PowerUserController {
 
     @Autowired
     private PowerUserService powerUserService;
+
+    /**
+     * 权限列表
+     * @param userEntryPowerRequest
+     * @return
+     */
+    @PostMapping("/getUserPowerList")
+    public Result<PageResult<UserEntryPowerVo>> getPowerUserEntryList(UserEntryPowerRequest userEntryPowerRequest){
+        PageHelper.startPage(userEntryPowerRequest.getPageNum(),userEntryPowerRequest.getPageSize());
+        List<UserEntryPowerVo> powerUserEntryList = powerUserService.getPowerUserEntryList();
+        PageInfo<UserEntryPowerVo> userEntryPowerVoPageInfo = new PageInfo<>(powerUserEntryList);
+        long total = userEntryPowerVoPageInfo.getTotal();
+        Result<PageResult<UserEntryPowerVo>> pageResultResult = PageResult.toResult(total, powerUserEntryList);
+        return pageResultResult;
+    }
+
+    /**
+     * 回显
+     * @param id
+     * @return
+     */
+    @GetMapping("/findByIdUserPower/{id}")
+    public Result<UserEntityPowerListVo> findByIdUserPower(@PathVariable("id") Long id){
+        UserEntityPowerListVo userEntityPowerListVo =powerUserService.findByIdUserPower(id);
+        return Result.success(userEntityPowerListVo);
+    }
+
+    /**
+     * 添加
+     */
+    @PostMapping("/insertUserPower")
+    public  Result insertUserPower(@RequestBody UserEntityPowerListVo userEntityPowerListVo){
+        return powerUserService.insertUserPower(userEntityPowerListVo);
+    }
+
+    /**
+     * 删除
+     * @param id
+     * @return
+     */
+    @GetMapping("/delUserPower/{id}")
+    public Result delUserPower(@PathVariable("id") Long id){
+        return powerUserService.delUserPower(id);
+    }
+
+
+
+
 }

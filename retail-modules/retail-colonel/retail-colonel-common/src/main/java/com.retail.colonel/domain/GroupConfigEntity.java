@@ -1,5 +1,6 @@
 package com.retail.colonel.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -27,7 +28,7 @@ public class GroupConfigEntity implements Serializable {
 	/**
 	 * 编号
 	 */
-	@TableId
+	@TableId(type = IdType.AUTO)
 	private Long id;
 	/**
 	 * 是否开启社区团购（0.开启， 1.关闭

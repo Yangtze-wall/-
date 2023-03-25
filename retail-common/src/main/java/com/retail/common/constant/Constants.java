@@ -15,4 +15,6 @@ public class Constants {
      */
     public static final Integer ERROR = 500;
     public static final String ERROR_MSG = "操作异常";
+
+    public static final String CODE_MSG="sms_code";
 }

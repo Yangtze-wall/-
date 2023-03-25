@@ -22,7 +22,6 @@ import com.retail.common.result.Result;
 public interface AuthService {
     Result register(UserEntityRequest userEntityRequest);
 
-    Result<UserEntityVo> userInfo();
 
     Result<JwtResponse> loginPassword(UserLoginPasswordVo userLoginPasswordVo);
 }

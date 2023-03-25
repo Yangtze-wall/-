@@ -1,5 +1,6 @@
 package com.retail.colonel.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -26,8 +27,8 @@ public class ColonelApplyEntity implements Serializable {
 	/**
 	 * 团长申请id
 	 */
-	@TableId
-	private Integer id;
+	@TableId(type = IdType.AUTO)
+	private Long id;
 	/**
 	 * 头像
 	 */
@@ -43,7 +44,7 @@ public class ColonelApplyEntity implements Serializable {
 	/**
 	 * 身份证号
 	 */
-	private Integer idcord;
+	private String idcord;
 	/**
 	 * 所属城市
 	 */
@@ -67,11 +68,11 @@ public class ColonelApplyEntity implements Serializable {
 	/**
 	 * 管理员
 	 */
-	private Integer admin;
+	private Long admin;
 	/**
 	 * 申请人
 	 */
-	private Integer userId;
+	private Long userId;
 	/**
 	 * 身份证 正面图片
 	 */

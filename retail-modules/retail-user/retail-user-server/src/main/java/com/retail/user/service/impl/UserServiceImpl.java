@@ -1,22 +1,25 @@
 package com.retail.user.service.impl;
 
+import cn.hutool.core.lang.Validator;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.crypto.SecureUtil;
-import cn.hutool.crypto.digest.MD5;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.retail.common.constant.Constants;
 import com.retail.common.constant.TokenConstants;
 import com.retail.common.domain.request.UserEntityRequest;
-import com.retail.common.domain.vo.UserEntityVo;
 import com.retail.common.domain.vo.UserLoginPasswordVo;
 import com.retail.common.exception.BizException;
 import com.retail.common.result.Result;
 import com.retail.common.utils.JwtUtils;
 import com.retail.common.utils.StringUtils;
-import com.retail.user.constant.Constant;
 import com.retail.user.domain.PowerUserEntity;
+import com.retail.user.domain.RoleEntity;
 import com.retail.user.domain.UserEntity;
+import com.retail.user.domain.UserRoleEntity;
 import com.retail.user.service.PowerUserService;
+import com.retail.user.service.RoleService;
+import com.retail.user.service.UserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -41,6 +44,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     private PowerUserService powerUserService;
 
     @Autowired
+    private UserRoleService userRoleService;
+
+    @Autowired
     private HttpServletRequest request;
 
     @Override
@@ -61,13 +67,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         if (StringUtils.isEmpty(userEntityRequest.getPhone())){
             throw new  BizException(501,"手机号不能为空");
         }
-//        if (StringUtils.isEmpty(userEntityRequest.getCode())){
-//            throw new  BizException(501,"短信不能为空");
-//        }
-//        String s = redisTemplate.opsForValue().get(Constant.CODE_MSG + userEntityRequest.getPhone());
-//        if (!userEntityRequest.getCode().equals(s)){
-//            throw new  BizException(501,"短信不一致");
-//        }
+        if (!Validator.isMobile(userEntityRequest.getPhone())){
+            throw new  BizException(501,"手机号不合法");
+        }
+        if (StringUtils.isEmpty(userEntityRequest.getCode())){
+            throw new  BizException(501,"短信不能为空");
+        }
+        String s = redisTemplate.opsForValue().get(Constants.CODE_MSG + userEntityRequest.getPhone());
+        if (!userEntityRequest.getCode().equals(s)){
+            throw new  BizException(501,"短信不一致");
+        }
         UserEntity userEntityUserName = baseMapper.selectOne(new QueryWrapper<UserEntity>().lambda().eq(UserEntity::getUsername, userEntityRequest.getUsername()));
         if (userEntityUserName!=null){
             throw new  BizException(501,"账号存在,请重新注册");
@@ -94,12 +103,21 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         userEntity.setBalance(0);
         //购物积分
         userEntity.setIntegration(0);
+        // 初始状态  正常
+        userEntity.setStatus(0);
+        // 介绍
+        userEntity.setRemark("用户很懒什么都没有写");
         baseMapper.insert(userEntity);
-
+        // 权限
         PowerUserEntity powerUserEntity = new PowerUserEntity();
         powerUserEntity.setUserId(userEntity.getId());
         powerUserEntity.setPowerId(1L);
         powerUserService.save(powerUserEntity);
+        //角色
+        UserRoleEntity userRoleEntity = new UserRoleEntity();
+        userRoleEntity.setRoleId(1L);
+        userRoleEntity.setUserId(userEntity.getId());
+        userRoleService.save(userRoleEntity);
         return Result.success("注册成功");
     }
 
@@ -112,18 +130,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         if (userEntity==null){
             throw  new BizException(502,"用户没有注册，请注册");
         }
+        //写入最后登录时间
+        userEntity.setLoginDate(new Date());
+        baseMapper.update(userEntity,new QueryWrapper<UserEntity>().lambda().eq(UserEntity::getId,userEntity.getId()));
+
         return Result.success(userEntity);
     }
 
-    @Override
-    public UserEntity userInfo(){
-        String token = request.getHeader("token");
-        String userKey = JwtUtils.getUserKey(token);
-        String s = redisTemplate.opsForValue().get(TokenConstants.LOGIN_TOKEN_KEY + userKey);
-        UserEntity user = JSON.parseObject(s, UserEntity.class);
-
-        return  user;
-    }
 
 
 }
