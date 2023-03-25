@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.retail.colonel.mapper.SeckillMapper">
+    <update id="updateEsRedis">
+        update retail_seckill set es_redis=#{esRedis} where id=#{id}
+    </update>
+
+    <select id="selectSpu" resultType="com.retail.common.domain.vo.SeckillSpuVo">
+        select * from retail_seckill a
+        left join retail_spu b on a.spu_id=b.id
+    </select>
+    <select id="selectSkuInventory" resultType="com.retail.common.domain.vo.SkuInventoryVo">
+        select  *  from retail_sku a
+        left join retail_inventory b on a.id=b.spu_id
+        where a.spu_id=#{spuId}
+
+    </select>
+</mapper>
