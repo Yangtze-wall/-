@@ -11,6 +11,14 @@ spring:
   application:
     # 应用名称
     name: retail-auth
+  rabbitmq:
+    listener:
+      #如果手动声明listener类型，可在config声明时设置
+      direct:
+        acknowledge-mode: MANUAL
+      simple:
+        acknowledge-mode: MANUAL
+    host: 139.196.95.132
   profiles:
     # 环境配置
     active: dev
