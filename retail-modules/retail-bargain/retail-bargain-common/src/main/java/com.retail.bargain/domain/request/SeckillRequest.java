@@ -17,4 +17,10 @@ public class SeckillRequest {
      * 时间区间
      */
     private Date time;
+
+    /**
+     * 分页
+     */
+    private Integer pageNum;
+    private Integer pageSize;
 }

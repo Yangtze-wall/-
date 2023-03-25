@@ -47,9 +47,6 @@ public class AuthController {
 
     private HttpServletRequest request;
 
-    @Autowired
-    private RedisTemplate<String,String> redisTemplate;
-
     @PostMapping("/register")
     public Result register(@RequestBody UserEntityRequest userEntityRequest){
         return authService.register(userEntityRequest);

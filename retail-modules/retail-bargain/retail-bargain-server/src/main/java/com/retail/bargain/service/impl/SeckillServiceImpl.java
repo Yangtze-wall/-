@@ -78,7 +78,7 @@ public class SeckillServiceImpl extends ServiceImpl<SeckillMapper, SeckillEntity
             seckillEntityVo.setPercent(NumberUtil.div(c.getSeckillResidueCount(), c.getSeckillCount()));
 
             seckillEntityVo.setId(c.getId());
-            seckillEntityVo.setStatus(c.getStatus());
+            seckillEntityVo.setStatus(Long.valueOf(c.getStatus()));
             seckillEntityVo.setShopId(c.getShopId());
             seckillEntityVo.setSeckillCount(c.getSeckillCount());
             seckillEntityVo.setSeckillLimit(c.getSeckillLimit());
@@ -88,7 +88,7 @@ public class SeckillServiceImpl extends ServiceImpl<SeckillMapper, SeckillEntity
             seckillEntityVo.setSeckillStartTime(c.getSeckillStartTime());
             seckillEntityVo.setSeckillResidueCount(c.getSeckillResidueCount());
             seckillEntityVo.setSeckillCreateTime(c.getSeckillCreateTime());
-            seckillEntityVo.setSlideshow(c.getSlideshow());
+            seckillEntityVo.setSlideshow(c.getSlideShow());
             seckillEntityVo.setSeckillHeadline(c.getSeckillHeadline());
             seckillEntityVo.setPostFree(c.getPostFree());
             seckillEntityVo.setSeckillIntroduce(c.getSeckillIntroduce());

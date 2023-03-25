@@ -3,10 +3,11 @@
 
 .gradle
 /build/
-!gradle/wrapper/gradle-wrapper.jar
+gradle/wrapper/gradle-wrapper.jar
 
+target/*
 target/
-!.mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper/maven-wrapper.jar
 
 ######################################################################
 # IDE
