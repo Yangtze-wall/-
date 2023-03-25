@@ -150,20 +150,26 @@ public class PowerUserServiceImpl extends ServiceImpl<PowerUserMapper, PowerUser
         userMapper.update(userEntity,new QueryWrapper<UserEntity>().lambda().eq(UserEntity::getId,userEntityPowerListVo.getId()));
         String ids = userEntityPowerListVo.getIds();
         PowerUserEntity powerUserEntity = new PowerUserEntity();
+
         if (ids.contains(",")){
             String[] split =ids.split(",");
             Arrays.stream(split).forEach(c ->{
-
                 long l = Long.parseLong(c);
-                powerUserEntity.setPowerId(l);
-                powerUserEntity.setUserId(userEntityPowerListVo.getId());
-                powerUserMapper.insert(powerUserEntity);
+                PowerUserEntity selectOne = powerUserMapper.selectOne(new QueryWrapper<PowerUserEntity>().lambda().eq(PowerUserEntity::getPowerId, l));
+                if (selectOne!=null){
+                    powerUserEntity.setPowerId(l);
+                    powerUserEntity.setUserId(userEntityPowerListVo.getId());
+                    powerUserMapper.insert(powerUserEntity);
+                }
             });
         }else {
             long l = Long.parseLong(ids);
-            powerUserEntity.setPowerId(l);
-            powerUserEntity.setUserId(userEntityPowerListVo.getId());
-            powerUserMapper.insert(powerUserEntity);
+            PowerUserEntity selectOne = powerUserMapper.selectOne(new QueryWrapper<PowerUserEntity>().lambda().eq(PowerUserEntity::getPowerId, l));
+            if (selectOne!=null) {
+                powerUserEntity.setPowerId(l);
+                powerUserEntity.setUserId(userEntityPowerListVo.getId());
+                powerUserMapper.insert(powerUserEntity);
+            }
         }
 
         return Result.success("权限添加成功");

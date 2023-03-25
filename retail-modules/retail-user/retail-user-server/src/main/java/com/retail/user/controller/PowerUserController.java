@@ -36,7 +36,7 @@ public class PowerUserController {
      * @return
      */
     @PostMapping("/getUserPowerList")
-    public Result<PageResult<UserEntryPowerVo>> getPowerUserEntryList(UserEntryPowerRequest userEntryPowerRequest){
+    public Result<PageResult<UserEntryPowerVo>> getPowerUserEntryList(@RequestBody UserEntryPowerRequest userEntryPowerRequest){
         PageHelper.startPage(userEntryPowerRequest.getPageNum(),userEntryPowerRequest.getPageSize());
         List<UserEntryPowerVo> powerUserEntryList = powerUserService.getPowerUserEntryList();
         PageInfo<UserEntryPowerVo> userEntryPowerVoPageInfo = new PageInfo<>(powerUserEntryList);
@@ -69,12 +69,10 @@ public class PowerUserController {
      * @param id
      * @return
      */
-    @GetMapping("/delUserPower/{id}")
+    @DeleteMapping("/delUserPower/{id}")
     public Result delUserPower(@PathVariable("id") Long id){
         return powerUserService.delUserPower(id);
     }
-
-
 
 
 }
