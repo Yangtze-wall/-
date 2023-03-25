@@ -10,6 +10,7 @@ import com.retail.common.domain.vo.UserEntityVo;
 import com.retail.common.domain.vo.UserLoginPasswordVo;
 import com.retail.common.exception.BizException;
 import com.retail.common.result.Result;
+import com.retail.common.utils.OssUtil;
 import com.retail.common.utils.StringUtils;
 import com.retail.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.retail.user.service.UserService;
+import org.springframework.web.multipart.MultipartFile;
 
 
 /**
@@ -37,6 +39,12 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @PostMapping("/upload")
+    public Result<String> upload(@RequestParam("file")MultipartFile multipartFile){
+        String file = OssUtil.uploadMultipartFile(multipartFile);
+        return Result.success(file);
+    }
 
     /**
      * 注册
