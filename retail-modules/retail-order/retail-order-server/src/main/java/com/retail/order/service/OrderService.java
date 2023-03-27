@@ -1,6 +1,7 @@
 package com.retail.order.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.retail.common.result.Result;
 import com.retail.order.domain.OrderEntity;
 
 
@@ -15,6 +16,10 @@ import java.util.Map;
  */
 public interface OrderService extends IService<OrderEntity> {
 
+
+    Result createSkeillOrder(OrderEntity orderEntity);
+
+    Result updateOrderAddress(OrderEntity orderEntity);
 
 }
 

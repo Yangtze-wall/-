@@ -1,9 +1,11 @@
 package com.retail.user.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.retail.common.domain.vo.AddressVo;
 import com.retail.user.domain.UserAddressEntity;
 
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,5 +18,6 @@ import java.util.Map;
 public interface UserAddressService extends IService<UserAddressEntity> {
 
 
+    List<AddressVo> selectOrderAddress(Long id);
 }
 

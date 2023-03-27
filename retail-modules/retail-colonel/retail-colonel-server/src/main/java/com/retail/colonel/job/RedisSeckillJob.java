@@ -33,7 +33,7 @@ public class RedisSeckillJob {
     private RedisTemplate<String,String> redisTemplate;
 
 
-    @Scheduled(cron = "0 0/30 * * * *")
+    @Scheduled(cron = "0/3 * * * * *")
     public Result task(){
          List<SeckillSpuVo>  seckillSpuVo=seckillMapper.selectSpu();
 

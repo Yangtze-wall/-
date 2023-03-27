@@ -2,9 +2,11 @@ package com.retail.user.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import com.retail.common.domain.vo.RoleVo;
 import com.retail.user.domain.RoleEntity;
 
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -15,6 +17,9 @@ import java.util.Map;
  * @date 2023-03-22 18:26:56
  */
 public interface RoleService extends IService<RoleEntity> {
+
+
+    List<RoleVo> selectOrderAddress2();
 
 
 }

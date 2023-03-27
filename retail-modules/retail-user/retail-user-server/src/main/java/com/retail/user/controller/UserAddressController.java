@@ -3,6 +3,7 @@ package com.retail.user.controller;
 import java.util.List;
 
 
+import com.retail.common.domain.vo.AddressVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,4 +29,16 @@ public class UserAddressController {
 
     @Autowired
     private UserAddressService userAddressService;
+
+    /**
+     * 根据用户id查地址
+     * @param id
+     * @return
+     */
+    @PostMapping("selectOrderAddress/{id}")
+    public List<AddressVo> selectOrderAddress(@PathVariable("id") Long id){
+        List<AddressVo> addressVoList=  userAddressService.selectOrderAddress(id);
+
+        return addressVoList;
+    }
 }

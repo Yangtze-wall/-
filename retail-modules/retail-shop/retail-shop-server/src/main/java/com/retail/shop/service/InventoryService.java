@@ -1,6 +1,7 @@
 package com.retail.shop.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.retail.common.domain.vo.InventoryVo;
 import com.retail.shop.domain.InventoryEntity;
 
 
@@ -16,5 +17,6 @@ import java.util.Map;
 public interface InventoryService extends IService<InventoryEntity> {
 
 
+    InventoryVo selectInventory(Long spuId);
 }
 

@@ -25,18 +25,18 @@ public class OrderEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 商品id
+	 * 订单id
 	 */
 	@TableId(type = IdType.AUTO)
 	private Long id;
 	/**
 	 * 用户id
 	 */
-	private Integer userId;
+	private Long userId;
 	/**
 	 * 商品单号
 	 */
-	private Long orderSn;
+	private String orderSn;
 	/**
 	 *  总价钱
 	 */
@@ -93,5 +93,17 @@ public class OrderEntity implements Serializable {
 	 * 结账时间
 	 */
 	private Date realityTime;
+	/**
+	 * 订单类型
+	 */
+	private Integer type;
+	/**
+	 * 拼团商品id
+	 */
+	private Long seckillId;
+	/**
+	 * 地址id
+	 */
+	private Long addressId;
 
 }

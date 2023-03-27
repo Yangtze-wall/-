@@ -3,6 +3,7 @@ package com.retail.user.controller;
 import java.util.List;
 
 
+import com.retail.common.domain.vo.RoleVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,4 +29,11 @@ public class RoleController {
 
     @Autowired
     private RoleService roleService;
+
+    @GetMapping("selectOrderAddress2")
+    public List<RoleVo> selectOrderAddress2(){
+        List<RoleVo> roleVoList=   roleService.selectOrderAddress2();
+
+        return  roleVoList;
+    }
 }

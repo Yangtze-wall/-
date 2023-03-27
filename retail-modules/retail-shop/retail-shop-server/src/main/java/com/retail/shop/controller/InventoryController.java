@@ -3,6 +3,8 @@ package com.retail.shop.controller;
 import java.util.List;
 
 
+import com.retail.common.domain.vo.InventoryVo;
+import com.retail.common.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,4 +31,20 @@ public class InventoryController {
 
     @Autowired
     private InventoryService inventoryService;
+
+
+    @PostMapping("/selectInventory")
+    public InventoryVo selectInventory(@RequestParam("spuId") Long spuId){
+
+        if (spuId==null){
+            return null;
+        }
+       InventoryVo inventoryVo=inventoryService.selectInventory(spuId);
+
+        return inventoryVo;
+    }
+
+
+
+
 }

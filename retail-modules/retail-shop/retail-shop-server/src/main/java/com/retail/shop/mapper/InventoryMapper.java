@@ -2,6 +2,7 @@ package com.retail.shop.mapper;
 
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.retail.common.domain.vo.InventoryVo;
 import com.retail.shop.domain.InventoryEntity;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -14,5 +15,7 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface InventoryMapper extends BaseMapper<InventoryEntity> {
+
+    InventoryVo selectInventory(Long spuId);
 
 }

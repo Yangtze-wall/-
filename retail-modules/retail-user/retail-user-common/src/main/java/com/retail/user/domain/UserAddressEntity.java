@@ -73,4 +73,5 @@ public class UserAddressEntity implements Serializable {
 	 */
 	private Date updateTime;
 
+
 }
