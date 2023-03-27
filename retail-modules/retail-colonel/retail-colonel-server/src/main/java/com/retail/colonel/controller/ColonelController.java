@@ -1,6 +1,7 @@
 package com.retail.colonel.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.retail.colonel.config.UserInfo;
 import com.retail.colonel.domain.ColonelEntity;
 import com.retail.colonel.domain.vo.ColonelInfoVo;
 import com.retail.colonel.service.ColonelService;
@@ -37,10 +38,8 @@ public class ColonelController {
     private RedisTemplate<String,String > redisTemplate;
     @GetMapping("colonelInfo")
     public Result<ColonelInfoVo> colonelInfo(){
-        String token = request.getHeader("token");
-        String userKey = JwtUtils.getUserKey(token);
-        String s = redisTemplate.opsForValue().get(TokenConstants.LOGIN_TOKEN_KEY + userKey);
-        UserEntityVo user = JSON.parseObject(s, UserEntityVo.class);
+        UserInfo userInfo = new UserInfo();
+        UserEntityVo user = userInfo.getInfo(request);
         ColonelEntity colonelEntity =colonelService.findById(user.getId());
         ColonelInfoVo colonelInfoVo = new ColonelInfoVo();
         colonelInfoVo.setUser(user);

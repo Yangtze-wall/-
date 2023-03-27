@@ -8,6 +8,8 @@ import com.retail.colonel.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <p>
  * 团长动态评论表	 服务实现类
@@ -20,4 +22,10 @@ import org.springframework.stereotype.Service;
 public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> implements CommentService {
     @Autowired
     private CommentMapper commentMapper;
+
+    @Override
+    public List<Comment> show() {
+        List<Comment> comments = commentMapper.selectshowList();
+        return comments;
+    }
 }

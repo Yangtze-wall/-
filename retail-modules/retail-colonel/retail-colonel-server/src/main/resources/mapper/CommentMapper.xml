@@ -2,4 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.retail.colonel.mapper.CommentMapper">
 
+    <select id="selectshowList" resultType="com.retail.colonel.domain.Comment">
+        select * from retail_comment
+    </select>
+    <select id="findByTrendId" resultType="com.retail.colonel.domain.vo.CommentVo">
+        SELECT
+            u.header_images pic,
+            u.nick_name,
+            c.*
+        FROM
+            retail_comment c
+                LEFT JOIN retail_user u ON c.user_id = u.id
+        WHERE
+            parent_id = #{parentId}
+          AND trend_id =#{id}
+
+    </select>
 </mapper>

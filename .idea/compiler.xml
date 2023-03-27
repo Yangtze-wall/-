@@ -30,37 +30,6 @@
         <module name="retail-order-server" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="retail-auth" target="1.8" />
-      <module name="retail-bargain" target="1.8" />
-      <module name="retail-bargain-common" target="1.8" />
-      <module name="retail-bargain-remote" target="1.8" />
-      <module name="retail-bargain-server" target="1.8" />
-      <module name="retail-cloud" target="1.8" />
-      <module name="retail-colonel" target="1.8" />
-      <module name="retail-colonel-common" target="1.8" />
-      <module name="retail-colonel-remote" target="1.8" />
-      <module name="retail-colonel-server" target="1.8" />
-      <module name="retail-common" target="1.8" />
-      <module name="retail-gateway" target="1.8" />
-      <module name="retail-modules" target="1.8" />
-      <module name="retail-order" target="1.8" />
-      <module name="retail-order-common" target="1.8" />
-      <module name="retail-order-remote" target="1.8" />
-      <module name="retail-order-server" target="1.8" />
-      <module name="retail-payment" target="1.8" />
-      <module name="retail-payment-common" target="1.8" />
-      <module name="retail-payment-remote" target="1.8" />
-      <module name="retail-payment-server" target="1.8" />
-      <module name="retail-shop" target="1.8" />
-      <module name="retail-shop-common" target="1.8" />
-      <module name="retail-shop-remote" target="1.8" />
-      <module name="retail-shop-server" target="1.8" />
-      <module name="retail-user" target="1.8" />
-      <module name="retail-user-common" target="1.8" />
-      <module name="retail-user-remote" target="1.8" />
-      <module name="retail-user-server" target="1.8" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">

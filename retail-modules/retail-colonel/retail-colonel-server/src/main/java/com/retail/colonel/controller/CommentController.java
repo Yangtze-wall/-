@@ -1,15 +1,16 @@
 package com.retail.colonel.controller;
 
+import com.retail.colonel.config.UserInfo;
 import com.retail.colonel.domain.Comment;
-import com.retail.colonel.domain.vo.CommentVo;
 import com.retail.colonel.service.CommentService;
+import com.retail.common.domain.vo.UserEntityVo;
 import com.retail.common.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -20,24 +21,30 @@ import java.util.List;
  * @author
  * @since 2023-03-26
  */
-@Controller
+//根据状态id 查看不同的评论
+@RestController
 @RequestMapping("/comment")
-public class CommentAction {
+public class CommentController {
 
 
     @Autowired
     private CommentService commentService;
+    @Autowired
+    private HttpServletRequest request;
+    @PostMapping("/list")
+    public Result<List<Comment>> list() {
+        UserEntityVo user = new UserInfo().getInfo(request);
 
-    @GetMapping(value = "/list")
-    public Result<List<Comment>> list(@RequestBody CommentVo commentVo) {
-
-        List<Comment> list = commentService.list();
-        return Result.success(list);
+        List<Comment> list = commentService.show();
+        Result<List<Comment>> success = Result.success(list);
+        System.out.println(success.getData());
+        System.out.println(111);
+        return success;
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Comment> getById(@PathVariable("id") String id) {
-        return new ResponseEntity<>(commentService.getById(id), HttpStatus.OK);
+    public Result<Comment> getById(@PathVariable("id") String id) {
+        return Result.success(commentService.getById(id));
     }
 
     @PostMapping(value = "/create")

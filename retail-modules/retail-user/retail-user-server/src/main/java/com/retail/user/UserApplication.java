@@ -15,9 +15,8 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @Version:
  */
 @SpringBootApplication
-@EnableFeignClients( basePackages = {"com.retail.user"})
+@EnableFeignClients
 @EnableDiscoveryClient
-
 public class UserApplication {
     public static void main(String[] args) {
         SpringApplication.run(UserApplication.class);

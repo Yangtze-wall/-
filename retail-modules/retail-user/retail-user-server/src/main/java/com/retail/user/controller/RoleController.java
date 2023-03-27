@@ -1,18 +1,12 @@
 package com.retail.user.controller;
 
-import java.util.List;
-
-
 import com.retail.common.result.Result;
 import com.retail.user.domain.UserRoleEntity;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
 import com.retail.user.service.RoleService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 /**
@@ -33,6 +27,7 @@ public class RoleController {
     @GetMapping(value = "/")
     public Result<List<UserRoleEntity>> list() {
         List<UserRoleEntity> list = roleService.selectUserRole();
+        System.out.println(list);
         return Result.success(list);
     }
 

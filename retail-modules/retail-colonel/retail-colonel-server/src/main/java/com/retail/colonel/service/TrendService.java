@@ -3,6 +3,9 @@ package com.retail.colonel.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.retail.colonel.domain.Trend;
+import com.retail.colonel.domain.vo.TrendCommentVo;
+
+import java.util.List;
 
 /**
  * <p>
@@ -14,4 +17,7 @@ import com.retail.colonel.domain.Trend;
  */
 public interface TrendService extends IService<Trend> {
 
+    List<Trend> selectTrend(Long id);
+
+    TrendCommentVo selectList(String id);
 }
