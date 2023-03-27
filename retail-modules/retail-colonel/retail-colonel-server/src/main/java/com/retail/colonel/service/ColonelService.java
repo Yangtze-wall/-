@@ -2,8 +2,10 @@ package com.retail.colonel.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.retail.colonel.domain.ColonelEntity;
+import com.retail.common.domain.vo.UserEntityVo;
 
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -15,6 +17,8 @@ import java.util.Map;
  */
 public interface ColonelService extends IService<ColonelEntity> {
 
+
+    List<ColonelEntity> selectColonel(UserEntityVo userEntityVo);
 
 }
 

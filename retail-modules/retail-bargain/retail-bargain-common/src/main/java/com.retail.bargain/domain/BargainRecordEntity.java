@@ -1,5 +1,4 @@
 package com.retail.bargain.domain;
-
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -53,6 +52,6 @@ public class BargainRecordEntity implements Serializable {
 	/**
 	 * 状态
 	 */
-	private Integer status;
+	private Long status;
 
 }

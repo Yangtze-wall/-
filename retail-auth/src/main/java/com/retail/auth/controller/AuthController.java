@@ -47,6 +47,8 @@ public class AuthController {
 
     private HttpServletRequest request;
 
+
+
     @PostMapping("/register")
     public Result register(@RequestBody UserEntityRequest userEntityRequest){
         return authService.register(userEntityRequest);
@@ -60,7 +62,6 @@ public class AuthController {
         UserEntityVo user = JSON.parseObject(s, UserEntityVo.class);
         return Result.success(user);
     }
-
 
     @PostMapping("/loginPassword")
     public Result<JwtResponse> loginPassword(@RequestBody UserLoginPasswordVo userLoginPasswordVo){

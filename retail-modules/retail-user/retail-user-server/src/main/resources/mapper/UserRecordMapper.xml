@@ -2,4 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.retail.user.mapper.UserRecordMapper">
 
+    <select id="selectCommission" resultType="com.retail.user.domain.UserRecordEntity">
+        select * from retail_user_record where user_id=#{userId} and recharge_type=#{rechargeType}
+    </select>
 </mapper>

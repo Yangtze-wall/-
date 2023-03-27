@@ -27,7 +27,7 @@ public class UserRoleEntity implements Serializable {
 	/**
 	 *  权限中间表
 	 */
-	@TableId(type = IdType.AUTO)
+
 	private Long id;
 	/**
 	 * 权限id

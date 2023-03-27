@@ -1,5 +1,4 @@
 package com.retail.order.domain;
-
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -36,6 +35,6 @@ public class ExpressageEntity implements Serializable {
 	/**
 	 * 状态
 	 */
-	private Integer status;
+	private Long status;
 
 }

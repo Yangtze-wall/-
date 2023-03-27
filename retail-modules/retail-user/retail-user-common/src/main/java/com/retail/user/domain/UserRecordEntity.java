@@ -45,7 +45,7 @@ public class UserRecordEntity implements Serializable {
 	/**
 	 * 类型(1充值，2提现，3消费，4返佣金, 5.退款)
 	 */
-	private String rechargeType;
+	private Integer rechargeType;
 	/**
 	 * 确认时间
 	 */
