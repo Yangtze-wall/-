@@ -3,14 +3,16 @@ package com.retail.auth.controller;
 import cn.hutool.core.lang.Validator;
 import cn.hutool.core.util.RandomUtil;
 import com.alibaba.fastjson.JSON;
+import com.retail.auth.domain.Captcha;
 import com.retail.auth.service.AuthService;
+import com.retail.auth.service.CaptchaService;
 import com.retail.auth.service.SmsService;
 import com.retail.common.constant.Constants;
 import com.retail.common.constant.TokenConstants;
 import com.retail.common.domain.request.UserEntityRequest;
 import com.retail.common.domain.response.JwtResponse;
+import com.retail.common.domain.vo.LoginVo;
 import com.retail.common.domain.vo.UserEntityVo;
-import com.retail.common.domain.vo.UserLoginPasswordVo;
 import com.retail.common.exception.BizException;
 import com.retail.common.result.Result;
 import com.retail.common.utils.JwtUtils;
@@ -60,8 +62,17 @@ public class AuthController {
     }
 
     @PostMapping("/loginPassword")
-    public Result<JwtResponse> loginPassword(@RequestBody UserLoginPasswordVo userLoginPasswordVo){
+    public Result<JwtResponse> loginPassword(@RequestBody LoginVo userLoginPasswordVo){
+        String msg = captchaService.checkImageCode(userLoginPasswordVo.getNonceStr(),userLoginPasswordVo.getValue());
+        if (StringUtils.isNotBlank(msg)) {
+            return Result.error(msg);
+        }
         Result<JwtResponse> jwtResponseResult =  authService.loginPassword(userLoginPasswordVo);
+        return jwtResponseResult;
+    }
+    @PostMapping("/loginPassword/colonel")
+    public Result<JwtResponse> loginPasswordColonel(@RequestBody LoginVo userLoginPasswordVo){
+        Result<JwtResponse> jwtResponseResult =  authService.loginPasswordColonel(userLoginPasswordVo);
         return jwtResponseResult;
     }
     @PostMapping("/sendSms")
@@ -78,7 +89,21 @@ public class AuthController {
         System.out.println(code);
         smsService.sendSms(phone,code);
         return Result.success("成功");
-
+    }
+    //退出登录
+    @GetMapping("logout")
+    public Result logout(){
+        String token = request.getHeader("token");
+        String userKey = JwtUtils.getUserKey(token);
+        redisTemplate.hasKey(TokenConstants.LOGIN_TOKEN_KEY + userKey);
+        return Result.success(null,"退出");
+    }
+    @Autowired
+    private CaptchaService captchaService;
+    @PostMapping("get-captcha")
+    public Result<Captcha> getCaptcha(@RequestBody Captcha captcha) {
+        Captcha captcha1 = captchaService.getCaptcha(captcha);
+        return Result.success(captcha1);
     }
 
 }

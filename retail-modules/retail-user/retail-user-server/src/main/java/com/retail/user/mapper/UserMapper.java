@@ -2,6 +2,7 @@ package com.retail.user.mapper;
 
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.retail.common.domain.vo.UserEntityVo;
 import com.retail.user.domain.UserEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -21,4 +22,6 @@ public interface UserMapper extends BaseMapper<UserEntity> {
     List<UserEntity> list(@Param("realName") String realName);
 
     void updateStatus(@Param("id") Long id);
+
+    UserEntityVo selectColonel(@Param("phone") String phone);
 }

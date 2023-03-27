@@ -1,26 +1,17 @@
 package com.retail.user.controller;
 
-import java.util.List;
-
-
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.lang.Validator;
 import com.retail.common.domain.request.UserEntityRequest;
+import com.retail.common.domain.vo.LoginVo;
 import com.retail.common.domain.vo.UserEntityVo;
-import com.retail.common.domain.vo.UserLoginPasswordVo;
 import com.retail.common.exception.BizException;
 import com.retail.common.result.Result;
 import com.retail.common.utils.StringUtils;
 import com.retail.user.domain.UserEntity;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import com.retail.user.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 
 /**
@@ -54,7 +45,7 @@ public class UserController {
      * @return
      */
     @PostMapping("/loginPassword")
-    public Result<UserEntityVo> loginPassword(@RequestBody UserLoginPasswordVo userLoginPasswordVo){
+    public Result<UserEntityVo> loginPassword(@RequestBody LoginVo userLoginPasswordVo){
         //判断不为空
         if (StringUtils.isBlank(userLoginPasswordVo.getPhone())){
             throw new BizException(502,"手机号不能为空");
@@ -73,5 +64,10 @@ public class UserController {
         UserEntityVo userEntityVo = new UserEntityVo();
         BeanUtil.copyProperties(data,userEntityVo);
         return  Result.success(userEntityVo);
+    }
+    @GetMapping("/colonelLogin/{phone}")
+    Result<UserEntityVo> loginPasswordColonel(@PathVariable("phone") String phone){
+         UserEntityVo user = this.userService.colonelLogin(phone);
+        return Result.success(user,"调用成功");
     }
 }

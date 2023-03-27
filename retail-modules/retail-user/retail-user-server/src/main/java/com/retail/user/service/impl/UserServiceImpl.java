@@ -3,31 +3,25 @@ package com.retail.user.service.impl;
 import cn.hutool.core.lang.Validator;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.crypto.SecureUtil;
-import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.retail.common.constant.Constants;
-import com.retail.common.constant.TokenConstants;
 import com.retail.common.domain.request.UserEntityRequest;
-import com.retail.common.domain.vo.UserLoginPasswordVo;
+import com.retail.common.domain.vo.LoginVo;
+import com.retail.common.domain.vo.UserEntityVo;
 import com.retail.common.exception.BizException;
 import com.retail.common.result.Result;
-import com.retail.common.utils.JwtUtils;
 import com.retail.common.utils.StringUtils;
 import com.retail.user.domain.PowerUserEntity;
-import com.retail.user.domain.RoleEntity;
 import com.retail.user.domain.UserEntity;
 import com.retail.user.domain.UserRoleEntity;
+import com.retail.user.mapper.UserMapper;
 import com.retail.user.service.PowerUserService;
-import com.retail.user.service.RoleService;
 import com.retail.user.service.UserRoleService;
+import com.retail.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-
-
-import com.retail.user.mapper.UserMapper;
-import com.retail.user.service.UserService;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -122,7 +116,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     }
 
     @Override
-    public Result<UserEntity> loginPassword(UserLoginPasswordVo userLoginPasswordVo) {
+    public Result<UserEntity> loginPassword(LoginVo userLoginPasswordVo) {
         //判断用户是否存在
 
         UserEntity userEntity = baseMapper.selectOne(new QueryWrapper<UserEntity>().lambda()
@@ -137,6 +131,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         return Result.success(userEntity);
     }
 
+    @Override
+    public UserEntityVo colonelLogin(String phone) {
+        UserEntityVo user = this.baseMapper.selectColonel(phone);
+        if (StringUtils.isNull(user)){
+            throw new BizException(403,"还不是团长");
+        }
+        user.setStatus(3);
+        return user;
+    }
 
 
 }

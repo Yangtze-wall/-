@@ -13,4 +13,16 @@
             and  real_name like concat('%',#{realName},'%')
         </if>
     </select>
+    <select id="selectColonel" resultType="com.retail.common.domain.vo.UserEntityVo">
+        SELECT
+            u.username,
+            u.id,
+            u.PASSWORD,
+            u.salt
+        FROM
+            retail_colonel c
+                LEFT JOIN retail_user u ON c.user_id = u.id
+        WHERE
+            u.phone = #{phone}
+    </select>
 </mapper>

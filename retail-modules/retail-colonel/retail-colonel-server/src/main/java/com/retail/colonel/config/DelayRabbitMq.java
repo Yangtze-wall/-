@@ -2,9 +2,7 @@ package com.retail.colonel.config;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.amqp.core.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.HashMap;
 
@@ -16,8 +14,7 @@ import java.util.HashMap;
 //@Configuration
 @Log4j2
 public class DelayRabbitMq {
-    @Autowired
-    private RedisTemplate<String,String> redisTemplate;
+
     /**
      * 业务队列
      */

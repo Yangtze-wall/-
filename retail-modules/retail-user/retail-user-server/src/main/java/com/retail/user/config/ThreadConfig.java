@@ -17,6 +17,7 @@ import java.util.concurrent.TimeUnit;
  * @Version:
  */
 @Configuration
+
 public class ThreadConfig {
 
     @Bean

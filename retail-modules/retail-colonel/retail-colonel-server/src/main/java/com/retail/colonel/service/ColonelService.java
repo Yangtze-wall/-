@@ -3,9 +3,6 @@ package com.retail.colonel.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.retail.colonel.domain.ColonelEntity;
 
-
-import java.util.Map;
-
 /**
  * 团长表
  *
@@ -16,5 +13,8 @@ import java.util.Map;
 public interface ColonelService extends IService<ColonelEntity> {
 
 
+    ColonelEntity findById(Long id);
+
+    ColonelEntity getInfo(Long id);
 }
 

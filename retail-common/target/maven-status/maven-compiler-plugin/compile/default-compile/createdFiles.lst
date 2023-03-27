@@ -5,6 +5,7 @@ com\retail\common\utils\HttpUtils$1.class
 com\retail\common\exception\BizCodeEnum.class
 com\retail\common\utils\XxlJob.class
 com\retail\common\utils\StringUtils.class
+com\retail\common\domain\vo\LoginVo.class
 com\retail\common\domain\request\UserEntityRequest.class
 com\retail\common\utils\OssUtil.class
 com\retail\common\utils\JwtUtils.class

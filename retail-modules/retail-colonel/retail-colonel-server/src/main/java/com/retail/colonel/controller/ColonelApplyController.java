@@ -1,19 +1,15 @@
 package com.retail.colonel.controller;
 
-import java.util.List;
-
-
+import com.retail.colonel.domain.ColonelApplyEntity;
+import com.retail.colonel.service.ColonelApplyService;
+import com.retail.common.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
-import com.retail.colonel.service.ColonelApplyService;
+import java.util.Date;
 
 
 /**
@@ -29,4 +25,12 @@ public class ColonelApplyController {
 
     @Autowired
     private ColonelApplyService colonelApplyService;
+    //团长申请添加
+    @PostMapping("colonelApply")
+    public Result colonelApply(@RequestBody ColonelApplyEntity colonelApplyEntity){
+        colonelApplyEntity.setCreateTime(new Date());
+        colonelApplyEntity.setStatus(0);
+        colonelApplyService.save(colonelApplyEntity);
+        return Result.success(null,"申请成功,等待管理员审核,注意查收邮件");
+    }
 }

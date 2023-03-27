@@ -15,7 +15,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @Version:
  */
 @SpringBootApplication
-@EnableFeignClients( basePackages = {"com.retail.colonel"})
+@EnableFeignClients
 @EnableDiscoveryClient
 public class ColonelApplication {
     public static void main(String[] args) {

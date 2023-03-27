@@ -8,13 +8,13 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 /**
  * 类的说明
  *
- * @Author: 手速很慢的King
+ * @Author:
  * @DateTime: 2023/02/01 19:48
  * @Description
  **/
 
 @SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
-@EnableFeignClients
+@EnableFeignClients(basePackages = {"com.retail.auth"})
 public class AuthApplication {
     public static void main(String[] args) {
         SpringApplication.run(AuthApplication.class);

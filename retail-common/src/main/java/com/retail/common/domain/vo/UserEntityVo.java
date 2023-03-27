@@ -1,7 +1,5 @@
 package com.retail.common.domain.vo;
 
-import com.baomidou.mybatisplus.annotation.IdType;import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -82,7 +80,7 @@ public class UserEntityVo implements Serializable {
 	 */
 	private Integer integration;
 	/**
-	 * 帐号状态（0正常 1停用）
+	 * 帐号状态（0正常 1停用 2团长）
 	 */
 	private Integer status;
 	/**
