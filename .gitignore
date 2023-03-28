@@ -4,8 +4,6 @@
 .gradle
 /build/
 gradle/wrapper/gradle-wrapper.jar
-
-target/*
 target/
 .mvn/wrapper/maven-wrapper.jar
 
@@ -25,7 +23,7 @@ target/
 *.iws
 *.iml
 *.ipr
-
+*.jar
 ### JRebel ###
 rebel.xml
 ### NetBeans ###
