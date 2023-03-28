@@ -14,7 +14,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  **/
 
 @SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
-@EnableFeignClients(basePackages = {"com.retail.auth"})
+@EnableFeignClients(basePackages = {"com.retail"})
 public class AuthApplication {
     public static void main(String[] args) {
         SpringApplication.run(AuthApplication.class);

@@ -15,6 +15,7 @@ import com.retail.common.exception.BizException;
 import com.retail.common.result.Result;
 import com.retail.common.utils.JwtUtils;
 import com.retail.common.utils.StringUtils;
+import com.retail.user.remote.UserFeign;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -85,8 +86,6 @@ public class AuthSerivceImpl implements AuthService {
         }
         Result<UserEntityVo> userEntityVoResult = userFeignService.loginPassword(userLoginPasswordVo);
         UserEntityVo entityVo = userEntityVoResult.getData();
-
-
         //MD5加密
         String passwordMd5 = SecureUtil.md5(userLoginPasswordVo.getPassword() + "|" + entityVo.getSalt());
         if (!entityVo.getPassword().equals(passwordMd5)){
@@ -106,6 +105,8 @@ public class AuthSerivceImpl implements AuthService {
         jwtResponse.setExpireTime("1Days");
         return Result.success(jwtResponse);
     }
+    @Autowired
+    private UserFeign userFeign;
     @Override
     public Result<JwtResponse> loginPasswordColonel(LoginVo userLoginPasswordVo) {
         //判断不为空
@@ -120,7 +121,7 @@ public class AuthSerivceImpl implements AuthService {
         if (StringUtils.isBlank(userLoginPasswordVo.getPassword())){
             throw new BizException(502,"密码不能为空");
         }
-        Result<UserEntityVo> userEntityVoResult = userFeignService.loginPasswordColonel(userLoginPasswordVo.getPhone());
+        Result<UserEntityVo> userEntityVoResult = userFeign.loginPasswordColonel(userLoginPasswordVo.getPhone());
         UserEntityVo entityVo = userEntityVoResult.getData();
         String passwordMd5 = SecureUtil.md5(userLoginPasswordVo.getPassword() + "|" + entityVo.getSalt());
         if (!entityVo.getPassword().equals(passwordMd5)){

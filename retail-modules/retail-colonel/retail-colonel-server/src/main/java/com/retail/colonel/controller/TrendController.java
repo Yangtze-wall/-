@@ -1,16 +1,16 @@
 package com.retail.colonel.controller;
 
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import com.retail.colonel.config.UserInfo;
+import com.alibaba.fastjson.JSON;
 import com.retail.colonel.domain.Trend;
 import com.retail.colonel.domain.vo.TrendCommentVo;
 import com.retail.colonel.service.TrendService;
+import com.retail.common.constant.TokenConstants;
 import com.retail.common.domain.vo.UserEntityVo;
-import com.retail.common.result.PageResult;
 import com.retail.common.result.Result;
+import com.retail.common.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,15 +33,17 @@ public class TrendController {
     private TrendService trendService;
     @Autowired
     private HttpServletRequest request;
+    @Autowired
+    private RedisTemplate<String,String> redisTemplate;
     //根据自己的id查看自己的动态
     @PostMapping(value = "/list")
-    public Result<PageResult<Trend>> list(@RequestParam(required = false) Integer current, @RequestParam(required = false) Integer pageSize) {
-        UserEntityVo userInfo = new UserInfo().getInfo(request);
-        PageHelper.startPage(current, pageSize);
+    public Result<List<Trend>> list(){
+        String token = request.getHeader("token");
+        String userKey = JwtUtils.getUserKey(token);
+        String s = redisTemplate.opsForValue().get(TokenConstants.LOGIN_TOKEN_KEY + userKey);
+        UserEntityVo userInfo = JSON.parseObject(s, UserEntityVo.class);
         List<Trend> list = trendService.selectTrend(userInfo.getId());
-        PageInfo<Trend> trendPageInfo = new PageInfo<>(list);
-        Result<PageResult<Trend>> pageResultResult = PageResult.toResult(trendPageInfo.getTotal(), list);
-        return pageResultResult;
+        return Result.success(list);
     }
     //通过动态的编号查看下面的评论数
     @GetMapping(value = "/{id}")

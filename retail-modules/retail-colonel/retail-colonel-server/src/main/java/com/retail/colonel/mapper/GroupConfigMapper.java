@@ -2,7 +2,7 @@ package com.retail.colonel.mapper;
 
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.retail.colonel.domain.GroupConfigEntity;
+import com.retail.colonel.domain.GroupConfig;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -13,6 +13,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @date 2023-03-23 10:09:39
  */
 @Mapper
-public interface GroupConfigMapper extends BaseMapper<GroupConfigEntity> {
+public interface GroupConfigMapper extends BaseMapper<GroupConfig> {
 
 }

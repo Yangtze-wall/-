@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -27,5 +28,9 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     public List<Comment> show() {
         List<Comment> comments = commentMapper.selectshowList();
         return comments;
+    }
+    public void ss(String sss){
+        List<Comment> comments = commentMapper.selectList(null);
+        List<Comment> collect = comments.stream().filter(c -> c.getContent().equals(sss)).collect(Collectors.toList());
     }
 }

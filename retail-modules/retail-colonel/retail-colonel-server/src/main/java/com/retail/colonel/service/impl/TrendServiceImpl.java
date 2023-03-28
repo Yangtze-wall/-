@@ -67,9 +67,12 @@ public class TrendServiceImpl extends ServiceImpl<TrendMapper, Trend> implements
     }
     public List<CommentVo> findById(SelectVo selectVo){
         List<CommentVo> list=  commentMapper.findByTrendId(selectVo);
-        if (list.size()==0||list==null){
-            return null;
-        }
-        return list;
+        List<CommentVo> collect = list.stream().map(c -> {
+            selectVo.setParentId(c.getId());
+            List<CommentVo> byId = findById(selectVo);
+            c.setChildren(byId);
+            return c;
+        }).collect(Collectors.toList());
+        return collect;
     }
 }

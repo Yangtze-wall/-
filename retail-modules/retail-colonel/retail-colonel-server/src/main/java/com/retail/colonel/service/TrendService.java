@@ -20,4 +20,6 @@ public interface TrendService extends IService<Trend> {
     List<Trend> selectTrend(Long id);
 
     TrendCommentVo selectList(String id);
+
+
 }

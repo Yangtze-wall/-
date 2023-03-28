@@ -1,13 +1,9 @@
 package com.retail.colonel.controller;
 
-import com.retail.colonel.config.UserInfo;
 import com.retail.colonel.domain.Comment;
 import com.retail.colonel.service.CommentService;
-import com.retail.common.domain.vo.UserEntityVo;
 import com.retail.common.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,12 +29,8 @@ public class CommentController {
     private HttpServletRequest request;
     @PostMapping("/list")
     public Result<List<Comment>> list() {
-        UserEntityVo user = new UserInfo().getInfo(request);
-
         List<Comment> list = commentService.show();
         Result<List<Comment>> success = Result.success(list);
-        System.out.println(success.getData());
-        System.out.println(111);
         return success;
     }
 
@@ -48,20 +40,18 @@ public class CommentController {
     }
 
     @PostMapping(value = "/create")
-    public ResponseEntity<Object> create(@RequestBody Comment params) {
+    public Result<Object> create(@RequestBody Comment params) {
         commentService.save(params);
-        return new ResponseEntity<>("created successfully", HttpStatus.OK);
+        return Result.success();
     }
 
     @PostMapping(value = "/delete/{id}")
-    public ResponseEntity<Object> delete(@PathVariable("id") String id) {
+    public Result<Object> delete(@PathVariable("id") String id) {
         commentService.removeById(id);
-        return new ResponseEntity<>("deleted successfully", HttpStatus.OK);
-    }
+        return Result.success();    }
 
     @PostMapping(value = "/update")
-    public ResponseEntity<Object> delete(@RequestBody Comment params) {
+    public Result<Object> delete(@RequestBody Comment params) {
         commentService.updateById(params);
-        return new ResponseEntity<>("updated successfully", HttpStatus.OK);
-    }
+        return Result.success();    }
 }
