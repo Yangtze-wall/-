@@ -41,7 +41,7 @@ public class BargainRecordEntity implements Serializable {
 	/**
 	 * 砍价百分比
 	 */
-	private Double bargainOrderAccomplish;
+	private BigDecimal bargainOrderAccomplish;
 	/**
 	 * 砍价价格
 	 */

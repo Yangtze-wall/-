@@ -4,13 +4,9 @@
 
     <select id="list" resultType="com.retail.user.domain.vo.UserEntryPowerVo">
             SELECT
-        a.id,
-        a.username,
-        a.password,
-        a.real_name,
-        a.status,
-        a.remark,
-        GROUP_CONCAT( c.NAME ) AS power_name
+        a.*,
+        GROUP_CONCAT( c.NAME ) AS power_name,
+        GROUP_CONCAT( c.ID ) AS power_id
     FROM
         retail_user a
         LEFT JOIN retail_power_user b ON a.id = b.user_id

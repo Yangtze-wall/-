@@ -3,6 +3,9 @@ package com.retail.user.controller;
 import java.util.List;
 
 
+import com.retail.common.domain.vo.UserAddressEntityVo;
+import com.retail.common.result.Result;
+import com.retail.user.domain.UserAddressEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,4 +31,15 @@ public class UserAddressController {
 
     @Autowired
     private UserAddressService userAddressService;
+
+    //   /user/useraddress/findByUserIdList/
+    @PostMapping("/findByUserIdList")
+    public Result<List<UserAddressEntityVo>> findByUserIdList(){
+      return userAddressService.findByUserIdList();
+    }
+    // user/useraddress/findByIdAddress
+    @PostMapping("/findByIdAddress")
+    public Result<UserAddressEntityVo> findByIdAddress(@RequestParam("id") Long id){
+        return userAddressService.findByIdAddress(id);
+    }
 }

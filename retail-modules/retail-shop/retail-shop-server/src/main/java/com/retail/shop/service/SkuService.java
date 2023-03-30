@@ -1,6 +1,8 @@
 package com.retail.shop.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.retail.common.domain.vo.SkuEntityVo;
+import com.retail.common.result.Result;
 import com.retail.shop.domain.SkuEntity;
 
 /**
@@ -12,5 +14,8 @@ import com.retail.shop.domain.SkuEntity;
  */
 public interface SkuService extends IService<SkuEntity> {
 
+    Result<SkuEntityVo> findBySkuEntry(Long spuId);
+
+    Result updateSkuSell(SkuEntityVo skuEntityVo);
 }
 

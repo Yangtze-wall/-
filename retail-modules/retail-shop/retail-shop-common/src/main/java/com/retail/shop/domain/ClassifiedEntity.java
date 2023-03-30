@@ -25,22 +25,37 @@ import lombok.NoArgsConstructor;
 public class ClassifiedEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+
 	/**
-	 *
+	 * 分类id
 	 */
 	@TableId(type = IdType.AUTO)
 	private Long id;
-	/**
-	 * 父级id
-	 */
-	private Long pid;
 	/**
 	 * 分类名称
 	 */
 	private String name;
 	/**
+	 * 父分类id
+	 */
+	private Long parentId;
+	/**
+	 * 是否显示[0-不显示，1显示]
+	 */
+	private Integer status;
+	/**
 	 * 排序
 	 */
 	private Integer sort;
+	/**
+	 * 图标地址
+	 */
+	private String icon;
+	/**
+	 * 计量单位
+	 */
+	private String unit;
+
+
 
 }

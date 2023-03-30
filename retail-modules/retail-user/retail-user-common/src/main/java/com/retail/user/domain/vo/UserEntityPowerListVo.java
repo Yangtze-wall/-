@@ -3,6 +3,7 @@ package com.retail.user.domain.vo;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.retail.user.domain.PowerEntry;
 import com.retail.user.domain.PowerUserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,7 +24,6 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class UserEntityPowerListVo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -74,7 +74,7 @@ public class UserEntityPowerListVo implements Serializable {
 	 */
 	private String remark;
 
-	private List<PowerUserEntity> powerUserEntityList;
+	private List<PowerEntry> powerEntryList;
 
 	private String ids;
 

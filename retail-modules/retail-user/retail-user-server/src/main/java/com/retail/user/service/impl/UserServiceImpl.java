@@ -1,5 +1,6 @@
 package com.retail.user.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.digest.MD5;
@@ -135,6 +136,32 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         return Result.success(userEntity);
     }
 
+    @Override
+    public UserEntityVo colonelLogin(String phone) {
+        UserEntityVo user = this.baseMapper.selectColonel(phone);
+        if (StringUtils.isNull(user)){
+            throw new BizException(403,"还不是团长");
+        }
+        user.setStatus(3);
+        return user;
+    }
+
+    @Override
+    public Result<UserEntityVo> findByIdUser() {
+        UserEntity userEntity=baseMapper.selectOne(new QueryWrapper<UserEntity>().lambda().eq(UserEntity::getId, userInfo().getId()));
+        UserEntityVo userEntityVo = new UserEntityVo();
+        BeanUtil.copyProperties(userEntity,userEntityVo);
+        return Result.success(userEntityVo);
+    }
+
+
+    public UserEntityVo userInfo(){
+        String token = request.getHeader("token");
+        String userKey = JwtUtils.getUserKey(token);
+        String s = redisTemplate.opsForValue().get(TokenConstants.LOGIN_TOKEN_KEY + userKey);
+        UserEntityVo user = JSON.parseObject(s, UserEntityVo.class);
+        return user;
+    }
 
 
 }

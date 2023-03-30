@@ -37,7 +37,7 @@ public class OrderEntity implements Serializable {
 	/**
 	 * 商品单号
 	 */
-	private Long orderSn;
+	private String orderSn;
 	/**
 	 *  总价钱
 	 */
@@ -94,5 +94,24 @@ public class OrderEntity implements Serializable {
 	 * 结账时间
 	 */
 	private Date realityTime;
+	/**
+	 * 类型(1.正常,2.拼团,3秒杀 4.砍价)
+	 */
+	private Integer type;
+	/**
+	 *  秒杀
+	 */
+	private Long seckillId;
+	/**
+	 * 收货地址id
+	 */
+	private Long addressId;
+	/**
+	 *  砍价表id
+	 */
+	private Long bargainId;
+
+	private Long teamId;
+
 
 }

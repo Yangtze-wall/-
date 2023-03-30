@@ -2,6 +2,7 @@ package com.retail.user.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.retail.common.domain.request.UserEntityRequest;
+import com.retail.common.domain.vo.UserEntityVo;
 import com.retail.common.domain.vo.UserLoginPasswordVo;
 import com.retail.common.result.Result;
 import com.retail.user.domain.UserEntity;
@@ -20,5 +21,8 @@ public interface UserService extends IService<UserEntity> {
 
     Result<UserEntity> loginPassword(UserLoginPasswordVo userLoginPasswordVo);
 
+    UserEntityVo colonelLogin(String phone);
+
+    Result<UserEntityVo> findByIdUser();
 }
 

@@ -40,6 +40,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @GetMapping("/colonelLogin/{phone}")
+    Result<UserEntityVo> loginPasswordColonel(@PathVariable("phone") String phone){
+        UserEntityVo user = this.userService.colonelLogin(phone);
+        return Result.success(user,"调用成功");
+    }
+
     @PostMapping("/upload")
     public Result<String> upload(@RequestParam("file")MultipartFile multipartFile){
         String file = OssUtil.uploadMultipartFile(multipartFile);
@@ -81,5 +87,10 @@ public class UserController {
         UserEntityVo userEntityVo = new UserEntityVo();
         BeanUtil.copyProperties(data,userEntityVo);
         return  Result.success(userEntityVo);
+    }
+
+    @PostMapping("/findByIdUser")
+    public Result<UserEntityVo> findByIdUser(){
+        return userService.findByIdUser();
     }
 }

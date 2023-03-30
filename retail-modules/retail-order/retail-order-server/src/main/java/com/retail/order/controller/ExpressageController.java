@@ -3,6 +3,8 @@ package com.retail.order.controller;
 import java.util.List;
 
 
+import com.retail.common.result.Result;
+import com.retail.order.domain.ExpressageEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,4 +31,10 @@ public class ExpressageController {
 
     @Autowired
     private ExpressageService expressageService;
+
+//    /order/expressage/getExpressageList
+    @PostMapping("/getExpressageList")
+    public Result<List<ExpressageEntity>> getExpressageList(){
+        return expressageService.getExpressageList();
+    }
 }

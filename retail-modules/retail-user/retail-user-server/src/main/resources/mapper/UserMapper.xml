@@ -2,4 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.retail.user.mapper.UserMapper">
 
+        <select id="selectColonel" resultType="com.retail.common.domain.vo.UserEntityVo">
+        SELECT
+            u.username,
+            u.id,
+            u.PASSWORD,
+            u.salt
+        FROM
+            retail_colonel c
+                LEFT JOIN retail_user u ON c.user_id = u.id
+        WHERE
+            u.phone = #{phone}
+    </select>
+
 </mapper>

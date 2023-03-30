@@ -1,10 +1,12 @@
 package com.retail.shop.controller;
 
 
+import com.retail.common.domain.vo.SkuEntityVo;
+import com.retail.common.result.Result;
+import com.retail.shop.domain.SkuEntity;
 import com.retail.shop.service.SkuService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 
@@ -23,5 +25,14 @@ public class SkuController {
     @Autowired
     private SkuService skuService;
 
+    @PostMapping("/findBySkuEntry/{spuId}")
+    public Result<SkuEntityVo> findBySkuEntry(@PathVariable("spuId") Long spuId){
+        return skuService.findBySkuEntry(spuId);
+    }
+
+    @PostMapping("/updateSkuSell")
+    public Result updateSkuSell(@RequestBody SkuEntityVo skuEntityVo){
+        return skuService.updateSkuSell(skuEntityVo);
+    }
 
 }

@@ -41,7 +41,7 @@ public class BargainEntity implements Serializable {
 	/**
 	 * 商品id
 	 */
-	private Long shopId;
+	private Long spuId;
 	/**
 	 * 已砍百分比
 	 */
@@ -61,7 +61,7 @@ public class BargainEntity implements Serializable {
 	/**
 	 * 砍价状态
 	 */
-	private Long bargainStatus;
+		private Integer bargainStatus;
 	/**
 	 * 成功砍价人数
 	 */
@@ -71,7 +71,7 @@ public class BargainEntity implements Serializable {
 	 */
 	private Long userId;
 	/**
-	 * 状态
+	 * 活动状态
 	 */
 	private Integer status;
 

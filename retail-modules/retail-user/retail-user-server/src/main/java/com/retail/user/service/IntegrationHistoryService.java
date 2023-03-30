@@ -1,6 +1,7 @@
 package com.retail.user.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.retail.common.result.Result;
 import com.retail.user.domain.IntegrationHistoryEntity;
 
 import java.util.Map;
@@ -15,5 +16,6 @@ import java.util.Map;
 public interface IntegrationHistoryService extends IService<IntegrationHistoryEntity> {
 
 
+    Result insert(IntegrationHistoryEntity integrationHistoryEntity);
 }
 

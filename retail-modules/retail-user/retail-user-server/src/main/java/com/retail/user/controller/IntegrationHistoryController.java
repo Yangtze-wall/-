@@ -3,6 +3,8 @@ package com.retail.user.controller;
 import java.util.List;
 
 
+import com.retail.common.result.Result;
+import com.retail.user.domain.IntegrationHistoryEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,4 +30,10 @@ public class IntegrationHistoryController {
 
     @Autowired
     private IntegrationHistoryService integrationHistoryService;
+
+    @PostMapping("/insert")
+    public Result insert(@RequestBody IntegrationHistoryEntity integrationHistoryEntity){
+        return integrationHistoryService.insert(integrationHistoryEntity);
+    }
+
 }

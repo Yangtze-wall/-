@@ -7,9 +7,11 @@ import com.retail.common.domain.vo.UserEntityVo;
 import com.retail.common.result.Result;
 import com.retail.common.utils.JwtUtils;
 import com.retail.user.config.ThreadConfig;
+import com.retail.user.domain.PowerEntry;
 import com.retail.user.domain.UserEntity;
 import com.retail.user.domain.vo.UserEntityPowerListVo;
 import com.retail.user.domain.vo.UserEntryPowerVo;
+import com.retail.user.mapper.PowerMapper;
 import com.retail.user.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -42,6 +44,9 @@ public class PowerUserServiceImpl extends ServiceImpl<PowerUserMapper, PowerUser
     private PowerUserMapper powerUserMapper;
 
     @Autowired
+    private PowerMapper powerMapper;
+
+    @Autowired
     private RedisTemplate<String,String> redisTemplate;
 
     @Autowired
@@ -61,6 +66,8 @@ public class PowerUserServiceImpl extends ServiceImpl<PowerUserMapper, PowerUser
 
     @Override
     public UserEntityPowerListVo findByIdUserPower(Long id) {
+
+
         ThreadPoolExecutor threadPoolExecutor = threadConfig.threadPoolExecutor();
 
         UserEntityPowerListVo userEntityPowerListVo = new UserEntityPowerListVo();
@@ -73,17 +80,17 @@ public class PowerUserServiceImpl extends ServiceImpl<PowerUserMapper, PowerUser
 
 
         // 查询权限
-        CompletableFuture<List<PowerUserEntity>> f1 = CompletableFuture.supplyAsync(() -> {
+        CompletableFuture<List<PowerEntry>> f1 = CompletableFuture.supplyAsync(() -> {
 
-            return baseMapper.selectList(new QueryWrapper<PowerUserEntity>().lambda().eq(PowerUserEntity::getUserId,id));
+            return powerMapper.selectList(new QueryWrapper<PowerEntry>().lambda());
         },threadPoolExecutor);
-        List<PowerUserEntity> powerUserEntityList = null;
+        List<PowerEntry> powerEntryList = null;
         try {
-            powerUserEntityList = f1.get();
+            powerEntryList  = f1.get();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        userEntityPowerListVo.setPowerUserEntityList(powerUserEntityList);
+        userEntityPowerListVo.setPowerEntryList(powerEntryList);
 
         // 查询该用户
         CompletableFuture<UserEntity> f2 = CompletableFuture.supplyAsync(() -> {
@@ -93,6 +100,7 @@ public class PowerUserServiceImpl extends ServiceImpl<PowerUserMapper, PowerUser
 
         try {
             UserEntity userEntity = f2.get();
+            userEntityPowerListVo.setId(userEntity.getId());
             //username
             userEntityPowerListVo.setUsername(userEntity.getUsername());
             //nickName
@@ -155,11 +163,13 @@ public class PowerUserServiceImpl extends ServiceImpl<PowerUserMapper, PowerUser
             String[] split =ids.split(",");
             Arrays.stream(split).forEach(c ->{
                 long l = Long.parseLong(c);
-                PowerUserEntity selectOne = powerUserMapper.selectOne(new QueryWrapper<PowerUserEntity>().lambda().eq(PowerUserEntity::getPowerId, l));
-                if (selectOne!=null){
-                    powerUserEntity.setPowerId(l);
-                    powerUserEntity.setUserId(userEntityPowerListVo.getId());
-                    powerUserMapper.insert(powerUserEntity);
+                List<PowerUserEntity> powerUserEntityList = powerUserMapper.selectList(new QueryWrapper<PowerUserEntity>().lambda().eq(PowerUserEntity::getPowerId, l));
+                if (powerUserEntityList!=null){
+                    powerUserEntityList.stream().forEach(item->{
+                        powerUserEntity.setPowerId(item.getPowerId());
+                        powerUserEntity.setUserId(userEntityPowerListVo.getId());
+                        powerUserMapper.insert(powerUserEntity);
+                    });
                 }
             });
         }else {

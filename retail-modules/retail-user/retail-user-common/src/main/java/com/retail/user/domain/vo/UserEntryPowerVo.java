@@ -20,5 +20,6 @@ public class UserEntryPowerVo {
     private Integer status;
     private String remark;
     private String powerName;
+    private String powerId;
 
 }

@@ -43,10 +43,6 @@ public class SkuEntity implements Serializable {
 	 */
 	private Integer skuSell;
 	/**
-	 * 库存
-	 */
-	private Integer skuStock;
-	/**
 	 * 价格
 	 */
 	private BigDecimal skuPrice;

@@ -1,9 +1,11 @@
 package com.retail.order.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.retail.common.result.Result;
 import com.retail.order.domain.ExpressageEntity;
 
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,5 +18,6 @@ import java.util.Map;
 public interface ExpressageService extends IService<ExpressageEntity> {
 
 
+    Result<List<ExpressageEntity>> getExpressageList();
 }
 

@@ -3,14 +3,10 @@ package com.retail.shop.controller;
 import java.util.List;
 
 
+import com.retail.common.domain.vo.InventoryEntityVo;
+import com.retail.common.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 import com.retail.shop.service.InventoryService;
@@ -29,4 +25,19 @@ public class InventoryController {
 
     @Autowired
     private InventoryService inventoryService;
+
+    /**
+     * 查询商品库存
+     * @param spuId
+     * @return
+     */
+    @PostMapping("/findByInventoryEntity/{spuId}")
+    Result<InventoryEntityVo> findByInventoryEntity(@PathVariable("spuId") Long spuId){
+        return inventoryService.findByInventoryEntity(spuId);
+    }
+
+    @PutMapping("/updateInventoryLock")
+    public Result updateInventoryLock(@RequestBody InventoryEntityVo inventoryEntityVo){
+        return inventoryService.updateInventoryLock(inventoryEntityVo);
+    }
 }
