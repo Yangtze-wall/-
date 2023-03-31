@@ -3,6 +3,7 @@ package com.retail.order.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.retail.common.domain.vo.OrderEntityVo;
 import com.retail.common.result.Result;
+import com.retail.order.config.PayVo;
 import com.retail.order.domain.OrderEntity;
 
 
@@ -19,5 +20,7 @@ public interface OrderService extends IService<OrderEntity> {
 
 
     Result orderInsert(OrderEntityVo orderEntityVo);
+
+    String handlePayResult(PayVo vo);
 }
 

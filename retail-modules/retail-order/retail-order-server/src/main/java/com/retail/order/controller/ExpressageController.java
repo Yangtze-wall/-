@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.retail.order.service.ExpressageService;
 
+import javax.servlet.http.HttpServletRequest;
+
 
 /**
  * 快递公司
@@ -31,6 +33,9 @@ public class ExpressageController {
 
     @Autowired
     private ExpressageService expressageService;
+
+    @Autowired
+    private HttpServletRequest request;
 
 //    /order/expressage/getExpressageList
     @PostMapping("/getExpressageList")

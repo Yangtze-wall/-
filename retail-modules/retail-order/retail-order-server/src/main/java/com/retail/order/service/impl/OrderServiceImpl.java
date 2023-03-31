@@ -6,6 +6,7 @@ import com.retail.common.constant.TokenConstants;
 import com.retail.common.domain.vo.*;
 import com.retail.common.result.Result;
 import com.retail.common.utils.JwtUtils;
+import com.retail.order.config.PayVo;
 import com.retail.order.domain.OrderEntity;
 import com.retail.order.feign.ShopFeignService;
 import com.retail.order.feign.UserFeignService;
@@ -25,15 +26,15 @@ import java.util.Date;
 @Service("orderService")
 public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> implements OrderService {
 
-    @Autowired
-    private HttpServletRequest request;
-    @Autowired
-    private RedisTemplate<String,String> redisTemplate;
+
     @Autowired
     private ShopFeignService shopFeignService;
     @Autowired
     private UserFeignService userFeignService;
-
+    @Autowired
+    private HttpServletRequest request;
+    @Autowired
+    private RedisTemplate<String,String> redisTemplate;
 
     public UserEntityVo userInfo(){
         String token = request.getHeader("token");
@@ -51,6 +52,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
         // 判断 订单里面有没有这个 人 买的砍价物品  userId bargainId
         Long bargainId = orderEntityVo.getBargainId();
 
+        // 判断该用户积分是否足够
+
         Result<SkuEntityVo> skuEntryResult = shopFeignService.findBySkuEntry(orderEntityVo.getSpuId());
         SkuEntityVo skuEntityVo = skuEntryResult.getData();
         //生成订单
@@ -58,7 +61,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
         //用户id   Long userId;
         orderEntity.setUserId(userInfo().getId());
         //商品单号    String orderSn;
-        String orderSn = RandomUtil.randomNumbers(16);
+        String orderSn = RandomUtil.randomNumbers(13);
         orderEntity.setOrderSn(orderSn);
         //总价钱   BigDecimal totalAmount;
         orderEntity.setTotalAmount(skuEntityVo.getSkuPrice());
@@ -104,9 +107,14 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
         baseMapper.insert(orderEntity);
         // 修改用户表的积分
 
-        //　删除　优惠券中间表　用户的优惠券　修改状态
+        //　删除　优惠券中间表　用户的优惠券　修改状态 is_del
 
 
         return Result.success("下单成功");
+    }
+
+    @Override
+    public String handlePayResult(PayVo vo) {
+        return null;
     }
 }

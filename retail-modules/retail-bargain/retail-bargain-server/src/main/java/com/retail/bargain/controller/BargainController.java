@@ -17,6 +17,7 @@ import com.retail.common.domain.vo.BargainEntityVo;
 import com.retail.common.result.PageResult;
 import com.retail.common.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -35,6 +36,7 @@ import javax.servlet.http.HttpServletRequest;
 @CrossOrigin
 @RestController
 @RequestMapping("bargain/bargain")
+@Component
 public class BargainController {
 
     @Autowired
@@ -54,10 +56,13 @@ public class BargainController {
      */
     @PostMapping("/getBargainList")
     public Result<PageResult<BargainEntity>> list(@RequestBody BargainEntityRequest bargainEntityRequest){
+        System.out.println(bargainEntityRequest);
         PageHelper.startPage(bargainEntityRequest.getPageNum(),bargainEntityRequest.getPageSize());
         List<BargainEntity> list=bargainService.select();
         PageInfo<BargainEntity> colonelEntityPageInfo = new PageInfo<>(list);
-        return PageResult.toResult(colonelEntityPageInfo.getTotal(),list);
+        Result<PageResult<BargainEntity>> pageResultResult = PageResult.toResult(colonelEntityPageInfo.getTotal(), list);
+        System.out.println(pageResultResult);
+        return pageResultResult;
     }
 
 
