@@ -2,4 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.retail.user.mapper.IntegrationHistoryMapper">
 
+    <update id="IntergralAdd">
+        update  retail_user set integration=integration+#{integral} where id=#{userId}
+    </update>
 </mapper>

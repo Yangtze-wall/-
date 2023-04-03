@@ -1,7 +1,9 @@
 package com.retail.user.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.retail.common.result.Result;
 import com.retail.user.domain.IntegrationHistoryEntity;
+import com.retail.user.domain.request.UserIntegralAdd;
 
 import java.util.Map;
 
@@ -14,6 +16,11 @@ import java.util.Map;
  */
 public interface IntegrationHistoryService extends IService<IntegrationHistoryEntity> {
 
-
+    /**
+     * 用户积分添加
+     * @param userIntegralAdd
+     * @return
+     */
+    Result add(UserIntegralAdd userIntegralAdd);
 }
 

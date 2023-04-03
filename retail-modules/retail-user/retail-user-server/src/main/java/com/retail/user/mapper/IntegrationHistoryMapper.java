@@ -3,6 +3,7 @@ package com.retail.user.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.retail.user.domain.IntegrationHistoryEntity;
+import com.retail.user.domain.request.UserIntegralAdd;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -14,5 +15,10 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface IntegrationHistoryMapper extends BaseMapper<IntegrationHistoryEntity> {
-
+    /**
+     * 用户积分添加
+     * @param userIntegralAdd
+     * @return
+     */
+    int IntergralAdd(UserIntegralAdd userIntegralAdd);
 }
