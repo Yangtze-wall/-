@@ -68,11 +68,6 @@ public class AuthSerivceImpl implements AuthService {
         return result;
     }
 
-    @Override
-    public Result<UserEntityVo> userInfo() {
-        Result<UserEntityVo> userEntityVoResult = userFeignService.userInfo();
-        return userEntityVoResult;
-    }
 
 
     @Override
@@ -99,7 +94,7 @@ public class AuthSerivceImpl implements AuthService {
         if (!entityVo.getPassword().equals(passwordMd5)){
             throw  new BizException(502,"密码错误，请重新输入");
         }
-        String userKey = UUID.randomUUID().toString().replaceAll("_", "");
+        String userKey = UUID.randomUUID().toString().replaceAll("-", "");
         Map<String, Object> map = new HashMap<>();
         map.put(JwtConstants.DETAILS_USER_ID,entityVo.getId());
         map.put(JwtConstants.USER_KEY,userKey);

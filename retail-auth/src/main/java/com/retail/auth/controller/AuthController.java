@@ -38,24 +38,23 @@ public class AuthController {
 
     @Autowired
     private AuthService authService;
-
     @Autowired
     private SmsService smsService;
     @Autowired
-    private RedisTemplate<String,String>  redisTemplate;
+    private RedisTemplate<String, String> redisTemplate;
 
-
+    @Autowired
     private HttpServletRequest request;
 
 
 
     @PostMapping("/register")
-    public Result register(@RequestBody UserEntityRequest userEntityRequest){
+    public Result register(@RequestBody UserEntityRequest userEntityRequest) {
         return authService.register(userEntityRequest);
     }
 
     @GetMapping("/userInfo")
-    public Result<UserEntityVo> userInfo(){
+    public Result<UserEntityVo> userInfo() {
         String token = request.getHeader("token");
         String userKey = JwtUtils.getUserKey(token);
         String s = redisTemplate.opsForValue().get(TokenConstants.LOGIN_TOKEN_KEY + userKey);
@@ -64,23 +63,24 @@ public class AuthController {
     }
 
     @PostMapping("/loginPassword")
-    public Result<JwtResponse> loginPassword(@RequestBody UserLoginPasswordVo userLoginPasswordVo){
-        Result<JwtResponse> jwtResponseResult =  authService.loginPassword(userLoginPasswordVo);
+    public Result<JwtResponse> loginPassword(@RequestBody UserLoginPasswordVo userLoginPasswordVo) {
+        Result<JwtResponse> jwtResponseResult = authService.loginPassword(userLoginPasswordVo);
         return jwtResponseResult;
     }
+
     @PostMapping("/sendSms")
-    public Result sendSms(String phone){
-        if (StringUtils.isBlank(phone)){
-            throw new BizException(501,"手机号不能为空");
+    public Result sendSms(String phone) {
+        if (StringUtils.isBlank(phone)) {
+            throw new BizException(501, "手机号不能为空");
         }
-        if (!Validator.isMobile(phone)){
-            throw new BizException(501,"手机号不合法");
+        if (!Validator.isMobile(phone)) {
+            throw new BizException(501, "手机号不合法");
         }
         //随机生成验证码
         String code = RandomUtil.randomNumbers(6);
-        redisTemplate.opsForValue().set(Constants.CODE_MSG+phone,code,5,TimeUnit.MINUTES);
+        redisTemplate.opsForValue().set(Constants.CODE_MSG + phone, code, 5, TimeUnit.MINUTES);
         System.out.println(code);
-        smsService.sendSms(phone,code);
+        smsService.sendSms(phone, code);
         return Result.success("成功");
 
     }

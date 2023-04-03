@@ -2,6 +2,7 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
@@ -12,7 +13,6 @@
         <module name="retail-user-common" />
         <module name="retail-bargain-common" />
         <module name="retail-payment-server" />
-        <module name="retail-order-server" />
         <module name="retail-shop-remote" />
         <module name="retail-gateway" />
         <module name="retail-colonel-remote" />
@@ -20,13 +20,14 @@
         <module name="retail-payment-remote" />
         <module name="retail-order-remote" />
         <module name="retail-colonel-common" />
+        <module name="retail-common" />
         <module name="retail-payment-common" />
         <module name="retail-order-common" />
         <module name="retail-user-server" />
         <module name="retail-auth" />
         <module name="retail-bargain-server" />
         <module name="retail-shop-server" />
-        <module name="retail-common" />
+        <module name="retail-order-server" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
