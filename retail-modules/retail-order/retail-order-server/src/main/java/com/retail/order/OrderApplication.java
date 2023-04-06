@@ -5,6 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
+import java.util.Date;
+
 /**
  * @author OrderApplication
  * @BelongsProject: retail-cloud
@@ -20,6 +22,9 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 public class OrderApplication {
     public static void main(String[] args) {
         SpringApplication.run(OrderApplication.class);
+//        DateTime dateTime = new DateTime(new Date());
+//        int day = dateTime.dayOfWeek();
+//        System.out.println(day);
     }
 
 }

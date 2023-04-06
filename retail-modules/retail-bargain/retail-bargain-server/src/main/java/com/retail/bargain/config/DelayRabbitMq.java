@@ -22,20 +22,19 @@ public class DelayRabbitMq {
     /**
      * 业务队列
      */
-    public static final String QUEUE_NAME = "";
+    public static final String QUEUE_NAME = "bargain_queue";
     /**
      * 死信队列
      */
-    public static final String DEAD_QUEUE = "";
+    public static final String DEAD_QUEUE = "bargain_dead_queue";
     /**
-     *
      * 死信交换机
      */
-    public static final String DEAD_EXCHANGE = "";
+    public static final String DEAD_EXCHANGE = "bargain_exchange";
     /**
      * 死信路由
      */
-    public static final String DEAD_QUEUE_KEY = "";
+    public static final String DEAD_QUEUE_KEY = "bargain_key";
 
 
     /**

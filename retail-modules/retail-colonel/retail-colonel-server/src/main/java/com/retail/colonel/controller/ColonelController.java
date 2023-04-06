@@ -75,8 +75,17 @@ public class ColonelController {
         return colonelService.findByIdColonelEntity(id);
     }
 
+    /**
+     * 删除
+     * @param id
+     * @return
+     */
     @DeleteMapping("/{id}")
     public Result deleteColonelEntity(@PathVariable("id") Long id){
         return colonelService.deleteColonelEntity(id);
     }
+
+
+
+
 }

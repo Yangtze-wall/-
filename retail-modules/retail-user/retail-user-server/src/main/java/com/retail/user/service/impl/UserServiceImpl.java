@@ -1,9 +1,13 @@
 package com.retail.user.service.impl;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.crypto.SecureUtil;
-import cn.hutool.crypto.digest.MD5;
+import cn.hutool.http.HttpUtil;
+import cn.hutool.http.Method;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.retail.common.constant.TokenConstants;
@@ -14,13 +18,11 @@ import com.retail.common.exception.BizException;
 import com.retail.common.result.Result;
 import com.retail.common.utils.JwtUtils;
 import com.retail.common.utils.StringUtils;
-import com.retail.user.constant.Constant;
+import com.retail.user.constant.UserConstant;
 import com.retail.user.domain.PowerUserEntity;
-import com.retail.user.domain.RoleEntity;
 import com.retail.user.domain.UserEntity;
 import com.retail.user.domain.UserRoleEntity;
 import com.retail.user.service.PowerUserService;
-import com.retail.user.service.RoleService;
 import com.retail.user.service.UserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -153,6 +155,43 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         BeanUtil.copyProperties(userEntity,userEntityVo);
         return Result.success(userEntityVo);
     }
+
+    @Override
+    public Result updateIntegration(UserEntity userEntity) {
+        baseMapper.update(userEntity,new QueryWrapper<UserEntity>().lambda().eq(UserEntity::getId,userEntity.getId()));
+        return Result.success();
+    }
+
+
+    @Override
+    public Result<String> authentication(String realName, String idCard) {
+        String host = UserConstant.AUTHENTICATION_HOST;
+        String appcode = "72bf2a3cc98a4b6e960f9b3e79c4a0e0";
+        Map map = new HashMap<>();
+        //最后在header中的格式(中间是英文空格)为Authorization:APPCODE 83359fd73fe94948385f570e3c139105
+        map.put("idCardNo",idCard);
+        map.put("name",realName);
+        String str = HttpUtil.createPost(host).method(Method.POST).header("Authorization", "APPCODE " + appcode).form(map).execute().body();
+        System.out.println("response"+ str);
+        return Result.success(str);
+    }
+
+    @Override
+    public Result<String> biopsy(String url) throws IOException {
+        String host = "https://life.shumaidata.com/checklife";
+        String appCode = "72bf2a3cc98a4b6e960f9b3e79c4a0e0";
+        Map params = new HashMap<>();
+        params.put("complexity", "1");
+        params.put("motions", "BLINK");
+//        params.put("motions", "MOUTH");
+//        params.put("motions", "NOD");
+//        params.put("motions", "YAW");
+        params.put("url", url);
+        String str = HttpUtil.createPost(host).method(Method.POST).header("Authorization", "APPCODE " + appCode).form(params).execute().body();
+        System.out.println("response:"+ str);
+        return Result.success(str);
+    }
+
 
 
     public UserEntityVo userInfo(){

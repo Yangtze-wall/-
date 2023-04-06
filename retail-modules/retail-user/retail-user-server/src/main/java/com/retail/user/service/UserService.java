@@ -7,6 +7,8 @@ import com.retail.common.domain.vo.UserLoginPasswordVo;
 import com.retail.common.result.Result;
 import com.retail.user.domain.UserEntity;
 
+import java.io.IOException;
+
 /**
  * 用户表
  *
@@ -24,5 +26,11 @@ public interface UserService extends IService<UserEntity> {
     UserEntityVo colonelLogin(String phone);
 
     Result<UserEntityVo> findByIdUser();
+
+    Result<String> authentication(String realName, String idCard);
+
+    Result<String> biopsy(String url) throws IOException;
+
+    Result updateIntegration(UserEntity userEntity);
 }
 

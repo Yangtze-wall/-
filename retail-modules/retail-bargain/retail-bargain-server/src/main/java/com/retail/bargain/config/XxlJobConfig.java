@@ -1,4 +1,4 @@
-package com.retail.common.config;
+package com.retail.bargain.config;
 
 import com.xxl.job.core.executor.impl.XxlJobSpringExecutor;
 import org.slf4j.Logger;
@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
  *
  * @author xuxueli 2017-04-28
  */
-//@Configuration
+@Configuration
 public class XxlJobConfig {
     private Logger logger = LoggerFactory.getLogger(XxlJobConfig.class);
 
@@ -31,7 +31,7 @@ public class XxlJobConfig {
     private String ip;
 
     //@Value("${xxl.job.executor.port}")
-    private int port=9999;
+    private int port=9995;
 
    // @Value("${xxl.job.executor.logpath}")
     private String logPath="/data/applogs/xxl-job/jobhandler";

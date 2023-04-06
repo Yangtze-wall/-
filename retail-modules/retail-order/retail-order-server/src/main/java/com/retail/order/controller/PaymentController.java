@@ -2,9 +2,8 @@ package com.retail.order.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.retail.common.result.Result;
-import com.retail.order.config.PayVo;
 import com.retail.order.domain.OrderEntity;
-import com.retail.order.domain.PaymentEntity;
+import com.retail.order.domain.PayMentEntity;
 import com.retail.order.mapper.OrderMapper;
 import com.retail.order.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,9 +39,9 @@ public class PaymentController {
 
 
 
-
+    //  order/payment/getPaymentList
     @PostMapping("/getPaymentList")
-    public Result<List<PaymentEntity>> getPaymentList(){
+    public Result<List<PayMentEntity>> getPaymentList(){
         return paymentService.getPaymentList();
     }
 

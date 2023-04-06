@@ -1,18 +1,18 @@
 package com.retail.order.service;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import com.retail.common.result.Result;
+import com.retail.order.domain.OrderEntity;
 
 /**
  * @author AliPayService
  * @BelongsProject: retail-cloud
  * @BelongsPackage: com.retail.order.service
- * @date: 2023-03-30  20:21
+ * @date: 2023-04-06  14:50
  * @Created by:  12871
  * @Description:
  * @Version:
  */
 public interface AliPayService {
+    public Result<String> aliPay(OrderEntity order);
 
-    void aliPay(HttpServletResponse response, HttpServletRequest request, String total_amount);
 }

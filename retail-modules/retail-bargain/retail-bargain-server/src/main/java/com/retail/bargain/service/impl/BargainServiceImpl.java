@@ -1,6 +1,7 @@
 package com.retail.bargain.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.RandomUtil;
 import com.alibaba.fastjson.JSON;
 import com.retail.bargain.config.RedisSonConfig;
@@ -73,8 +74,11 @@ public class  BargainServiceImpl extends ServiceImpl<BargainMapper, BargainEntit
             return Result.error("库存不足");
         }
         bargainEntity.setStatus(0);
-        bargainEntity.setTotalExpirationTime(new Date());
+        long l = System.currentTimeMillis()+ 259200000;
+        Date date = new Date(l);
+        bargainEntity.setTotalExpirationTime(date);
         baseMapper.insert(bargainEntity);
+
         return Result.success();
     }
 

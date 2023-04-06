@@ -11,4 +11,5 @@ package com.retail.bargain.constant;
  */
 public class BargainConstant {
     public static final String REDISSION_LOCK="bargain_lock_";
+
 }

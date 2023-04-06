@@ -33,7 +33,7 @@ public class SeckillEntity implements Serializable {
 	/**
 	 * 商品id
 	 */
-	private Long shopId;
+	private Long spuId;
 	/**
 	 * 轮播图
 	 */
@@ -59,14 +59,6 @@ public class SeckillEntity implements Serializable {
 	 */
 	private Date seckillCreateTime;
 	/**
-	 * 状态
-	 */
-	private Integer status;
-	/**
-	 * 秒杀库存
-	 */
-	private Integer seckillCount;
-	/**
 	 * 剩余库存
 	 */
 	private Integer seckillResidueCount;
@@ -78,5 +70,8 @@ public class SeckillEntity implements Serializable {
 	 * 是否包邮
 	 */
 	private Integer postFree;
+
+	private Integer esRedis;
+
 
 }

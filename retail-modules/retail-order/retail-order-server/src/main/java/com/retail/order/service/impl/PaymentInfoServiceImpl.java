@@ -8,7 +8,7 @@ import com.retail.common.constant.TokenConstants;
 import com.retail.common.domain.vo.UserEntityVo;
 import com.retail.common.result.Result;
 import com.retail.common.utils.JwtUtils;
-import com.retail.order.domain.PaymentEntity;
+import com.retail.order.domain.PayMentEntity;
 import com.retail.order.mapper.PaymentMapper;
 import com.retail.order.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ import java.util.List;
 
 
 @Service("paymentInfoService")
-public class PaymentInfoServiceImpl extends ServiceImpl<PaymentMapper, PaymentEntity> implements PaymentService {
+public class PaymentInfoServiceImpl extends ServiceImpl<PaymentMapper, PayMentEntity> implements PaymentService {
     @Autowired
     private HttpServletRequest request;
     @Autowired
@@ -35,8 +35,13 @@ public class PaymentInfoServiceImpl extends ServiceImpl<PaymentMapper, PaymentEn
     }
 
     @Override
-    public Result<List<PaymentEntity>> getPaymentList() {
-        List<PaymentEntity> paymentEntityList=baseMapper.selectList(new QueryWrapper<PaymentEntity>());
+    public Result<List<PayMentEntity>> getPaymentList() {
+        List<PayMentEntity> paymentEntityList=baseMapper.selectList(new QueryWrapper<PayMentEntity>());
         return Result.success(paymentEntityList);
+    }
+
+    @Override
+    public void createColonelOrderPay(PayMentEntity payMentEntity) {
+        baseMapper.insert(payMentEntity);
     }
 }

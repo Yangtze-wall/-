@@ -3,7 +3,7 @@ package com.retail.order.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
-import com.retail.order.domain.PaymentEntity;
+import com.retail.order.domain.PayMentEntity;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -14,6 +14,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @date 2022-03-21 19:10:45
  */
 @Mapper
-public interface PaymentMapper extends BaseMapper<PaymentEntity> {
+public interface PaymentMapper extends BaseMapper<PayMentEntity> {
 
 }

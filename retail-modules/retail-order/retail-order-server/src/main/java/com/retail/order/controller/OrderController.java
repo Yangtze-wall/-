@@ -3,6 +3,7 @@ package com.retail.order.controller;
 import java.util.List;
 
 
+import com.baomidou.mybatisplus.extension.api.R;
 import com.retail.common.domain.vo.OrderEntityVo;
 import com.retail.common.result.Result;
 import com.retail.order.domain.OrderEntity;
@@ -36,5 +37,16 @@ public class OrderController {
     @PostMapping("/orderInsert")
     public Result orderInsert(@RequestBody OrderEntityVo orderEntityVo){
         return orderService.orderInsert(orderEntityVo);
+    }
+    // order/order/getOrderListSeckill
+    @PostMapping("/getOrderList")
+    public Result<List<OrderEntity>> getOrderList(){
+        return orderService.getOrderList();
+    }
+
+    // order/order/findByOrderSn/
+    @GetMapping("/findByOrderSn/{orderSn}")
+    public Result findByOrderSn(@PathVariable("orderSn") String orderSn){
+        return orderService.findByOrderSn(orderSn);
     }
 }

@@ -2,11 +2,12 @@ package com.retail.order.service.impl;
 
 import cn.hutool.core.util.RandomUtil;
 import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.retail.common.constant.TokenConstants;
 import com.retail.common.domain.vo.*;
 import com.retail.common.result.Result;
 import com.retail.common.utils.JwtUtils;
-import com.retail.order.config.PayVo;
+
 import com.retail.order.domain.OrderEntity;
 import com.retail.order.feign.ShopFeignService;
 import com.retail.order.feign.UserFeignService;
@@ -21,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 
 @Service("orderService")
@@ -51,9 +53,11 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
     public Result orderInsert(OrderEntityVo orderEntityVo) {
         // 判断 订单里面有没有这个 人 买的砍价物品  userId bargainId
         Long bargainId = orderEntityVo.getBargainId();
-
+        baseMapper.selectOne(new QueryWrapper<OrderEntity>().lambda().eq(OrderEntity::getBargainId,bargainId).eq(OrderEntity::getUserId,userInfo().getId()));
         // 判断该用户积分是否足够
-
+        if (userInfo().getIntegration()<orderEntityVo.getIntegration()){
+            return Result.error("积分不足");
+        }
         Result<SkuEntityVo> skuEntryResult = shopFeignService.findBySkuEntry(orderEntityVo.getSpuId());
         SkuEntityVo skuEntityVo = skuEntryResult.getData();
         //生成订单
@@ -106,15 +110,28 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
         orderEntity.setType(4);
         baseMapper.insert(orderEntity);
         // 修改用户表的积分
-
+        UserEntityVo userEntityVo = userInfo();
+        userEntityVo.setIntegration(userEntityVo.getIntegration()-orderEntityVo.getIntegration());
+        userFeignService.updateIntegration(userEntityVo);
         //　删除　优惠券中间表　用户的优惠券　修改状态 is_del
-
 
         return Result.success("下单成功");
     }
 
+
+
     @Override
-    public String handlePayResult(PayVo vo) {
-        return null;
+    public   Result<List<OrderEntity>> getOrderList() {
+        List<OrderEntity> orderEntityList =
+                baseMapper.selectList(new QueryWrapper<OrderEntity>().lambda().eq(OrderEntity::getUserId, userInfo().getId()));
+        return Result.success(orderEntityList);
     }
+
+    @Override
+    public Result findByOrderSn(String orderSn) {
+        OrderEntity orderEntity = baseMapper.selectOne(new QueryWrapper<OrderEntity>().lambda().eq(OrderEntity::getOrderSn, orderSn));
+        return Result.success(orderEntity);
+    }
+
+
 }

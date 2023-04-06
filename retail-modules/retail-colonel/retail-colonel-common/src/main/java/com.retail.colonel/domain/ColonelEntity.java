@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import lombok.Data;
 import lombok.AllArgsConstructor;
@@ -49,5 +50,24 @@ public class ColonelEntity implements Serializable {
 	 * 身份证 反面图片
 	 */
 	private String idcordReverse;
-
+	/**
+	 当月佣金
+	 */
+	private BigDecimal monthCommission;
+	/**
+	 *  总共佣金
+	 */
+	private BigDecimal totalCommission;
+	/**
+	 *  已提现佣金
+	 */
+	private BigDecimal withdraw;
+	/**
+	 *  剩余佣金
+	 */
+	private BigDecimal surplusCommission;
+	/**
+	 * 团长详细地址(冗余字段)
+	 */
+	private String address;
 }

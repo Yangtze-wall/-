@@ -1,5 +1,6 @@
 package com.retail.user.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 
@@ -92,5 +93,27 @@ public class UserController {
     @PostMapping("/findByIdUser")
     public Result<UserEntityVo> findByIdUser(){
         return userService.findByIdUser();
+    }
+
+    /**
+     * 身份验证
+     * @param userEntityVo
+     * @return
+     */
+    @PostMapping("/authentication")
+    public Result<String> authentication(@RequestBody UserEntityVo userEntityVo){
+        return userService.authentication(userEntityVo.getRealName(),userEntityVo.getIdCard());
+    }
+
+    @PostMapping("/biopsy")
+    public Result<String> biopsy(@RequestParam("url") String url) throws IOException {
+        return userService.biopsy(url);
+    }
+
+    @PostMapping("user/user/updateIntegration")
+    Result updateIntegration(@RequestBody UserEntityVo userEntityVo){
+        UserEntity userEntity = new UserEntity();
+        BeanUtil.copyProperties(userEntityVo,userEntity);
+        return userService.updateIntegration(userEntity);
     }
 }

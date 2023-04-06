@@ -16,6 +16,8 @@ import com.retail.bargain.utils.DecUtil;
 import com.retail.common.domain.vo.BargainEntityVo;
 import com.retail.common.result.PageResult;
 import com.retail.common.result.Result;
+import com.xxl.job.core.context.XxlJobHelper;
+import com.xxl.job.core.handler.annotation.XxlJob;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
