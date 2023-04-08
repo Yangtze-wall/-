@@ -6,42 +6,40 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * @ProjectName:    retail-cloud
- * @Package:        com.retail.common.domain.vo
- * @ClassName:      SeckillSpuVo
- * @Author:     2766395184
+ * @ProjectName: retail-cloud
+ * @Package: com.retail.common.domain.vo
+ * @ClassName: SeckillSpuVo
+ * @Author: 2766395184
  * @Description:
- * @Date:    2023/3/25 10:46
- * @Version:    1.0
+ * @Date: 2023/3/25 10:46
+ * @Version: 1.0
  */
 @Data
 public class SeckillSpuVo {
 
-    private Long id	;
+    private Long id;
 
-    private Long spuId	;
+    private Long spuId;
 
-    private Integer slideShow	;
+    private String slideShow;
 
-    private String seckillHeadline	;
+    private String seckillHeadline;
 
-    private BigDecimal seckillPrice	;
+    private BigDecimal seckillPrice;
 
-    private Date seckillStartTime	;
+    private Date seckillStartTime;
 
-    private Date seckillEndTime	;
+    private Date seckillEndTime;
 
     private Date seckillCreateTime;
 
-    private Integer status	;
+    private Integer postFree;
 
-    private Integer seckillCount	;
+    private Integer seckillLimit;
 
-    private Integer seckillResidueCount	;
+    private Integer seckillResidueCount;
 
     private Integer esRedis;
-
-
 
 
     private Long skuId;
@@ -77,15 +75,6 @@ public class SeckillSpuVo {
      * 1 同步 2 未同步
      */
     private Integer esStatus;
-
-
-
-
-
-
-
-
-
 
 
 }
