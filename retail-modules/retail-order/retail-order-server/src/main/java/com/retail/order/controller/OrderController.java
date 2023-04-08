@@ -3,6 +3,9 @@ package com.retail.order.controller;
 import java.util.List;
 
 
+import com.retail.common.domain.vo.OrderEntityVo;
+import com.retail.common.result.Result;
+import com.retail.order.domain.OrderEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,4 +31,31 @@ public class OrderController {
 
     @Autowired
     private OrderService orderService;
+
+    /**
+     * 订单表
+     * @return
+     */
+    @PostMapping("/getOrderList")
+    public Result getOrderList(){
+        return orderService.getOrderList();
+    }
+
+    /**
+     * 回显
+     * @param orderSn
+     * @return
+     */
+    @GetMapping("/findByOrderSn/{orderSn}")
+    public Result<OrderEntity> findByOrderSn(@PathVariable("orderSn") String orderSn ){
+        return orderService.findByOrderSn(orderSn);
+
+    }
+    @PostMapping("/insertOrder")
+    public Result insertOrder(@RequestBody OrderEntityVo orderEntityVo){
+        return orderService.insertOrder(orderEntityVo);
+    }
+
+
+
 }

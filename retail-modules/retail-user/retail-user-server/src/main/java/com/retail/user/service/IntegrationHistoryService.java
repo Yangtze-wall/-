@@ -1,8 +1,11 @@
 package com.retail.user.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.retail.common.result.Result;
 import com.retail.user.domain.IntegrationHistoryEntity;
+import com.retail.user.domain.vo.SignTimeSearchVo;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -14,6 +17,12 @@ import java.util.Map;
  */
 public interface IntegrationHistoryService extends IService<IntegrationHistoryEntity> {
 
+
+    Result insertSign(IntegrationHistoryEntity integrationHistoryEntity);
+
+
+
+    Map<String, Object> doSign(Long id, String dateStr);
 
 }
 

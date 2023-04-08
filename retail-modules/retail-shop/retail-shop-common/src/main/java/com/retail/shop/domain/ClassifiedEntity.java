@@ -1,10 +1,13 @@
 package com.retail.shop.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,19 +30,34 @@ public class ClassifiedEntity implements Serializable {
 	/**
 	 *
 	 */
-	@TableId
+	@TableId(type = IdType.AUTO)
 	private Long id;
-	/**
-	 * 父级id
-	 */
-	private Integer pid;
 	/**
 	 * 分类名称
 	 */
 	private String name;
 	/**
+	 * 父分类id
+	 */
+	private Long parentId;
+	/**
+	 * 是否显示[0-不显示，1显示]
+	 */
+	private Integer status;
+	/**
 	 * 排序
 	 */
 	private Integer sort;
+	/**
+	 * 图标地址
+	 */
+	private String icon;
+	/**
+	 * 计量单位
+	 */
+	private String unit;
+
+
+
 
 }

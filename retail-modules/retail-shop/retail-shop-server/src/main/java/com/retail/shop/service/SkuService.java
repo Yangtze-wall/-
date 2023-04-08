@@ -1,7 +1,14 @@
 package com.retail.shop.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.retail.common.result.PageResult;
+import com.retail.common.result.Result;
 import com.retail.shop.domain.SkuEntity;
+import com.retail.common.domain.vo.ProductVo;
+import com.retail.shop.domain.vo.SearchParam;
+import com.retail.shop.domain.vo.SkuModelVo;
+
+import java.util.List;
 
 /**
  * 商品 sku 表
@@ -11,6 +18,28 @@ import com.retail.shop.domain.SkuEntity;
  * @date 2023-03-22 17:00:28
  */
 public interface SkuService extends IService<SkuEntity> {
+
+
+    List<SkuModelVo> findAll();
+
+    Result<PageResult<SkuModelVo>> search(SearchParam searchParam);
+
+
+
+
+    Result deleteSkuById(Long id);
+
+
+
+
+    Result insertSku(ProductVo productVo);
+
+    Result updateSku(ProductVo productVo);
+
+    Result<ProductVo>  findBySkuId(Long id);
+
+    List<ProductVo> findSkuList();
+
 
 }
 

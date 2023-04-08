@@ -6,6 +6,8 @@ import com.retail.common.domain.vo.UserLoginCodeVo;
 import com.retail.common.domain.vo.UserLoginPasswordVo;
 import com.retail.common.result.Result;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -23,14 +25,23 @@ public interface UserFeignService {
     @PostMapping("user/user/register")
     Result register(@RequestBody UserEntityRequest userEntityRequest);
 
-    @PostMapping("user/user/userInfo")
-    public Result<UserEntityVo> userInfo();
 
     @PostMapping("user/user/loginPassword")
     Result<UserEntityVo> loginPassword(@RequestBody UserLoginPasswordVo userLoginPasswordVo);
 
+//    @PostMapping("user/user/loginPassword/{phone}")
+//    Result<UserEntityVo> loginPassword(@PathVariable("phone") String phone);
+
+    @PostMapping("user/user/loginPasswordColonel")
+    Result<UserEntityVo> loginPasswordColonel(@RequestBody UserLoginPasswordVo userLoginPasswordVo);
+
+
     @PostMapping("user/user/loginCode")
     public Result<UserEntityVo> loginCode(@RequestBody UserLoginCodeVo userLoginCodeVo);
 
+//    @GetMapping("/user/user/colonelLogin/{phone}")
+//    Result<UserEntityVo> loginPasswordColonel(@PathVariable("phone") String phone);
+@PostMapping("/user/user/colonelLogin/{phone}")
+Result<UserEntityVo> loginPasswordColonel(@PathVariable("phone") String phone);
 
 }

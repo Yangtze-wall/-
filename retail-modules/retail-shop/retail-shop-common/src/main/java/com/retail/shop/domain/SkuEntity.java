@@ -1,11 +1,11 @@
 package com.retail.shop.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.math.BigDecimal;
 import java.io.Serializable;
-import java.util.Date;
 import lombok.Data;
 
 /**
@@ -23,7 +23,7 @@ public class SkuEntity implements Serializable {
 	/**
 	 *
 	 */
-	@TableId
+	@TableId(type = IdType.AUTO)
 	private Long id;
 	/**
 	 * 商品图片
@@ -41,10 +41,6 @@ public class SkuEntity implements Serializable {
 	 * 销量
 	 */
 	private Integer skuSell;
-	/**
-	 * 库存
-	 */
-	private Integer skuStock;
 	/**
 	 * 价格
 	 */

@@ -1,5 +1,6 @@
 package com.retail.shop.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -22,7 +23,7 @@ public class SpuEntity implements Serializable {
 	/**
 	 * 商品表
 	 */
-	@TableId
+	@TableId(type = IdType.AUTO)
 	private Long id;
 	/**
 	 * 商品名称
@@ -35,15 +36,15 @@ public class SpuEntity implements Serializable {
 	/**
 	 * 商家id
 	 */
-	private Integer shopsId;
+	private Long shopId;
 	/**
 	 * 商品上架时间
 	 */
-	private Date spuCreatetime;
+	private Date spuCreateTime;
 	/**
 	 * 商品修改时间
 	 */
-	private Date spuUpdatetime;
+	private Date spuUpdateTime;
 	/**
 	 * 排序
 	 */
@@ -56,5 +57,15 @@ public class SpuEntity implements Serializable {
 	 * 1 同步 2 未同步
 	 */
 	private Integer esStatus;
+	/**
+	 * 品牌id
+	 */
+	private Long brandId;
+	/**
+	 * 分类id
+	 */
+	private Long classifiedId;
+
+
 
 }

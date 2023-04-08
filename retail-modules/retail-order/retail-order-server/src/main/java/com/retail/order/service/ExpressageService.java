@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.retail.order.domain.ExpressageEntity;
 
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -14,6 +15,9 @@ import java.util.Map;
  * @date 2023-03-23 10:07:25
  */
 public interface ExpressageService extends IService<ExpressageEntity> {
+
+
+    List<ExpressageEntity> selectExpressageList();
 
 
 }

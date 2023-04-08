@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSON;
 import com.retail.auth.service.SmsService;
 import com.retail.auth.vo.SmsResultVo;
 import com.retail.common.exception.BizException;
+import com.retail.common.result.Result;
 import com.retail.common.utils.StringUtils;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
@@ -45,11 +46,13 @@ public class SmsServiceImpl implements SmsService {
                 .form(map).execute().body();
         log.info("response->"+str);
         if (StringUtils.isBlank(str)){
-            throw new BizException(501,"调用短信接口失败");
+//            throw new BizException(501,"调用短信接口失败");
+             Result.error("调用短信接口失败");
         }
         SmsResultVo smsResultVo = JSON.parseObject(str, SmsResultVo.class);
         if (smsResultVo.getCode()!=0){
-            throw new BizException(501,"调用短信接口失败,msg"+smsResultVo.getMsg());
+//            throw new BizException(501,"调用短信接口失败,msg"+smsResultVo.getMsg());
+            Result.error("调用短信接口失败,msg"+smsResultVo.getMsg());
         }
 
 

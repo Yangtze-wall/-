@@ -1,5 +1,6 @@
 package com.retail.bargain.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -27,7 +28,7 @@ public class CoverTemplateEntity implements Serializable {
 	/**
 	 *  运费配置模板
 	 */
-	@TableId
+	@TableId(type = IdType.AUTO)
 	private Long id;
 	/**
 	 * 模板名称
@@ -60,6 +61,6 @@ public class CoverTemplateEntity implements Serializable {
 	/**
 	 * 更新人
 	 */
-	private Integer updateBy;
+	private Long updateBy;
 
 }

@@ -2,9 +2,10 @@ package com.retail.user.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.retail.user.domain.UserAddressEntity;
+import com.retail.common.domain.vo.UserAddressEntityVo;
 
 
-import java.util.Map;
+import java.util.List;
 
 /**
  * 收货地址表
@@ -15,6 +16,11 @@ import java.util.Map;
  */
 public interface UserAddressService extends IService<UserAddressEntity> {
 
+
+    List<UserAddressEntityVo> selectStoreCouponByUserId();
+
+
+    UserAddressEntityVo findUserAddressById(Long id);
 
 }
 

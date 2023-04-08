@@ -64,7 +64,7 @@ public class UserEntityVo implements Serializable {
 	/**
 	 * 头像
 	 */
-	private String header;
+	private String headerImages;
 	/**
 	 * 用户性别（0男 1女 2未知)
 	 */
@@ -82,7 +82,7 @@ public class UserEntityVo implements Serializable {
 	 */
 	private Integer integration;
 	/**
-	 * 帐号状态（0正常 1停用）
+	 * 帐号状态帐号状态（0正常 1停用 2团长）
 	 */
 	private Integer status;
 	/**
@@ -101,5 +101,18 @@ public class UserEntityVo implements Serializable {
 	 * 备注
 	 */
 	private String remark;
+
+	/**
+	 * 角色id
+	 */
+	private Long roleId;
+	/**
+	 * 角色名称
+	 */
+	private String roleName;
+	/**
+	 * 角色描述
+	 */
+	private String roleRemake;
 
 }

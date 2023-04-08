@@ -3,7 +3,11 @@ package com.retail.shop.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.retail.shop.domain.SkuEntity;
+import com.retail.shop.domain.vo.SkuModelVo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 商品 sku 表
@@ -15,4 +19,8 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface SkuMapper extends BaseMapper<SkuEntity> {
 
+
+
+
+    SkuModelVo findById(@Param("id") Long id);
 }

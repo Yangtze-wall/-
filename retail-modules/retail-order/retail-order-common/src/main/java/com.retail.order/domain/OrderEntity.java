@@ -1,5 +1,6 @@
 package com.retail.order.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -27,16 +28,16 @@ public class OrderEntity implements Serializable {
 	/**
 	 * 商品id
 	 */
-	@TableId
+	@TableId(type = IdType.AUTO)
 	private Long id;
 	/**
 	 * 用户id
 	 */
-	private Integer userId;
+	private Long userId;
 	/**
 	 * 商品单号
 	 */
-	private Long orderSn;
+	private String orderSn;
 	/**
 	 *  总价钱
 	 */
@@ -64,7 +65,7 @@ public class OrderEntity implements Serializable {
 	/**
 	 * 快递公司id
 	 */
-	private Integer corporationId;
+	private Long corporationId;
 	/**
 	 * 收件人姓名
 	 */
@@ -84,7 +85,7 @@ public class OrderEntity implements Serializable {
 	/**
 	 * 优惠券id
 	 */
-	private Integer couponId;
+	private Long couponId;
 	/**
 	 * 下单时间
 	 */
@@ -93,5 +94,35 @@ public class OrderEntity implements Serializable {
 	 * 结账时间
 	 */
 	private Date realityTime;
+	/**
+	 * 类型(1.正常,2.拼团,3秒杀 4.砍价)
+	 */
+	private Integer type;
+	/**
+	 *  秒杀id
+	 */
+	private Long seckillId;
+	/**
+	 * 收货地址id
+	 */
+	private Long addressId;
+	/**
+	 *  砍价表id
+	 */
+	private Long bargainId;
+
+	/**
+	 * 拼团
+	 */
+	private Long teamId;
+
+	/**
+	 * skuId
+	 */
+	private Long skuId;
+	/**
+	 * spuId
+	 */
+	private Long spuId;
 
 }

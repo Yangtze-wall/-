@@ -31,6 +31,7 @@ import java.util.List;
 public class MyFilter implements GlobalFilter, Ordered {
     List<String> PATHS=new ArrayList<String>(){{
         add("/auth/**");
+        add("/shop/**");
     }};
     @Autowired
     private RedisTemplate<String,String> redisTemplate;

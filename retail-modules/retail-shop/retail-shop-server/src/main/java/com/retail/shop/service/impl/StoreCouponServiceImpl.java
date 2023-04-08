@@ -16,5 +16,9 @@ import com.retail.shop.service.StoreCouponService;
 public class StoreCouponServiceImpl extends ServiceImpl<StoreCouponMapper, StoreCouponEntity> implements StoreCouponService {
 
 
-
+    @Override
+    public StoreCouponEntity findStoreCouponById(Long id) {
+        StoreCouponEntity storeCouponEntity = this.baseMapper.selectById(id);
+        return storeCouponEntity;
+    }
 }
