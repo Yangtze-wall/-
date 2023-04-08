@@ -113,5 +113,10 @@ public class OrderEntity implements Serializable {
 
 	private Long teamId;
 
+	private Long skuId;
+
+	private Long spuId;
+
+
 
 }

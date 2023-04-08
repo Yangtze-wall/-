@@ -24,4 +24,7 @@ public interface ShopFeignService {
 
     @PostMapping("shop/storecoupon/findByIdStoreCoupon")
     public Result<StoreCouponEntityVo> findByIdStoreCoupon(@RequestParam("id") Long id);
+
+    @PostMapping("shop/retaiusercouponcenter/isDelRetaiUserCoupon")
+    Result isDelRetaiUserCoupon(@RequestParam("couponId") Long couponId);
 }

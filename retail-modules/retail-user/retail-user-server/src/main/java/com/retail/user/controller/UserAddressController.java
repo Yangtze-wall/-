@@ -32,11 +32,21 @@ public class UserAddressController {
     @Autowired
     private UserAddressService userAddressService;
 
+    /**
+     * 下拉框展示  当前登陆人所需要的数据
+     * @return
+     */
     //   /user/useraddress/findByUserIdList/
     @PostMapping("/findByUserIdList")
     public Result<List<UserAddressEntityVo>> findByUserIdList(){
       return userAddressService.findByUserIdList();
     }
+
+    /**
+     * 通过主键id  查询订单表中需要的地址数据
+     * @param id
+     * @return
+     */
     // user/useraddress/findByIdAddress
     @PostMapping("/findByIdAddress")
     public Result<UserAddressEntityVo> findByIdAddress(@RequestParam("id") Long id){

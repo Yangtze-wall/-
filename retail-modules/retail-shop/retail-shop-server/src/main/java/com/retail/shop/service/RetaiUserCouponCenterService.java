@@ -1,6 +1,7 @@
 package com.retail.shop.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.retail.common.result.Result;
 import com.retail.shop.domain.RetaiUserCouponCenterEntity;
 
 import java.util.Map;
@@ -15,5 +16,6 @@ import java.util.Map;
 public interface RetaiUserCouponCenterService extends IService<RetaiUserCouponCenterEntity> {
 
 
+    Result isDelRetaiUserCoupon(Long couponId);
 }
 

@@ -2,6 +2,9 @@ package com.retail.shop.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.retail.shop.domain.ClassifiedEntity;
+import com.retail.shop.domain.vo.ClassifiedVo;
+
+import java.util.List;
 
 /**
  * 商品分类表
@@ -13,5 +16,6 @@ import com.retail.shop.domain.ClassifiedEntity;
 public interface ClassifiedService extends IService<ClassifiedEntity> {
 
 
+    List<ClassifiedVo> selectClassifiedTreeList();
 }
 

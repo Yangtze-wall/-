@@ -1,40 +1,53 @@
 package com.retail.order.config;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.rabbitmq.client.Channel;
+import com.retail.order.domain.OrderEntity;
+import com.retail.order.mapper.OrderMapper;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.amqp.core.*;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
 
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
 
 /**
  * @author Lenovo
  * 延迟队列
  */
-//@Configuration
+@Configuration
 @Log4j2
-public class DelayRabbitMq {
+public class OrderRabbitMq {
     @Autowired
     private RedisTemplate<String,String> redisTemplate;
+
+    @Autowired
+    private OrderMapper orderMapper;
+
     /**
      * 业务队列
      */
-    public static final String QUEUE_NAME = "";
+    public static final String QUEUE_NAME = "order_queue";
     /**
      * 死信队列
      */
-    public static final String DEAD_QUEUE = "";
+    public static final String DEAD_QUEUE = "order_dead_queue";
     /**
      *
      * 死信交换机
      */
-    public static final String DEAD_EXCHANGE = "";
+    public static final String DEAD_EXCHANGE = "order_exchange";
     /**
      * 死信路由
      */
-    public static final String DEAD_QUEUE_KEY = "";
+    public static final String DEAD_QUEUE_KEY = "order_key";
 
 
     /**
@@ -81,7 +94,29 @@ public class DelayRabbitMq {
     }
 
 
+    // 订单5分钟没有支付，自动取消，使用rabbitMQ延迟队列)
+    // 回滚库存
+    @RabbitListener(queues = DEAD_QUEUE)
+    public void  queueDead(String json, Channel channel, Message message){
+        long deliveryTag = message.getMessageProperties().getDeliveryTag();
+        String messageId = message.getMessageProperties().getMessageId();
+        Long add = redisTemplate.opsForSet().add(messageId);
+        try {
+            if (add>=0){
+                List<OrderEntity> orderEntityList = JSON.parseArray(json, OrderEntity.class);
+               // 修改订单order状态  3.支付失败
+                orderEntityList.stream().forEach(c-> {
+                    c.setStatus(3);
+                    orderMapper.updateById(c);
+                });
+               // 库存表  锁库存
 
+            }
+            channel.basicAck(deliveryTag,true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 

@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient("retail-user")
 public interface UserFeignService {
     @PostMapping("user/useraddress/findByIdAddress")
-
     public Result<UserAddressEntityVo> findByIdAddress(@RequestParam("id") Long id);
 
     @PostMapping("user/user/updateIntegration")

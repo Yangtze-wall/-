@@ -39,13 +39,11 @@ public class AliPayServiceImpl implements AliPayService {
         AlipayClient alipayClient = new DefaultAlipayClient(AliPayConfig.gatewayUrl, AliPayConfig.app_id, AliPayConfig.merchant_private_key, "json", AliPayConfig.charset, AliPayConfig.alipay_public_key, AliPayConfig.sign_type);
         //设置请求参数
         AlipayTradePagePayRequest aliPayRequest = new AlipayTradePagePayRequest();
-        //aliPayRequest.setReturnUrl(AliPayConfig.return_url);
+        aliPayRequest.setReturnUrl(AliPayConfig.return_url);
         aliPayRequest.setNotifyUrl(AliPayConfig.notify_url);
-
 
         //商户订单号，后台可以写一个工具类生成一个订单号，必填
         String order_number = new String(order.getOrderSn());
-
 
         //订单名称，必填
         String subject = new String(order.getOrderSn());
@@ -60,8 +58,6 @@ public class AliPayServiceImpl implements AliPayService {
         } catch (AlipayApiException e) {
             e.printStackTrace();
         }
-        //输出
-
         System.out.println(result);
 
         return Result.success(result);

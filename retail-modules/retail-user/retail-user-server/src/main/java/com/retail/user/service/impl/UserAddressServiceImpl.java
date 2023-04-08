@@ -55,6 +55,7 @@ public class UserAddressServiceImpl extends ServiceImpl<UserAddressMapper, UserA
 
     @Override
     public Result<UserAddressEntityVo> findByIdAddress(Long id) {
+        // 令牌桶
         //int maxTokens, double refillRate
         TokenBucket tokenBucket = new TokenBucket(1, 1);
         boolean b = tokenBucket.tryConsume(1);

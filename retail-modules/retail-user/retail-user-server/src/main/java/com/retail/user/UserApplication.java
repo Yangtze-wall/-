@@ -1,5 +1,7 @@
 package com.retail.user;
 
+import cn.hutool.core.util.IdUtil;
+import com.retail.common.utils.StringUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;

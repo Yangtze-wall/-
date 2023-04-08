@@ -60,7 +60,8 @@ public class  BargainServiceImpl extends ServiceImpl<BargainMapper, BargainEntit
 
     @Override
     public List<BargainEntity> select() {
-        return baseMapper.selectList(new QueryWrapper<BargainEntity>());
+        List<BargainEntity> bargainEntityList = baseMapper.selectList(new QueryWrapper<BargainEntity>().lambda().eq(BargainEntity::getUserId,userInfo().getId()));
+        return bargainEntityList;
     }
 
     @Override
@@ -119,23 +120,30 @@ public class  BargainServiceImpl extends ServiceImpl<BargainMapper, BargainEntit
         System.out.println("Encoded string: " + encodedString);
         // 通过路径 查询该活动
         UrlEntry selectOne = urlMapper.selectOne(new QueryWrapper<UrlEntry>().lambda().eq(UrlEntry::getUrl, encodedString));
-        if (selectOne==null){
-            UrlEntry urlEntry = new UrlEntry();
-            urlEntry.setUrl(encodedString);
-            urlEntry.setUrlKey(key);
-            urlEntry.setUrlStatus(0);
-            urlMapper.insert(urlEntry);
+        if (selectOne!=null){
+            return Result.error();
         }
+        UrlEntry urlEntry = new UrlEntry();
+        urlEntry.setUrl(encodedString);
+        urlEntry.setUrlKey(key);
+        urlEntry.setUrlStatus(0);
+        urlMapper.insert(urlEntry);
         String url= "http://192.168.231.1:9205/bargain/bargain/updateInsertBargain/"+encodedString;
         return Result.success(url);
     }
 
+    /**
+     *  砍价
+     * @param id
+     * @param url
+     * @return
+     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Result updateInsertBargain(Long id, String url) {
         //加锁
         RedissonClient redissonClient = redisSonConfig.redissonClient();
-        RLock lock = redissonClient.getLock(BargainConstant.REDISSION_LOCK + id);
+        RLock lock = redissonClient.getLock(BargainConstant.REDISSION_LOCK + userInfo().getId());
         boolean flag = lock.tryLock();
         if (!flag){
             throw new BizException(401,"正在砍价请稍后");
@@ -168,7 +176,7 @@ public class  BargainServiceImpl extends ServiceImpl<BargainMapper, BargainEntit
             Result<SkuEntityVo> skuEntryResult = shopFeignService.findBySkuEntry(bargainEntity.getSpuId());
             SkuEntityVo skuEntityVo = skuEntryResult.getData();
             // 判断  剩余百分比==0 成功砍价人数==需要人数   时  sku 添加销量  锁定库存库存
-            if (bargainEntity.getNeedNumberPeople().equals(bargainEntity.getBargainNumberPeople())){
+            if (bargainEntity.getNeedNumberPeople().equals(bargainEntity.getBargainNumberPeople()) && bargainEntity.getNeedNumberPeople().equals(bargainEntity.getBargainNumberPeople())){
                 // sku 添加销量
                 skuEntityVo.setSkuSell(skuEntityVo.getSkuSell()+1);
                 shopFeignService.updateSkuSell(skuEntityVo);
@@ -177,15 +185,16 @@ public class  BargainServiceImpl extends ServiceImpl<BargainMapper, BargainEntit
                 InventoryEntityVo inventoryEntityVo = inventoryEntityVoResult.getData();
                 inventoryEntityVo.setInventoryLock(inventoryEntityVo.getInventoryLock()+1);
                 shopFeignService.updateInventoryLock(inventoryEntityVo);
-                // 删除地址表
+                // 删除砍价地址表  逻辑删除
                 UrlEntry urlEntry = urlMapper.selectOne(new QueryWrapper<UrlEntry>().lambda().eq(UrlEntry::getUrl, url));
                 urlEntry.setUrlStatus(1);
                 urlMapper.update(urlEntry,new QueryWrapper<UrlEntry>().lambda().eq(UrlEntry::getUrl,url));
+                //
+                bargainEntity.setBargainStatus(2);
+                baseMapper.update(bargainEntity,new QueryWrapper<BargainEntity>().lambda().eq(BargainEntity::getId,id));
             }
         //需要人数 == 成功砍价人数 是否相同  <
         if (bargainEntity.getNeedNumberPeople().equals(bargainEntity.getBargainNumberPeople())){
-            bargainEntity.setBargainStatus(2);
-            baseMapper.update(bargainEntity,new QueryWrapper<BargainEntity>().lambda().eq(BargainEntity::getId,id));
             return Result.error("该砍价活动被人砍完了");
         }
         // 判断剩余百分比 是否等于0
@@ -193,7 +202,7 @@ public class  BargainServiceImpl extends ServiceImpl<BargainMapper, BargainEntit
             bargainEntity.setBargainStatus(2);
             bargainEntity.setStatus(1);
             baseMapper.update(bargainEntity,new QueryWrapper<BargainEntity>().lambda().eq(BargainEntity::getId,id));
-            return Result.error("该砍价活动被人砍完了剩余百分比0");
+            return Result.error("该砍价活动被人砍完了   剩余百分比0");
         }
         // 判断本人是否拼团过
             Long userId = bargainEntity.getUserId();

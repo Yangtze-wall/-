@@ -56,15 +56,6 @@ public class JobConfig {
             }
         });
 
-        bargainEntityList.stream().forEach(c -> {
-            long l = System.currentTimeMillis();
-            if (l>c.getTotalExpirationTime().getTime()){
-                BargainEntity bargainEntity = new BargainEntity();
-                bargainEntity.setId(c.getId());
-                bargainEntity.setStatus(1);
-                bargainEntity.setBargainStatus(1);
-                bargainMapper.updateById(bargainEntity);
-            }
-        });
+
     }
 }

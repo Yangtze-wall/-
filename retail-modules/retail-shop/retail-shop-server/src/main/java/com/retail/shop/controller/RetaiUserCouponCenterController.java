@@ -3,6 +3,7 @@ package com.retail.shop.controller;
 import java.util.List;
 
 
+import com.retail.common.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,4 +29,9 @@ public class RetaiUserCouponCenterController {
 
     @Autowired
     private RetaiUserCouponCenterService retaiUserCouponCenterService;
+
+    @PostMapping("shop/retaiusercouponcenter/isDelRetaiUserCoupon")
+    Result isDelRetaiUserCoupon(@RequestParam("couponId") Long couponId){
+        return retaiUserCouponCenterService.isDelRetaiUserCoupon(couponId);
+    }
 }

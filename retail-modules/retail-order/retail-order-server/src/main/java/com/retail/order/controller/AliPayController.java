@@ -71,6 +71,7 @@ public class AliPayController {
         boolean signVerified = AlipaySignature.rsaCheckV1(params, AliPayConfig.alipay_public_key,
                 AliPayConfig.charset, AliPayConfig.sign_type);
 
+        //
 
 
         if (signVerified) {
@@ -97,12 +98,16 @@ public class AliPayController {
             payMentEntity.setPaymentStatus(params.get("trade_status"));
             payMentEntity.setOrderSn(orderSn);
             paymentService.createColonelOrderPay(payMentEntity);
-            //修改订单支付状态
+            //修改订单支付状态   添加结账时间
+
+
+            //  支付成功后给用户加积分，调用用户加积分接口
 
 
             return "success";
         } else {
             System.out.println("签名验证失败...");
+
             return "error";
         }
 

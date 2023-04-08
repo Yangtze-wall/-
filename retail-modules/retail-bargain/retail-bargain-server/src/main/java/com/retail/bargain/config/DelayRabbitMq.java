@@ -1,22 +1,31 @@
 package com.retail.bargain.config;
 
+import com.alibaba.fastjson.JSONObject;
+import com.rabbitmq.client.Channel;
+import com.retail.bargain.domain.BargainEntity;
+import com.retail.bargain.mapper.BargainMapper;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.amqp.core.*;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
 
+import java.io.IOException;
 import java.util.HashMap;
-
+import java.util.List;
 
 
 /**
  * @author Lenovo
  * 延迟队列
  */
-//@Configuration
+@Configuration
 @Log4j2
 public class DelayRabbitMq {
+    @Autowired
+    private BargainMapper bargainMapper;
     @Autowired
     private RedisTemplate<String,String> redisTemplate;
     /**
@@ -80,6 +89,31 @@ public class DelayRabbitMq {
         return binding;
     }
 
+
+    @RabbitListener(queues = DEAD_QUEUE)
+    public void  queueDead(String json,Channel channel,Message message){
+        long deliveryTag = message.getMessageProperties().getDeliveryTag();
+        String messageId = message.getMessageProperties().getMessageId();
+        Long add = redisTemplate.opsForSet().add(messageId);
+        if (add>=1){
+            try {
+                List<BargainEntity> bargainEntityList = JSONObject.parseArray(json, BargainEntity.class);
+                bargainEntityList.stream().forEach(c -> {
+                    long l = System.currentTimeMillis();
+                    if (l>c.getTotalExpirationTime().getTime()){
+                        BargainEntity bargainEntity = new BargainEntity();
+                        bargainEntity.setId(c.getId());
+                        bargainEntity.setStatus(1);
+                        bargainEntity.setBargainStatus(1);
+                        bargainMapper.updateById(bargainEntity);
+                    }
+                });
+                channel.basicAck(deliveryTag,true);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 
 
