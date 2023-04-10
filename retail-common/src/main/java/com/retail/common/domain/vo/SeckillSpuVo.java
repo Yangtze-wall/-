@@ -19,7 +19,7 @@ public class SeckillSpuVo {
 
     private Long id;
 
-    private Long spuId;
+    private Long skuId;
 
     private String slideShow;
 
@@ -42,7 +42,6 @@ public class SeckillSpuVo {
     private Integer esRedis;
 
 
-    private Long skuId;
     /**
      * 商品名称
      */

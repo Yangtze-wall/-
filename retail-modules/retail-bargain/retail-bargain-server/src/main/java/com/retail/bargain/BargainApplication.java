@@ -15,7 +15,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @Version:
  */
 @SpringBootApplication
-@EnableFeignClients( basePackages = {"com.retail.bargain"})
+@EnableFeignClients
 @EnableDiscoveryClient
 public class BargainApplication {
     public static void main(String[] args) {

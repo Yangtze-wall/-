@@ -1,5 +1,6 @@
 package com.retail.bargain.domain.request;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.util.Date;
@@ -16,11 +17,18 @@ public class SeckillRequest {
     /**
      * 时间区间
      */
-    private Date time;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date startTime;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date endTime;
+    /**
+     * 秒杀商品标题
+     */
+    private String seckillName;
 
     /**
      * 分页
      */
-    private Integer pageNum;
-    private Integer pageSize;
+    private Integer pageNum=1;
+    private Integer pageSize=3;
 }

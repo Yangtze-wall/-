@@ -1,5 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.retail.bargain.mapper.SeckillMapper">
+    <insert id="insertOrder" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `practical`.`retail_order`(`user_id`, `order_sn`, `total_amount`, `integration_amount`, `coupon_amount`, `freight_amount`, `pay_amount`, `status`, `corporation_id`, `name`, `phone`, `address`, `remark`, `coupon_id`, `create_time`, `reality_time`, `type`, `seckill_id`, `address_id`)
+                                        VALUES (#{userId}, #{orderSn}, #{totalAmount} ,#{integrationAmount}, #{couponAmount}, #{freightAmount}, #{payAmount}, #{status}, #{corporationId}, #{name}, #{phone}, #{address}, #{remark}, #{couponId}, #{createTime}, #{realityTime}, #{type}, #{seckillId}, #{addressId});
+    </insert>
 
+    <update id="updateEsRedis">
+        update retail_seckill set es_redis=#{esRedis} where id=#{id}
+    </update>
+    <update id="updateOrderStatus">
+        update retail_order set status = "3" where id=#{id}
+    </update>
+    <update id="inventoryLock">
+        update retail_inventory set inventory_lock=inventory_lock+#{count} where id=#{id}
+    </update>
+    <update id="updateInventoryCount">
+        update retail_inventory set inventory_count=#{count} where id=#{id}
+    </update>
+    <update id="updateInventoryLock">
+        update retail_inventory set inventory_lock=#{count} where id=#{id}
+    </update>
+
+    <select id="selectSpu" resultType="com.retail.common.domain.vo.SeckillSpuVo">
+        select * from retail_seckill a
+        left join retail_spu b on a.spu_id=b.id
+    </select>
+    <select id="selectSkuInventory" resultType="com.retail.common.domain.vo.SkuInventoryVo">
+        select  *  from retail_sku a
+        left join retail_inventory b on a.id=b.spu_id
+        where a.spu_id=#{spuId}
+
+    </select>
+    <select id="findByIdOrder" resultType="com.retail.bargain.vo.OrderVo">
+        SELECT * FROM `retail_order` where id=#{id}
+    </select>
+    <select id="findOrderBySeckillIdUserId" resultType="com.retail.bargain.vo.OrderVo">
+        SELECT * FROM `retail_order` where seckill_id=#{seckillId} and user_id=#{userId}
+    </select>
+    <select id="userLogin" resultType="com.retail.common.domain.vo.UserEntityVo">
+        select * from `retail_user` where id=#{id}
+    </select>
+    <select id="findByIdSpu" resultType="com.retail.bargain.vo.SpuEntity">
+        select *from retail_spu where id=#{spuId}
+    </select>
+    <select id="selectAddress" resultType="com.retail.bargain.vo.AddressVo">
+        select *from retail_user_address where id = #{addressId}
+    </select>
+    <select id="findByIdInventory" resultType="com.retail.common.domain.vo.InventoryVo">
+        select *from retail_inventory where spu_id=#{spuId}
+    </select>
+    <select id="findByIdSku" resultType="com.retail.bargain.vo.SkuEntity">
+        select *from retail_sku where id =#{skuId}
+    </select>
 </mapper>

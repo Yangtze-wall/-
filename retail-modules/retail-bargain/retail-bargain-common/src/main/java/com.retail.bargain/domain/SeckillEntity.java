@@ -1,90 +1,53 @@
 package com.retail.bargain.domain;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-
-import java.math.BigDecimal;
-import java.io.Serializable;
-import java.util.Date;
-import lombok.Data;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
+
 /**
- * 秒杀商品表
- *
- * @author fengge
- * @date 2023-03-23 11:22:38
+ * @ProjectName: retail-cloud
+ * @Package: com.retail.colonel.domain
+ * @ClassName: Seckill
+ * @Author: 2766395184
+ * @Description: 秒杀表
+ * @Date: 2023/3/25 9:53
+ * @Version: 1.0
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName("retail_seckill")
 public class SeckillEntity implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * 秒杀表id
-	 */
-	@TableId(type = IdType.AUTO)
-	private Long id;
-	/**
-	 * 商品id
-	 */
-	private Long shopId;
-	/**
-	 * 轮播图
-	 */
-	private String slideShow;
-	/**
-	 * 秒杀商品标题
-	 */
-	private String seckillHeadline;
-	/**
-	 * 秒杀价
-	 */
-	private BigDecimal seckillPrice;
-	/**
-	 * 秒杀开始时间
-	 */
-	private Date seckillStartTime;
-	/**
-	 * 秒杀结束时间
-	 */
-	private Date seckillEndTime;
-	/**
-	 * 添加时间
-	 */
-	private Date seckillCreateTime;
-	/**
-	 * 状态
-	 */
-	private Integer status;
-	/**
-	 * 秒杀库存
-	 */
-	private Integer seckillCount;
-	/**
-	 * 剩余库存
-	 */
-	private Integer seckillResidueCount;
-	/**
-	 * 每人限购次数
-	 */
-	private Integer seckillLimit;
-	/**
-	 * 是否包邮
-	 */
-	private Integer postFree;
-    /**
-	 * 秒杀商品描述介绍
-	 */
+    private Long id;
 
-	private String seckillIntroduce;
+    private Long skuId;
 
-	/**
-	 * 秒杀配置id
-	 */
-	private Integer seckillConfigId;
+    private String slideShow;
+
+    private String seckillHeadline;
+
+    private BigDecimal seckillPrice;
+
+    private Date seckillStartTime;
+
+    private Date seckillEndTime;
+
+    private Date seckillCreateTime;
+
+    private Integer postFree;
+
+    private Integer seckillLimit;
+
+    private Integer seckillResidueCount;
+
+    private Integer esRedis;
+
+
 }

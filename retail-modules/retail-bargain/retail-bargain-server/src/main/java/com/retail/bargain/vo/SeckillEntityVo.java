@@ -17,7 +17,7 @@ public class SeckillEntityVo {
     /**
      * 商品id
      */
-    private Long shopId;
+    private Long spuId;
     /**
      * 轮播图
      */
@@ -43,14 +43,6 @@ public class SeckillEntityVo {
      */
     private Date seckillCreateTime;
     /**
-     * 状态
-     */
-    private Long status;
-    /**
-     * 秒杀库存
-     */
-    private Integer seckillCount;
-    /**
      * 剩余库存
      */
     private Integer seckillResidueCount;
@@ -62,21 +54,11 @@ public class SeckillEntityVo {
      * 是否包邮
      */
     private Integer postFree;
-    /**
-     * 秒杀商品描述介绍
-     */
 
-    private String seckillIntroduce;
+
 
     /**
-     * 秒杀配置id
+     * 商品名称
      */
-    private Integer seckillConfigId;
-
-    /**
-     * 百分比 剩余库存/秒杀库存 = 百分比
-     */
-    private BigDecimal percent;
-
-
+    private String spuName;
 }

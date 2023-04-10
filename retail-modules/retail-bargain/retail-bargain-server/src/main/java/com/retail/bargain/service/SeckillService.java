@@ -2,26 +2,55 @@ package com.retail.bargain.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.retail.bargain.domain.SeckillEntity;
+import com.retail.bargain.domain.request.PayRequest;
 import com.retail.bargain.domain.request.SeckillRequest;
-import com.retail.bargain.vo.SeckillEntityVo;
+import com.retail.bargain.domain.request.StartSeckill;
+import com.retail.common.domain.vo.SeckillSpuVo;
+import com.retail.common.result.Result;
 
 import java.util.List;
-import java.util.Map;
 
-/**
- * 秒杀商品表
- *
- * @author fengge
- * @email 1287137373@qq.com
- * @date 2023-03-23 11:22:38
- */
 public interface SeckillService extends IService<SeckillEntity> {
 
+//    /**
+//     * 秒杀商品详情
+//     * @param id
+//     * @return
+//     */
+//    Result<SeckillSpuVo> itemDetail(Long id);
+
     /**
-     * 秒杀商品列表
-     * @param seckillRequest
+     * 秒杀商品页面
+     * @param request
      * @return
      */
-    List<SeckillEntityVo> seckillList(SeckillRequest seckillRequest);
-}
+    List<SeckillEntity> seckillList(SeckillRequest request);
 
+    /**
+     * 秒杀商品添加
+     * @param entity
+     * @return
+     */
+    Result seckillAdd(SeckillEntity entity);
+
+    /**
+     * 点击开始秒杀
+     * @param seckill
+     * @return
+     */
+    Result start(StartSeckill seckill);
+
+    /**
+     * 支付
+     * @param payRequest
+     * @return
+     */
+    Result pay(PayRequest payRequest);
+
+    /**
+     * 商品详情信息
+     * @param id
+     * @return
+     */
+    SeckillSpuVo itemDetail(Long id);
+}
