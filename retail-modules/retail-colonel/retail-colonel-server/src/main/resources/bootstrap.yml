@@ -15,11 +15,16 @@ spring:
     # 环境配置
     active: dev
   cloud:
+    sentinel:
+      eager: true
+      transport:
+        dashboard: localhost:8888
+        port: 8179
     nacos:
       discovery:
         # 服务注册地址
         server-addr: 139.196.95.132:8848
-        namespace: 30354df8-a3b1-4324-82bc-66a42864e7e4
+        namespace: 8f73b40e-0976-464a-a41f-7f6cf9faf2f9
       config:
         # 配置中心地址
         server-addr: 139.196.95.132:8848
@@ -28,6 +33,18 @@ spring:
         # 共享配置
         shared-configs:
           - application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+    refresh:
+      never-refreshable: org.apache.ibatis.session.defaults.DefaultSqlSessionFactory
 #des 密钥
 des:
   decryptKey: qqpqwertypuiopas
+sss: sss
+tencentcloudapi:
+  # 你的 secretId
+  secretId: AKIDkRI2sbAbt365wc9Yoy1ta7WknhT7c9bx
+  # 你的 secretKey
+  secretKey: JXbVEpIdoDUbaWNA2qolZEj3TjlcHk2R
+  # 请求官方地址 不变
+  endpoint: iai.tencentcloudapi.com
+  #地域 可不变
+  region: ap-shanghai

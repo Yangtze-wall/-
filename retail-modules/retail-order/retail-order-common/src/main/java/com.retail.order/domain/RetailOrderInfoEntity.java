@@ -1,14 +1,15 @@
 package com.retail.order.domain;
 
-import com.baomidou.mybatisplus.annotation.IdType;import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-
-import java.math.BigDecimal;
-import java.io.Serializable;
-import java.util.Date;
-import lombok.Data;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * 订单详情表
@@ -20,8 +21,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("reatil_order_info")
-public class ReatilOrderInfoEntity implements Serializable {
+@TableName("retail_order_info")
+public class RetailOrderInfoEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**

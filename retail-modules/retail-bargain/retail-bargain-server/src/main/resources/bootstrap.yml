@@ -19,6 +19,7 @@ spring:
       discovery:
         # 服务注册地址
         server-addr: 139.196.95.132:8848
+        namespace: 8f73b40e-0976-464a-a41f-7f6cf9faf2f9
       config:
         # 配置中心地址
         server-addr: 139.196.95.132:8848
@@ -27,3 +28,22 @@ spring:
         # 共享配置
         shared-configs:
           - application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+aliPay:
+  url: https://openapi-sandbox.dl.alipaydev.com/gateway.do
+  appId: 2021000122650339
+  privateKey: MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDe8Vl6TkUO7AZLFK4mpJWf8CiGagfM2aBFiUp6yGzn3WCqLYs0CZaV4qfRiEiH6RZNaK29mqrpcux7LS58xcGRGqHDmadTd+mfCaUOD/J5YHOq0sHCRFkK3e/Bck5/b9jwwQy/n6TRz+f8+7G9PJhGjnbJ/FtONKAU3OS7un3+Ulw3xDOufHWyJNw5Q/N28iuErU4r5m5e38M8FMD1HF2uayBVNHDRmB5t6Um5LPjcBlCOPmpId8Z+DB02XXPHoDNHEK1fELOEfYxtAHUfoRGnwhwtzAU+FBMUHuH+UBsWbpxWyv2ijujanaL3/5oC5UIxtCXPvhiNQR6hpXNtKukHAgMBAAECggEBAK7GBABmtaqyC2j2qGPw6L9+dTaSjtTf0s5Qh8vjrcTDftFKbPN5hMyx6B/SOBIb/3jl1DZstwnWJ1+VFvmHymxntWLy5QMBYWtlEzkH9W2D2ImVOYKDNE7Zl+hOJQ2wcCClJspea8Zzt4lTA463nyTI8IT+SdHwXYKdfM9Srw0cqwzQQs9lMnmM57NtGR//M3zKY0VblzPl+LAjOJiZLFEsFyfUFl4TrrXc+3GCTm1fd7DsemXK1Dk/9rZWX7it48cqvMBGK+enLFkleTMGTaE2Efz60zXX56EVtse9zRc5gbffG/9F8XsdTOP2qNOpEqRu72otF3tk/MrP8SPdtXECgYEA9+Lkd8DEcwRXuTum00yNdDTH7HMNJ7BF+U3Y2yVTGsySS9pB2xHHu3wtFLb8WUcwY00pPtrAvgDe4oCWZaaN7Q26BEKCFVKztZPWwqLvYM2ZIeqa6OQ7UhKLEYTyEhwNkZaMYGa35pOtGQCTAt3rhcfewo3BBcopcsYYoj/zZgkCgYEA5j1yyaDBO/ZPCpVZp/h7/PnvDtcBUylUoUQAv56eB/gaXy0bARZemdY3g6Y0RWUPs6Q1i83WJ84pKJnmBJJr5a60iA+NbRmfIHy0EnZ6Y4RX3pZ/8TjCsBb2NboOSBg/cYTPl/maqerS+yir0qbxFZpA1keSXShPaaXDKNMYGo8CgYAHSO257zpWvvvs/6nJb+iAT8TIWCE811tXFkiXOCOXGAf8nq9sxrr98YpJn48O+J6dbHkX1cnwS4pBUdIZrqlhHBQpZ+L2yXVqkquvEKbES4aCjqh6y6pKoSzhGO0cRyLG8ouxkZM5/YEKyQ+I+Aih59vOD+hqSSSqsNOsgQCgMQKBgFVhLiMFIQNKaK9FCRVX+SqryHHZW11qcz7GR/zHJlVQNP9ca6owkG492SJRzQp62qLEXzLz5tmmAu9SetDxN1/aNIpMMibmHHNgqyo5k1M6LZeWeeWLJe9E5JKx5z/m9gfzt0PlROyD7y9COs2IKNjY9fhAXE99dk14MfH+re6TAoGBALeaQI2UR5989JfbGBHPwVlEC4l3HU/q+wpW4xS18R26kXy7IurniRUfZyjif9xjOCbrzVEnRIVxvEusIt8C1vZ1UAzWPCtPa4zvjXo+dcHWQCnMwywUrwly+9oGbfZu9VnTFtAljUvixvqfTDbumvpZPH3Hm45/kpqEWc3O+e6x
+  publicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAom75YO2KQMLuriQZTq0dQwLdugmY41MdnSyGHQusn9EenPWHe+f8PmNk4rYt5kzp6RFe68Yqm5LvZ1ianuOoJM9wjq1N851pgx1wnPF7OfmhSVSJLcog0Qgagr7tbfq/lcHHnAIB0XTVZOutLbOsjyXji5uCoTJrDYBTPrt7EVadjr85O+3ZW+f0PhMiMDNZgMgKVlVE+KuAlpx7GlWwSuQ+qqNOUtX7KPo5O2MhOTADSJJHc7vR6WRs0RxaOsw8TorH7vxn/Ha05VxnuAPkEbvgnDGRjHov1FYu1v/763of+RciN2i6oIoxi0AlFdH54KWP7Busd6ad7oQUc5jBMQIDAQAB
+  notifyUrl: https://69y0f20371.goho.co/notify
+  returnUrl: http://localhost:9528/#/seckill/index
+
+xxl:
+  job:
+    executor:
+      appname: systems
+      port: 9999
+    admin:
+      addresses: http://127.0.0.1:8080/xxl-job-admin
+      accessToken: default_token
+#des 密钥
+des:
+  decryptKey: qqpqwertypuiopas

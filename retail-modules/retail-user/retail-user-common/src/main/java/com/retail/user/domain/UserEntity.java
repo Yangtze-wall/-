@@ -1,13 +1,14 @@
 package com.retail.user.domain;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.IdType;import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -92,7 +93,7 @@ public class UserEntity implements Serializable {
 	/**
 	 * 用户余额
 	 */
-	private Integer balance;
+	private BigDecimal balance;
 	/**
 	 * 最后登录时间
 	 */
@@ -101,5 +102,6 @@ public class UserEntity implements Serializable {
 	 * 备注
 	 */
 	private String remark;
+
 
 }

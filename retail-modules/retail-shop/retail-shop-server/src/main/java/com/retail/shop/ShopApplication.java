@@ -10,7 +10,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @description: 商品系统服务启动类
  */
 @SpringBootApplication
-@EnableFeignClients( basePackages = {"com.retail.shop"})
+@EnableFeignClients
 @EnableDiscoveryClient
 public class ShopApplication {
     public static void main(String[] args) {

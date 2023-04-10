@@ -2,7 +2,7 @@ package com.retail.order.mapper;
 
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.retail.order.domain.ReatilOrderInfoEntity;
+import com.retail.order.domain.RetailOrderInfoEntity;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -13,6 +13,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @date 2023-03-22 18:50:56
  */
 @Mapper
-public interface ReatilOrderInfoMapper extends BaseMapper<ReatilOrderInfoEntity> {
+public interface ReatilOrderInfoMapper extends BaseMapper<RetailOrderInfoEntity> {
 
 }

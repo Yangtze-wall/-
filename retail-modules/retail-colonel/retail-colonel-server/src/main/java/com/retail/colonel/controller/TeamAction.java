@@ -7,6 +7,9 @@ import com.retail.common.constant.TokenConstants;
 import com.retail.common.domain.vo.UserEntityVo;
 import com.retail.common.result.Result;
 import com.retail.common.utils.JwtUtils;
+import com.retail.common.utils.StringUtils;
+import com.retail.shop.domain.SkuEntity;
+import com.retail.shop.remote.ShopFeign;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
@@ -65,13 +68,26 @@ public class TeamAction {
     @Autowired
     private RedisTemplate<String,String> redisTemplate;
     //拼团邀请接口
-    @GetMapping("applyUser/{id}")
-    public Result applyUser(@PathVariable("id") String id){
+    @GetMapping("applyUser/{id}/{spuId}")
+    public Result applyUser(@PathVariable("id") String id,@PathVariable("spuId") Long spuId){
         String token = request.getHeader("token");
         String userKey = JwtUtils.getUserKey(token);
         String s = redisTemplate.opsForValue().get(TokenConstants.LOGIN_TOKEN_KEY + userKey);
         UserEntityVo user = JSON.parseObject(s, UserEntityVo.class);
         Result result = teamService.applyUser(user.getId(),id);
         return result;
+    }
+    @Autowired
+    private ShopFeign shopFeign;
+    //拼团商品信息明细
+    @GetMapping("info/{id}")
+    public Result getInfo(@PathVariable("id") Long id){
+        String s = redisTemplate.opsForValue().get("sku_" + id);
+        if (!StringUtils.isNull(s)){
+            return Result.success(JSON.parseObject(s, SkuEntity.class));
+        }
+        SkuEntity skuEntity =  shopFeign.getInfo(id);
+        redisTemplate.opsForValue().set("sku_"+id, JSON.toJSONString(skuEntity));
+        return Result.success(skuEntity);
     }
 }

@@ -1,15 +1,15 @@
 package com.retail.bargain.domain;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.IdType;import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
+import java.io.Serializable;
 import java.util.Date;
+import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 /**
  * 拼团表
@@ -53,7 +53,7 @@ public class TeamEntity implements Serializable {
 	/**
 	 * 状态
 	 */
-	private Long status;
+	private Integer status;
 	/**
 	 * 团长id
 	 */

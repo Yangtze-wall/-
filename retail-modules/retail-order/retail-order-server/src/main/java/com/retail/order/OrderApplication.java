@@ -15,11 +15,10 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @Version:
  */
 @SpringBootApplication
-@EnableFeignClients( basePackages = {"com.retail.order"})
+@EnableFeignClients(basePackages = {"com.retail"})
 @EnableDiscoveryClient
 public class OrderApplication {
     public static void main(String[] args) {
         SpringApplication.run(OrderApplication.class);
     }
-
 }

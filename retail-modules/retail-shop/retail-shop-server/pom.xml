@@ -26,5 +26,19 @@
             <groupId>org.elasticsearch.client</groupId>
             <artifactId>elasticsearch-rest-high-level-client</artifactId>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.xuxueli</groupId>-->
+<!--            <artifactId>xxl-job-core</artifactId>-->
+<!--            <version>2.0.1</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.slf4j</groupId>-->
+<!--            <artifactId>slf4j-api</artifactId>-->
+<!--        </dependency>-->
+        <dependency>
+            <groupId>com.xuxueli</groupId>
+            <artifactId>xxl-job-core</artifactId>
+            <version>2.4.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 </project>

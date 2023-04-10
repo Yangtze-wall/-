@@ -19,6 +19,7 @@ spring:
       discovery:
         # 服务注册地址
         server-addr: 139.196.95.132:8848
+        namespace: 8f73b40e-0976-464a-a41f-7f6cf9faf2f9
       config:
         # 配置中心地址
         server-addr: 139.196.95.132:8848
@@ -27,3 +28,16 @@ spring:
         # 共享配置
         shared-configs:
           - application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+
+#xxl:
+#  job:
+#    executor:
+#      appname: system-stop
+#      address:
+#      ip:
+#      port: 9999
+#      logpath:
+#      logretentiondays: 30
+#    admin:
+#      addresses: http://127.0.0.1:8080/xxl-job-admin
+#      accessToken: default_token

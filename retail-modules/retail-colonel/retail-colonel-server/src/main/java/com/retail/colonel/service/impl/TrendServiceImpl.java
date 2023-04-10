@@ -36,6 +36,9 @@ public class TrendServiceImpl extends ServiceImpl<TrendMapper, Trend> implements
     public List<Trend> selectTrend(Long id) {
         List<ColonelEntity> colonelEntities = this.colonelMapper.selectList(new QueryWrapper<ColonelEntity>().lambda()
                 .eq(ColonelEntity::getUserId, id));
+        if (colonelEntities.size()==0){
+            return null;
+        }
         List<Trend> trends = this.trendMapper.selectList(new QueryWrapper<Trend>().lambda()
                 .eq(Trend::getColonelId, colonelEntities.get(0).getId()));
         return trends;

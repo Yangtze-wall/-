@@ -15,11 +15,12 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @Version:
  */
 @SpringBootApplication
-@EnableFeignClients
+@EnableFeignClients(basePackages = {"com.retail"})
 @EnableDiscoveryClient
+
 public class ColonelApplication {
     public static void main(String[] args) {
-        SpringApplication.run(ColonelApplication.class);
+        SpringApplication.run(ColonelApplication.class,args);
     }
 
 }

@@ -66,8 +66,8 @@ public class UserController {
         return  Result.success(userEntityVo);
     }
     @GetMapping("/colonelLogin/{phone}")
-    Result<UserEntityVo> loginPasswordColonel(@PathVariable("phone") String phone){
-         UserEntityVo user = this.userService.colonelLogin(phone);
-        return Result.success(user,"调用成功");
+    Result<UserEntity> loginPasswordColonel(@PathVariable("phone") String phone){
+        UserEntity user = this.userService.colonelLogin(phone);
+        return Result.success(user,"成功");
     }
 }

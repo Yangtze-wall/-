@@ -22,6 +22,20 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.alipay.sdk</groupId>
+            <artifactId>alipay-sdk-java</artifactId>
+            <version>4.35.87.ALL</version>
+        </dependency>
+        <dependency>
+            <groupId>org.example</groupId>
+            <artifactId>retail-bargain-common</artifactId>
+        </dependency>
+<dependency>
+            <groupId>org.example</groupId>
+            <artifactId>retail-bargain-remote</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>

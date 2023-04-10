@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 /**
  * <p>
@@ -30,7 +29,7 @@ public class Team implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
- private Long skuId;
+ private Long orderId;
 
     /**
      * 所需人数
@@ -60,11 +59,13 @@ public class Team implements Serializable {
     /**
      * 拼团结束时间
      */
-    private Date teamEndTime;
+//    private Date teamEndTime;
     /**
      * 优惠金额
      */
-    private BigDecimal discountPrice;
+//    private BigDecimal discountPrice;
+    //平团完成时间
+    private Date teamAccomplishTime;
 
 
 }

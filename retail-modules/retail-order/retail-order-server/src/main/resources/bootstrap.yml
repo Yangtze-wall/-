@@ -19,6 +19,7 @@ spring:
       discovery:
         # 服务注册地址
         server-addr: 139.196.95.132:8848
+        namespace: 8f73b40e-0976-464a-a41f-7f6cf9faf2f9
       config:
         # 配置中心地址
         server-addr: 139.196.95.132:8848
@@ -27,3 +28,13 @@ spring:
         # 共享配置
         shared-configs:
           - application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+alipay:
+  url: https://openapi.alipaydev.com/gateway.do
+  appid: 2021000122671123
+  privateKey: MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCrUQ40kPNBXs9AtTRxhsNlFfSz8kAB4AY2gMmgdtZdb9yIbs7sWxDwIdFr56JSKhdXS0wfO8xf+fiOSA5WF2cVPL+2I2a5+Qe04GtIkTraVw+GDFmfor6Ljne0/EOa7Dh+ulNSzvQH+oaCpmdNMkqDZncv5cDXCnSp4JYcrv8wjLrNfVtqb7mR4L8O5Pf8t+o1cfGHg8iAtq4uvmwZ55vIXXDxKuXvXetmGoBLXXDheTua0OKbqAFyyIm9gtDgXuWzkYLc6u+BaTCXpzu31OocKejIMrwCKT0bTzBioP6QN9R0J125AzCtshYkLMHuBjo8jtSYFL/fYDZW/WdJWWTPAgMBAAECggEAY8szmytUiB/SWr8zbW4zJA9GHAxhfLYi6FzdFrwi4wrmTBNANi5WD4ujkle8FmCueAtErG0JAF98imUu9LdtNNHOWysEDBEkjBiuZfczcTyFrnBDRNpoZKL42FSajQRNZITlRLeJL5yf/jswsac6AJEPnLcZPiq5CrvotYy62mwpeLrUAkL5vuMagYk8HfI195OLJtOQa1AFZ8t7khp2k+osuW+LBXn/7MxXTsqdkbsFibxsk/neMJbhvMBET+TEAa2ZsGBGLilX5zMTIolyGQhTWZEWMI5wMfPta8IIphTqSdBslJWWc0Aj0Q21ursEOH2G9bjjX5HQkt2K08i+AQKBgQDxMqdz7Bb+vO5xVRifa0Z+jSi7o9lZC5d+bsN0hApTgD7eyYCvl8RQkeDaOG4cTGa0mjnvuyVeJ91ZsPmIFdbKUfa9N4b04lCydU120MJARECBqkp88PjaAh9SS/64a4za2rCfRi/Qq/QghXM7hiCfMCfduTsA/EHohTqqXzrCKQKBgQC11Ie1urSZWBRAmt91tBwYwwubNhM2K7sT6KNk001zvv6X7K3UkKVe6gfWY2QyRfCudDzjUR/OkZcpetHOlXfhL3z5zcXkoxGV15n31DZcXJANaFam6lFtnEVUip7rGtAz+aInj8e2o9EeD7GKNjcnr3mjDaGSFufn3C5Csw3+NwKBgE50IH2XTH99ar2YZVLtbNebCKXIDNlm6NbqJk9O56DzdP+4YVA8OFHQsWeptT8lJr8V70RoBiaTJu+WngPCvsO+V1iCqDYdKwxxFUpRau3GhYjnoCT1qKwYxqFZMLhB22YQfiTAiqsAU38EiU/SN+gvnLgFGQkgBDwioctrAEzJAoGBAIucc9cFVEWpa2NvhsRJVolsuSyjiHy/dxUCOvLfi0ikDbd48r+TkGYgK4RhLD2tle9dMKMZVuK0xuwCcbW87h7o53ymkpvK2WXD9WRkfJjOOY0R3/apU3xl0JXpGbxLCjHeKrNVonKJtbbvNdJ5bj/6a9rWTIhvLgDI/nwYH1ZhAoGBAKhLgi2/OUR4smGD3vItLSfSuh+kK444rjx3bjVFKOfeIZJRo9loxaUeDFL7OlnVsNuAjPi70uyZmZC+2giSdQHq7T0m46+6BZJJoyNrjYx0DFjNeWETuLKyEUseIAnfritjGIqPBznvVzB0T8MMqFaUvg9K3Sbt976wOWCi9olU
+  publicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAiIBX9e/UY//p2m6BOwj8R47dGoFO0mvKrcxb48P6Ikck3CpKURL8yz9bd32DpdvHfSDtrzZ0IKSxBhtp17wlt7ZchzXCEEQk1Dex9MJKxr2Ga7apd9WPOJaHTy35vTSqC5cT7tpOSB4JXIdrTE7f5OE0ROnJWOU+t1flb6UpbZfH05WqIs2loQI1gEzJwhClDaD8BwirwKPujRpseuUDBe1Nbytbi4zday8d9xle1kO/1Vvz7oaHoYBLGnKwOS4jsO8ssHIOnsvV9qaUgoALiqI1o0UbJPKEt1ih8pRct1fEqF9I3ZRF2gOk/hPXTTkAKCtN7GUDwQNaisjfWaoqqQIDAQAB
+  # 异步调用地址
+  notifyUrl: https://715y5616c3.goho.co/order/notify
+  # 支付成功调用知道
+  returnUrl: http://localhost:9528/
+

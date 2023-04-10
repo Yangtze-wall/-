@@ -3,9 +3,6 @@ package com.retail.order.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.retail.order.domain.OrderEntity;
 
-
-import java.util.Map;
-
 /**
  * 订单表
  *
@@ -16,5 +13,6 @@ import java.util.Map;
 public interface OrderService extends IService<OrderEntity> {
 
 
+    OrderEntity getOrder(Long userId, Long id);
 }
 

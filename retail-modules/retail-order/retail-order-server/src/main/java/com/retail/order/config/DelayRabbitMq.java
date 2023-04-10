@@ -57,6 +57,7 @@ public class DelayRabbitMq {
     @Bean
     public Queue createDead(){
         Queue queue = new Queue(DEAD_QUEUE,true);
+
         return queue;
     }
 

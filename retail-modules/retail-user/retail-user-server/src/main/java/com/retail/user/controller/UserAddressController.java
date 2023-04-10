@@ -58,4 +58,9 @@ public class UserAddressController {
         userAddressService.upateStatus(id,userId);
         return Result.success(null,"成功");
     }
+    @PostMapping("findByUserId/{userId}")
+    public Result<List<UserAddressEntity>> findByUserId(@PathVariable String userId) {
+        List<UserAddressEntity> list = userAddressService.findUserAddressEntity(userId);
+        return Result.success(list);
+    }
 }
