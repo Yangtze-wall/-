@@ -1,11 +1,11 @@
 package com.retail.order.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.retail.common.result.Result;
 import com.retail.order.domain.OrderEntity;
+import com.retail.order.domain.request.OrderRequest;
+import com.retail.order.vo.OrderEntityVo;
 
-
-import java.util.Map;
+import java.util.List;
 
 /**
  * 订单表
@@ -17,9 +17,14 @@ import java.util.Map;
 public interface OrderService extends IService<OrderEntity> {
 
 
-    Result createSkeillOrder(OrderEntity orderEntity);
+//    Result createSkeillOrder(OrderEntity orderEntity);
+//
+//    Result updateOrderAddress(OrderEntity orderEntity);
 
-    Result updateOrderAddress(OrderEntity orderEntity);
-
+    /**
+     * 订单列表
+     * @return
+     */
+    List<OrderEntityVo> orderList(OrderRequest request);
 }
 

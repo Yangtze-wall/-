@@ -2,4 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.retail.order.mapper.OrderMapper">
 
+    <select id="selectFindByIdSpu" resultType="com.retail.order.vo.SpuEntity">
+        select *from retail_spu where id=#{spuId}
+    </select>
+    <select id="selectFindByIdSku" resultType="com.retail.order.vo.SkuEntity">
+        select *from retail_sku where id=#{skuId}
+    </select>
 </mapper>
