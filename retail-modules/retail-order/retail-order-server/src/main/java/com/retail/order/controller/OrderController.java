@@ -59,7 +59,7 @@ public class OrderController {
     @Autowired
     private BargainFeign bargainFeign;
     @GetMapping("pay/{userId}/{id}")
-    public void returnUrl(HttpServletResponse httpResponse, @PathVariable("userId") Long userId, @PathVariable("id") Long id) throws AlipayApiException, IOException {
+    public String returnUrl(HttpServletResponse httpResponse, @PathVariable("userId") Long userId, @PathVariable("id") Long id) throws AlipayApiException, IOException {
         OrderEntity orderEntity = orderService.getOrder(userId,id);
         if (orderEntity!=null){
             throw new BizException(401,"你已经抢购了");
@@ -115,10 +115,10 @@ public class OrderController {
         System.out.println(tradeNo);
         System.out.println(response.getBody());
         if (response.isSuccess()) {
-            httpResponse.setContentType("text/html;charset=" + "UTF-8");
-            httpResponse.getWriter().write(response.getBody());          // 直接将完整的表单html输出到页面
-            httpResponse.getWriter().flush();
-            httpResponse.getWriter().close();
+//            httpResponse.setContentType("text/html;charset=" + "UTF-8");
+//            httpResponse.getWriter().write(response.getBody());          // 直接将完整的表单html输出到页面
+//            httpResponse.getWriter().flush();
+//            httpResponse.getWriter().close();
             System.out.println("成功");
             System.out.println(response.toString());
             System.out.println(response.getCode());
@@ -126,9 +126,11 @@ public class OrderController {
             System.out.println(response.getTradeNo());
             System.out.println(response.getOutTradeNo());
             System.out.println(response.getMerchantOrderNo());
+            return response.getBody();
         } else {
             System.out.println("失败");
         }
+        return null;
     }
     @Autowired
     private ApiData alipayConfig;
