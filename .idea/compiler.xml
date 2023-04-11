@@ -20,13 +20,13 @@
         <module name="retail-payment-remote" />
         <module name="retail-order-remote" />
         <module name="retail-colonel-common" />
-        <module name="retail-common" />
         <module name="retail-payment-common" />
         <module name="retail-order-common" />
         <module name="retail-user-server" />
         <module name="retail-auth" />
         <module name="retail-bargain-server" />
         <module name="retail-shop-server" />
+        <module name="retail-common" />
         <module name="retail-order-server" />
       </profile>
     </annotationProcessing>
