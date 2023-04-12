@@ -1,7 +1,5 @@
 package com.retail.common.domain.vo;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -30,7 +28,7 @@ public class CommissionVo {
     /**
      * 订单号(账户流水号)
      */
-    private String orderId;
+    private String orderSn;
     /**
      * 金额
      */
