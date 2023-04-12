@@ -7,7 +7,6 @@ import com.retail.common.utils.StringUtils;
 import com.retail.order.domain.OrderEntity;
 import com.retail.order.domain.request.OrderRequest;
 import com.retail.order.feign.ShopFeign;
-import com.retail.order.feign.UserFeign;
 import com.retail.order.mapper.OrderMapper;
 import com.retail.order.service.OrderService;
 import com.retail.order.vo.OrderEntityVo;
@@ -36,8 +35,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
     @Autowired
     private ShopFeign shopFeign;
 
-    @Autowired
-    private UserFeign userFeign;
+
 
     @Resource
     private OrderMapper orderMapper;

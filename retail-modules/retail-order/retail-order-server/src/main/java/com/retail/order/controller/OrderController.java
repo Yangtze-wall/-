@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 
@@ -110,6 +111,31 @@ public class OrderController {
         return Result.success(orderEntity.get(0));
     }
 
+    /**
+     * 订单号查询订单信息
+     */
+    @PostMapping("findByOrderSn/{orderSn}")
+    public Result<OrderEntity> orderFindByOrderSn(@PathVariable("orderSn") String orderSn){
+        List<OrderEntity> orderEntity = orderMapper.selectList(new QueryWrapper<OrderEntity>().lambda().eq(OrderEntity::getOrderSn,orderSn));
+        return Result.success(orderEntity.get(0));
+    }
+
+    /**
+     * 订单状态修改  (支付成功后)
+     */
+    @PostMapping("updateOrderStatus/{orderSn}")
+    public Result updateOrderStatus(@PathVariable("orderSn") String orderSn){
+        OrderEntity orderEntity = new OrderEntity();
+        //结账时间
+        orderEntity.setRealityTime(new Date());
+        //支付状态 2支付成功
+        orderEntity.setStatus(2);
+        int update = orderMapper.update(orderEntity, new QueryWrapper<OrderEntity>().lambda().eq(OrderEntity::getOrderSn, orderSn));
+        if (update==0){
+            return Result.error("修改失败");
+        }
+        return Result.success("修改成功");
+    }
 
 
 
