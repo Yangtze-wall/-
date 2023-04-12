@@ -5,6 +5,7 @@ import com.retail.bargain.domain.SeckillEntity;
 import com.retail.bargain.domain.request.PayRequest;
 import com.retail.bargain.domain.request.SeckillRequest;
 import com.retail.bargain.domain.request.StartSeckill;
+import com.retail.bargain.vo.Payment;
 import com.retail.common.domain.vo.SeckillSpuVo;
 import com.retail.common.result.Result;
 
@@ -53,4 +54,10 @@ public interface SeckillService extends IService<SeckillEntity> {
      * @return
      */
     SeckillSpuVo itemDetail(Long id);
+
+    /**
+     * 支付表添加
+     * @param payment
+     */
+    void paymentAdd(Payment payment);
 }

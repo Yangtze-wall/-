@@ -41,7 +41,7 @@ aliPay:
   publicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAiIBX9e/UY//p2m6BOwj8R47dGoFO0mvKrcxb48P6Ikck3CpKURL8yz9bd32DpdvHfSDtrzZ0IKSxBhtp17wlt7ZchzXCEEQk1Dex9MJKxr2Ga7apd9WPOJaHTy35vTSqC5cT7tpOSB4JXIdrTE7f5OE0ROnJWOU+t1flb6UpbZfH05WqIs2loQI1gEzJwhClDaD8BwirwKPujRpseuUDBe1Nbytbi4zday8d9xle1kO/1Vvz7oaHoYBLGnKwOS4jsO8ssHIOnsvV9qaUgoALiqI1o0UbJPKEt1ih8pRct1fEqF9I3ZRF2gOk/hPXTTkAKCtN7GUDwQNaisjfWaoqqQIDAQAB
   # 异步调用地址
   notifyUrl: https://69y0f20371.goho.co/colonel/seckill/notify
-  # 支付成功调用知道
+  # 支付成功调用地址
   returnUrl: http://localhost:9528/#/order/index
 
 xxl:

@@ -13,10 +13,7 @@ import com.retail.bargain.feign.OrderFeign;
 import com.retail.bargain.mapper.SeckillMapper;
 import com.retail.bargain.service.SeckillService;
 import com.retail.bargain.util.AlipayUtil;
-import com.retail.bargain.vo.AddressVo;
-import com.retail.bargain.vo.OrderVo;
-import com.retail.bargain.vo.SkuEntity;
-import com.retail.bargain.vo.SpuEntity;
+import com.retail.bargain.vo.*;
 import com.retail.common.domain.vo.InventoryVo;
 import com.retail.common.domain.vo.SeckillSpuVo;
 import com.retail.common.domain.vo.UserEntityVo;
@@ -304,6 +301,11 @@ public class SeckillServiceImpl extends ServiceImpl<SeckillMapper, SeckillEntity
         log.info(spuVo);
 
         return spuVo;
+    }
+
+    @Override
+    public void paymentAdd(Payment payment) {
+        seckillMapper.paymentAdd(payment);
     }
 
 

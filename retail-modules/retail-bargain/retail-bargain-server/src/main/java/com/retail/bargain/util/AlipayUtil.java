@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
-import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayTradePagePayRequest;
 import com.alipay.api.request.AlipayTradeQueryRequest;
 import com.alipay.api.response.AlipayTradePagePayResponse;
@@ -15,10 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author Lenovo
@@ -105,42 +101,42 @@ public class AlipayUtil {
         }
     }
 
-    /**
-     * 回调
-     */
-    public String payNotify(HttpServletRequest request) throws Exception {
-        if (request.getParameter("trade_status").equals("TRADE_SUCCESS")) {
-            System.out.println("=========支付宝异步回调========");
-
-            Map<String, String> params = new HashMap<>();
-            Map<String, String[]> requestParams = request.getParameterMap();
-            for (String name : requestParams.keySet()) {
-                params.put(name, request.getParameter(name));
-            }
-
-            System.out.println(params.get("out_trade_no"));
-            System.out.println(params.get("gmt_payment"));
-            System.out.println(params.get("trade_no"));
-
-            String sign = params.get("sign");
-            String content = AlipaySignature.getSignCheckContentV1(params);
-            // 验证签名
-            boolean checkSignature = AlipaySignature.rsa256CheckContent(content, sign, publicKey, "UTF-8");
-            // 支付宝验签
-            if (checkSignature) {
-                // 验签通过
-                log.info("交易名称: " + params.get("subject"));
-                log.info("交易状态: " + params.get("trade_status"));
-                log.info("支付宝交易凭证号: " + params.get("trade_no"));
-                log.info("商户订单号: " + params.get("out_trade_no"));
-                log.info("交易金额: " + params.get("total_amount"));
-                log.info("买家在支付宝唯一id: " + params.get("buyer_id"));
-                log.info("买家付款时间: " + params.get("gmt_payment"));
-                log.info("买家付款金额: " + params.get("buyer_pay_amount"));
-            }
-        }
-        return "success";
-    }
+//    /**
+//     * 回调
+//     */
+//    public String payNotify(HttpServletRequest request) throws Exception {
+//        if (request.getParameter("trade_status").equals("TRADE_SUCCESS")) {
+//            System.out.println("=========支付宝异步回调========");
+//
+//            Map<String, String> params = new HashMap<>();
+//            Map<String, String[]> requestParams = request.getParameterMap();
+//            for (String name : requestParams.keySet()) {
+//                params.put(name, request.getParameter(name));
+//            }
+//
+//            System.out.println(params.get("out_trade_no"));
+//            System.out.println(params.get("gmt_payment"));
+//            System.out.println(params.get("trade_no"));
+//
+//            String sign = params.get("sign");
+//            String content = AlipaySignature.getSignCheckContentV1(params);
+//            // 验证签名
+//            boolean checkSignature = AlipaySignature.rsa256CheckContent(content, sign, publicKey, "UTF-8");
+//            // 支付宝验签
+//            if (checkSignature) {
+//                // 验签通过
+//                log.info("交易名称: " + params.get("subject"));
+//                log.info("交易状态: " + params.get("trade_status"));
+//                log.info("支付宝交易凭证号: " + params.get("trade_no"));
+//                log.info("商户订单号: " + params.get("out_trade_no"));
+//                log.info("交易金额: " + params.get("total_amount"));
+//                log.info("买家在支付宝唯一id: " + params.get("buyer_id"));
+//                log.info("买家付款时间: " + params.get("gmt_payment"));
+//                log.info("买家付款金额: " + params.get("buyer_pay_amount"));
+//            }
+//        }
+//        return "success";
+//    }
 
 
 }

@@ -5,6 +5,9 @@
         INSERT INTO `practical`.`retail_order`(`user_id`, `order_sn`, `total_amount`, `integration_amount`, `coupon_amount`, `freight_amount`, `pay_amount`, `status`, `corporation_id`, `name`, `phone`, `address`, `remark`, `coupon_id`, `create_time`, `reality_time`, `type`, `seckill_id`, `address_id`)
                                         VALUES (#{userId}, #{orderSn}, #{totalAmount} ,#{integrationAmount}, #{couponAmount}, #{freightAmount}, #{payAmount}, #{status}, #{corporationId}, #{name}, #{phone}, #{address}, #{remark}, #{couponId}, #{createTime}, #{realityTime}, #{type}, #{seckillId}, #{addressId});
     </insert>
+    <insert id="paymentAdd">
+        INSERT INTO `retail_payment`(`order_sn`, `alipay_trade_no`, `total_amount`, `subject`, `payment_status`, `create_time`, `confirm_time`, `callback_content`, `callback_time`, `out_trade_no`) VALUES (#{orderSn}, #{alipayTradeNo}, #{totalAmount}, #{subject}, #{paymentStatus}, #{createTime}, #{confirmTime}, #{callbackContent}, #{callbackTime}, #{outTradeNo});
+    </insert>
 
     <update id="updateEsRedis">
         update retail_seckill set es_redis=#{esRedis} where id=#{id}

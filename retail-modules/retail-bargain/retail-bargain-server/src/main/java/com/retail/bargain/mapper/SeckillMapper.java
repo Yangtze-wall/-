@@ -2,10 +2,7 @@ package com.retail.bargain.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.retail.bargain.domain.SeckillEntity;
-import com.retail.bargain.vo.AddressVo;
-import com.retail.bargain.vo.OrderVo;
-import com.retail.bargain.vo.SkuEntity;
-import com.retail.bargain.vo.SpuEntity;
+import com.retail.bargain.vo.*;
 import com.retail.common.domain.vo.InventoryVo;
 import com.retail.common.domain.vo.SeckillSpuVo;
 import com.retail.common.domain.vo.SkuInventoryVo;
@@ -101,4 +98,10 @@ public interface SeckillMapper extends BaseMapper<SeckillEntity> {
      * @return
      */
     SkuEntity findByIdSku(@Param("skuId") Long skuId);
+
+    /**
+     * 支付表添加
+     * @param payment
+     */
+    void paymentAdd(Payment payment);
 }
