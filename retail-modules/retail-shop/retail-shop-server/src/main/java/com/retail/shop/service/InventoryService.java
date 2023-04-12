@@ -4,9 +4,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.retail.common.domain.vo.InventoryVo;
 import com.retail.shop.domain.InventoryEntity;
 
-
-import java.util.Map;
-
 /**
  * 库存表
  *
@@ -17,6 +14,11 @@ import java.util.Map;
 public interface InventoryService extends IService<InventoryEntity> {
 
 
+    /**
+     * 库存表详情
+     * @param spuId
+     * @return
+     */
     InventoryVo selectInventory(Long spuId);
 }
 

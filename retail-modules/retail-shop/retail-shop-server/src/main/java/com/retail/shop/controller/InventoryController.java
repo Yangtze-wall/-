@@ -1,21 +1,14 @@
 package com.retail.shop.controller;
 
-import java.util.List;
-
-
 import com.retail.common.domain.vo.InventoryVo;
 import com.retail.common.result.Result;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-
+import com.retail.shop.domain.InventoryEntity;
+import com.retail.shop.mapper.InventoryMapper;
 import com.retail.shop.service.InventoryService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
 
 
 /**
@@ -31,20 +24,35 @@ public class InventoryController {
 
     @Autowired
     private InventoryService inventoryService;
+    @Resource
+    private InventoryMapper inventoryMapper;
 
-
+    /**
+     * 库存表详情
+     *
+     * @param spuId
+     * @return
+     */
     @PostMapping("/selectInventory")
-    public InventoryVo selectInventory(@RequestParam("spuId") Long spuId){
-
-        if (spuId==null){
+    public InventoryVo selectInventory(@RequestParam("spuId") Long spuId) {
+        if (spuId == null) {
             return null;
         }
-       InventoryVo inventoryVo=inventoryService.selectInventory(spuId);
+        InventoryVo inventoryVo = inventoryService.selectInventory(spuId);
 
         return inventoryVo;
     }
-
-
+    /**
+     * 库存修改
+     */
+    @PostMapping("/updateInventory")
+    public Result updateInventory(@RequestBody InventoryEntity inventoryEntity){
+        int i = inventoryMapper.updateById(inventoryEntity);
+        if (i < 0) {
+            return Result.error("库存修改失败");
+        }
+        return Result.error("库存修改成功");
+    }
 
 
 }

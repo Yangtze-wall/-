@@ -3,13 +3,13 @@ package com.retail.user.domain;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-
-import java.math.BigDecimal;
-import java.io.Serializable;
-import java.util.Date;
-import lombok.Data;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * 账户记录流水表
@@ -37,7 +37,7 @@ public class UserRecordEntity implements Serializable {
 	/**
 	 * 订单号(账户流水号)
 	 */
-	private String orderId;
+	private String orderSn;
 	/**
 	 * 金额
 	 */
@@ -57,6 +57,6 @@ public class UserRecordEntity implements Serializable {
 	/**
 	 * 描述
 	 */
-	private String describe;
+	private String remark;
 
 }
