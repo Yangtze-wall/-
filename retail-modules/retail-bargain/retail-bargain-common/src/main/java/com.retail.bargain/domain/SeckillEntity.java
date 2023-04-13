@@ -32,7 +32,6 @@ public class SeckillEntity implements Serializable {
     private String slideShow;
 
     private String seckillHeadline;
-
     private BigDecimal seckillPrice;
 
     private Date seckillStartTime;

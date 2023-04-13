@@ -12,10 +12,18 @@ import com.alipay.api.response.AlipayTradePagePayResponse;
 import com.alipay.api.response.AlipayTradeQueryResponse;
 import com.retail.bargain.domain.SeckillEntity;
 import com.retail.bargain.remote.BargainFeign;
+import com.retail.common.constant.TokenConstants;
+import com.retail.common.domain.vo.UserEntityVo;
 import com.retail.common.exception.BizException;
+import com.retail.common.result.Result;
+import com.retail.common.utils.JwtUtils;
 import com.retail.order.config.ApiData;
 import com.retail.order.domain.OrderEntity;
+import com.retail.order.domain.RefundEntity;
 import com.retail.order.service.OrderService;
+import com.retail.order.util.AlipayUtil;
+import com.retail.shop.domain.SkuEntity;
+import com.retail.shop.remote.ShopFeign;
 import lombok.extern.log4j.Log4j2;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +34,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 
 /**
@@ -167,11 +177,11 @@ public class OrderController {
         return "success";
     }
               //主动查询
-    @GetMapping("show")
-    public void show() throws AlipayApiException {
+    @GetMapping("show/{sss}")
+    public void show(@PathVariable("sss") String ss) throws AlipayApiException {
         AlipayTradeQueryRequest request = new AlipayTradeQueryRequest();
         JSONObject bizContent = new JSONObject();
-        bizContent.put("trade_no", "2023033022001477530502466253");
+        bizContent.put("out_trade_no", ss);
           //bizContent.put("trade_no", "2014112611001004680073956707");
         request.setBizContent(bizContent.toString());
         AlipayTradeQueryResponse response = alipayClient.execute(request);
@@ -181,5 +191,94 @@ public class OrderController {
         } else {
             System.out.println("调用失败");
         }
+    }
+    @GetMapping("getToken")
+    public Result<String> getToken(){
+        String token = request.getHeader("token");
+        String s = UUID.randomUUID().toString().replaceAll("-", "");
+        redisTemplate.opsForValue().set(token,s);
+        return Result.success(s);
+    }
+    @Autowired
+    private ShopFeign shopFeign;
+    @GetMapping("buySku/{id}")
+    public Result<String> buySku(@PathVariable("id") Long id){
+        String token = request.getHeader("token");
+        String userKey = JwtUtils.getUserKey(token);
+        String ss = redisTemplate.opsForValue().get(TokenConstants.LOGIN_TOKEN_KEY + userKey);
+        UserEntityVo user = JSON.parseObject(ss, UserEntityVo.class);
+        SkuEntity skuEntity = shopFeign.getInfo(id);
+        AlipayTradePagePayRequest request = new AlipayTradePagePayRequest();
+        //异步接收地址，仅支持http/https，公网可访问
+        request.setNotifyUrl(notifyUrl);
+        //同步跳转地址，仅支持http/https
+        request.setReturnUrl(returnUrl);
+/******必传参数******/
+        JSONObject bizContent = new JSONObject();
+        String s = IdUtil.getSnowflake(20, 1).nextIdStr();
+        //商户订单号，商家自定义，保持唯一性
+        bizContent.put("out_trade_no", s);
+        //支付金额，最小值0.01元
+        bizContent.put("total_amount", skuEntity.getSkuPrice());
+        //订单标题，不可使用特殊符号
+        bizContent.put("subject", skuEntity.getSkuTitle());
+        //电脑网站支付场景固定传值FAST_INSTANT_TRADE_PAY
+        bizContent.put("product_code", "FAST_INSTANT_TRADE_PAY");
+///******可选参数******/
+        //
+//        bizContent.put("time_expire", new Date());
+//        //          // 商品明细信息，按需传入
+//        JSONArray goodsDetail = new JSONArray();
+//        JSONObject goods1 = new JSONObject();
+//        goods1.put("goods_id", "goodsNo1");
+//        goods1.put("goods_name", "子商品1");
+//        goods1.put("quantity", 1);
+//        goods1.put("price", 0.01);
+//        goodsDetail.add(goods1);
+//        bizContent.put("goods_detail", goodsDetail);
+//        //          // 扩展信息，按需传入
+//        JSONObject extendParams = new JSONObject();
+//        extendParams.put("sys_service_provider_id", "2088511833207846");
+//        bizContent.put("extend_params", extendParams);
+        request.setBizContent(bizContent.toString());
+        AlipayTradePagePayResponse response = null;
+        try {
+            response = alipayClient.pageExecute(request);
+        } catch (AlipayApiException e) {
+            throw new RuntimeException(e);
+        }
+        String tradeNo = response.getTradeNo();
+        System.out.println(response.getBody());
+        if (response.isSuccess()) {
+//            httpResponse.setContentType("text/html;charset=" + "UTF-8");
+//            httpResponse.getWriter().write(response.getBody());          // 直接将完整的表单html输出到页面
+//            httpResponse.getWriter().flush();
+//            httpResponse.getWriter().close();
+            System.out.println("成功");
+            System.out.println(response.toString());
+            System.out.println(response.getCode());
+            System.out.println(response.getMsg());
+            System.out.println(response.getTradeNo());
+            System.out.println(response.getOutTradeNo());
+            System.out.println(response.getMerchantOrderNo());
+            return Result.success(response.getBody());
+        } else {
+            System.out.println("失败");
+        }
+        return Result.error();
+    }
+    @Autowired
+    private AlipayUtil alipayUtil;
+    @PostMapping("/refund")
+    public String refund( String outTradeNo,String tradeNo,
+                          String transIn, BigDecimal refundAmount){
+        RefundEntity refundEntity = new RefundEntity();
+        refundEntity.setOutTradeNo(outTradeNo);
+        refundEntity.setTradeNo(tradeNo);
+        refundEntity.setTransIn(transIn);
+        refundEntity.setRefundAmount(refundAmount);
+        String refund = alipayUtil.refund(refundEntity);
+        System.out.println("退款通知:"+refund);
+        return null;
     }
 }

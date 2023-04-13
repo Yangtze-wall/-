@@ -2,6 +2,7 @@ package com.retail.colonel.controller;
 
 import cn.hutool.http.HttpUtil;
 import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.retail.colonel.bean.Face;
 import com.retail.colonel.domain.ColonelEntity;
 import com.retail.colonel.domain.Info;
@@ -22,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -70,10 +72,16 @@ public class ColonelController {
     }
     @Autowired
     private FaceService faceService;
+
+
+
     @PostMapping("apply")
     public Result apply(@RequestBody ApplyVo applyVo) {
+        ColonelEntity colonel =  colonelService.findName(applyVo.getName());
+        if (null!=colonel){
+            return Result.error("已申请");
+        }
         ColonelEntity colonelEntity = new ColonelEntity();
-
         Map<String, Object> params = new HashMap<>();
         params.put("idCardNo", applyVo.getCord());
         params.put("name", applyVo.getName());
@@ -81,6 +89,9 @@ public class ColonelController {
                 .header("Authorization", "APPCODE 3db9cf10c61f4ee18708b2b233087869")
                 .form(params).execute().body();
         R result1 = JSON.parseObject(result, R.class);
+        if (!result1.getCode().equals(200)){
+            return Result.error("身份信息错误");
+        }
         Info info = result1.getData();
         colonelEntity.setAddress(info.getAddress());
         colonelEntity.setCreateTime(new Date());
@@ -89,6 +100,7 @@ public class ColonelController {
         colonelEntity.setTotalCommission(new BigDecimal(0));
         colonelEntity.setStatus(1);
         colonelEntity.setGradeId(1L);
+        colonelEntity.setName(applyVo.getName());
         colonelService.save(colonelEntity);
         String token = request.getHeader("token");
         String userKey = JwtUtils.getUserKey(token);
@@ -106,5 +118,29 @@ public class ColonelController {
         faceService.save(face);
         return Result.success(null,"已成功申请 等待团长管理员审核");
     }
-
+    @GetMapping("list")
+    public Result list(){
+        List<ColonelEntity> list1 = colonelService.list(new QueryWrapper<ColonelEntity>()
+                .lambda().eq(ColonelEntity::getStatus,1)                );
+        return Result.success(list1);
+    }
+    @GetMapping("yes/{id}")
+    public Result yes(@PathVariable("id") Long id){
+        ColonelEntity colonelEntity = new ColonelEntity();
+        colonelEntity.setId(id);
+        colonelEntity.setGradeId(1L);
+        colonelEntity.setMonthCommission(new BigDecimal(0));
+        colonelEntity.setSurplusCommission(new BigDecimal(0));
+        colonelEntity.setSurplusCommission(new BigDecimal(0));
+        colonelEntity.setStatus(3);
+        colonelService.updateById(colonelEntity);
+        return Result.success();
+    }@GetMapping("no/{id}")
+    public Result no(@PathVariable("id") Long id){
+        ColonelEntity colonelEntity = new ColonelEntity();
+        colonelEntity.setId(id);
+        colonelEntity.setStatus(2);
+        colonelService.updateById(colonelEntity);
+        return Result.success();
+    }
 }

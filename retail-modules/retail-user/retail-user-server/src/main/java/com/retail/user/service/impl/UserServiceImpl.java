@@ -136,10 +136,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
 
         //写入最后登录时间
         userEntity.setLoginDate(new Date());
-        ColonelEntity colonelEntity =  colonelFeign.findById(userEntity.getId());
-        if (colonelEntity!=null){
-            userEntity.setStatus(colonelEntity.getStatus());
-        }
+        userEntity.setStatus(0);
       //  userEntity.setStatus(colonelEntity.getStatus());
         baseMapper.update(userEntity,new QueryWrapper<UserEntity>().lambda().eq(UserEntity::getId,userEntity.getId()));
         if (userRoleEntity.getRoleId()==4){

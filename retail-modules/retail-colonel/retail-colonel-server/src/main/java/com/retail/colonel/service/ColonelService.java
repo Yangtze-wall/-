@@ -16,5 +16,8 @@ public interface ColonelService extends IService<ColonelEntity> {
     ColonelEntity findById(Long id);
 
     ColonelEntity getInfo(Long id);
+
+    ColonelEntity findName(String name);
+
 }
 

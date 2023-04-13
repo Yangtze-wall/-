@@ -25,4 +25,12 @@ public class ColonelServiceImpl extends ServiceImpl<ColonelMapper, ColonelEntity
         ColonelEntity colonelEntity = this.colonelMapper.selectOne(new QueryWrapper<ColonelEntity>().lambda().eq(ColonelEntity::getUserId, id));
         return colonelEntity;
     }
+
+    @Override
+    public ColonelEntity findName(String name) {
+        ColonelEntity colonelEntity = colonelMapper.selectOne(new QueryWrapper<ColonelEntity>().lambda().eq(
+                ColonelEntity::getName, name
+        ));
+        return colonelEntity;
+    }
 }
