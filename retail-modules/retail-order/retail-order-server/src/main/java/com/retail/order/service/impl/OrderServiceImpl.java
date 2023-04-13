@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,6 +41,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
     @Autowired
     private UserFeign userFeign;
 
+    @Autowired
+    private OrderMapper orderMapper;
 
 
 
@@ -49,22 +52,20 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
 
 
     @Override
-    public Result createSkeillOrder(OrderEntity orderEntity)  {
+    public Result<OrderEntity>  createSkeillOrder(Long spuId)  {
 
-//        RateLimiter rateLimiter = RateLimiter.create(1);
-//       try{
+//        String s = redisTemplate.opsForValue().get("OrderSn" + spuId);
+//        if (s!=null){
+//            return Result.error(502,"直接购买");
+//        }
 //
-//               String time = LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME);
-//               System.out.println(time + ":" + rateLimiter.tryAcquire());
-//               Thread.sleep(250);
-//
-//       }catch (Exception e){
-//           e.printStackTrace();
-//       }
 
-        String s = redisTemplate.opsForValue().get("seckill_spu" + orderEntity.getSeckillId());
-        SeckillSpuVo seckillSpuVo = JSON.parseObject(s, SeckillSpuVo.class);
-        Long spuId = seckillSpuVo.getSpuId();
+        OrderEntity orderEntity = new OrderEntity();
+
+
+//        String s = redisTemplate.opsForValue().get("seckill_spu" + orderEntity.getSeckillId());
+//        SeckillSpuVo seckillSpuVo = JSON.parseObject(s, SeckillSpuVo.class);
+//        Long spuId = seckillSpuVo.getSpuId();
 
 
 
@@ -75,7 +76,10 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
             return Result.error(502,"商品已被抢空");
         }
 
-
+        SpuVo spuVo= shopFeign.selectSpu(spuId);
+        //设置总价钱
+        orderEntity.setTotalAmount(spuVo.getSpuColonelPrice());
+        orderEntity.setPayAmount(spuVo.getSpuColonelPrice());
         UserEntityVo userEntityVo = this.userInfo();
         //登录人设置
         orderEntity.setUserId(userEntityVo.getId());
@@ -108,20 +112,28 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
             orderEntity.setAddress(address);
         });
 
+        orderEntity.setCouponAmount(new BigDecimal(0));
+        orderEntity.setFreightAmount(new BigDecimal(0));
+        orderEntity.setIntegrationAmount(new BigDecimal(0));
 
 
+        orderMapper.createOrder(orderEntity);
+
+//        redisTemplate.opsForValue().set("OrderSn"+spuId,orderEntity.getOrderSn());
+
+        Long id = orderEntity.getId();
+        OrderEntity selectOne = this.baseMapper.selectOne(new QueryWrapper<OrderEntity>().lambda().eq(OrderEntity::getId, id));
 
 
-        this.baseMapper.insert(orderEntity);
-
-
-        return Result.success("订单添加成功");
+        return Result.success(selectOne,"订单添加成功");
 
 
     }
 
     @Override
     public Result updateOrderAddress(OrderEntity orderEntity) {
+
+
 
         UserEntityVo userEntityVo = this.userInfo();
 

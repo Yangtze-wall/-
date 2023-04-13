@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
  * @Date:    2023/3/25 10:57
  * @Version:    1.0
  */
-@Component
+//@Component
 public class RedisSeckillJob {
 
     @Autowired
@@ -33,15 +33,10 @@ public class RedisSeckillJob {
     private RedisTemplate<String,String> redisTemplate;
 
 
-    @Scheduled(cron = "0/3 * * * * *")
+    @Scheduled(cron = "0 0/30 * * * *")
     public Result task(){
          List<SeckillSpuVo>  seckillSpuVo=seckillMapper.selectSpu();
-
-        System.out.println("<<<<<<<"+seckillSpuVo);
-
         List<SeckillSpuVo> seckillSpuVos = seckillSpuVo.stream().filter(c ->c.getEsRedis()  == 1).collect(Collectors.toList());
-
-        System.out.println("<<<<<<<seckillSpuVos"+seckillSpuVos);
         if (seckillSpuVos==null){
             return Result.success("商品已全部同步");
         }
@@ -56,6 +51,8 @@ public class RedisSeckillJob {
 
         return Result.success("同步结束");
     }
+
+
 
 
 

@@ -4,6 +4,7 @@ import java.util.List;
 
 
 import com.retail.common.domain.vo.AddressVo;
+import com.retail.common.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -40,5 +41,10 @@ public class UserAddressController {
         List<AddressVo> addressVoList=  userAddressService.selectOrderAddress(id);
 
         return addressVoList;
+    }
+    @PostMapping("selectOrderAddressTwo")
+    public Result<List<AddressVo>> selectOrderAddressTwo(){
+        List<AddressVo> addressVoList=  userAddressService.selectOrderAddressTwo();
+        return Result.success(addressVoList);
     }
 }

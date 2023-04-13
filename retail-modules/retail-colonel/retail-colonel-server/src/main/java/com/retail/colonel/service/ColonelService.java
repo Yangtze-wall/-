@@ -20,5 +20,6 @@ public interface ColonelService extends IService<ColonelEntity> {
 
     List<ColonelEntity> selectColonel(UserEntityVo userEntityVo);
 
+    ColonelEntity findbyColonelId(Long userId);
 }
 

@@ -1,7 +1,10 @@
 package com.retail.shop.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.retail.common.domain.vo.SpuVo;
 import com.retail.shop.domain.SpuEntity;
+
+import java.util.List;
 
 /**
  * 商品表
@@ -12,5 +15,8 @@ import com.retail.shop.domain.SpuEntity;
  */
 public interface SpuService extends IService<SpuEntity> {
 
+    List<SpuEntity> selectListSpu();
+
+    SpuVo selectSpu(Long spuId);
 }
 

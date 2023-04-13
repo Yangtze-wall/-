@@ -33,22 +33,25 @@ public class OrderController {
 
     /**
      * 生成拼团订单
-     * @param orderEntity
+     * @param spuId
      * @return
      */
-    @PostMapping("/createSkeillOrder")
-    public Result createSkeillOrder(@RequestBody OrderEntity orderEntity){
+    @PostMapping("/createSkeillOrder/{spuId}")
+    public Result<OrderEntity> createSkeillOrder(@PathVariable("spuId") Long spuId){
 
-        if (orderEntity==null){
+        if (spuId==null){
             return Result.error("请点击下单");
         }
 
-        Result result= orderService.createSkeillOrder(orderEntity);
+        Result<OrderEntity> orderEntityResult= orderService.createSkeillOrder(spuId);
 
-        return Result.success(result);
+
+        return orderEntityResult;
 
 
     }
+
+
 
     /**
      * 修改订单地址
@@ -57,6 +60,8 @@ public class OrderController {
      */
     @PostMapping("/updateOrderAddress")
     public Result updateOrderAddress(@RequestBody OrderEntity orderEntity){
+
+
 
         if (orderEntity.getId()==null){
             return  Result.error("请选择订单");
@@ -67,8 +72,6 @@ public class OrderController {
 
 
        Result result= orderService.updateOrderAddress(orderEntity);
-
-
 
 
 

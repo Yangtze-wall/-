@@ -2,7 +2,9 @@ package com.retail.shop.controller;
 
 
 import com.retail.shop.service.BrandService;
+import com.xxl.job.core.handler.annotation.XxlJob;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,6 +24,7 @@ public class BrandController {
 
     @Autowired
     private BrandService brandService;
+
 
 
 }

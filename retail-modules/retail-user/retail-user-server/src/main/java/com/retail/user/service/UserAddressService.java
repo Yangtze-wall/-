@@ -19,5 +19,7 @@ public interface UserAddressService extends IService<UserAddressEntity> {
 
 
     List<AddressVo> selectOrderAddress(Long id);
+
+    List<AddressVo> selectOrderAddressTwo();
 }
 

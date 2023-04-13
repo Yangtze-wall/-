@@ -2,7 +2,9 @@ package com.retail.auth.controller;
 
 import cn.hutool.core.lang.Validator;
 import cn.hutool.core.util.RandomUtil;
+import com.retail.auth.domain.Captcha;
 import com.retail.auth.service.AuthService;
+import com.retail.auth.service.CaptchaService;
 import com.retail.auth.service.SmsService;
 import com.retail.common.constant.Constants;
 import com.alibaba.fastjson.JSON;
@@ -44,7 +46,7 @@ public class AuthController {
     @Autowired
     private RedisTemplate<String,String>  redisTemplate;
 
-
+    @Autowired
     private HttpServletRequest request;
 
 
@@ -57,6 +59,7 @@ public class AuthController {
     @GetMapping("/userInfo")
     public Result<UserEntityVo> userInfo(){
         String token = request.getHeader("token");
+        System.out.println(token);
         String userKey = JwtUtils.getUserKey(token);
         String s = redisTemplate.opsForValue().get(TokenConstants.LOGIN_TOKEN_KEY + userKey);
         UserEntityVo user = JSON.parseObject(s, UserEntityVo.class);
@@ -84,5 +87,13 @@ public class AuthController {
         return Result.success("成功");
 
     }
+    @Autowired
+    private CaptchaService captchaService;
+    @PostMapping("get-captcha")
+    public Result<Captcha> getCaptcha(@RequestBody Captcha captcha) {
+        Captcha captcha1 = captchaService.getCaptcha(captcha);
+        return Result.success(captcha1);
+    }
+
 
 }

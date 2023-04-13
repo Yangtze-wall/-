@@ -1,5 +1,6 @@
 package com.retail.colonel.service.impl;
 
+import com.retail.colonel.domain.Team;
 import com.retail.common.domain.vo.UserEntityVo;
 import org.springframework.stereotype.Service;
 
@@ -23,8 +24,14 @@ public class ColonelServiceImpl extends ServiceImpl<ColonelMapper, ColonelEntity
     public List<ColonelEntity> selectColonel(UserEntityVo userEntityVo) {
 
         List<ColonelEntity> colonelEntityList = this.baseMapper.selectList(new QueryWrapper<ColonelEntity>().lambda().eq(ColonelEntity::getUserId, userEntityVo.getId()));
-
-
         return colonelEntityList;
+    }
+
+    @Override
+    public ColonelEntity findbyColonelId(Long userId) {
+
+        ColonelEntity colonelEntity = this.baseMapper.selectOne(new QueryWrapper<ColonelEntity>().lambda().eq(ColonelEntity::getUserId,userId));
+
+        return colonelEntity;
     }
 }

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import lombok.Data;
 
@@ -23,7 +24,7 @@ public class SpuEntity implements Serializable {
 	 * 商品表
 	 */
 	@TableId(type = IdType.AUTO)
-	private Long id;
+	private Long    id;
 	/**
 	 * 商品名称
 	 */
@@ -35,15 +36,15 @@ public class SpuEntity implements Serializable {
 	/**
 	 * 商家id
 	 */
-	private Integer shopsId;
+	private Integer shopId;
 	/**
 	 * 商品上架时间
 	 */
-	private Date spuCreatetime;
+	private Date spuCreateTime;
 	/**
 	 * 商品修改时间
 	 */
-	private Date spuUpdatetime;
+	private Date spuUpdateTime;
 	/**
 	 * 排序
 	 */
@@ -56,5 +57,8 @@ public class SpuEntity implements Serializable {
 	 * 1 同步 2 未同步
 	 */
 	private Integer esStatus;
+
+	private BigDecimal spuPrice;
+	private BigDecimal spuColonelPrice;
 
 }

@@ -17,7 +17,7 @@ import java.util.Map;
 public interface OrderService extends IService<OrderEntity> {
 
 
-    Result createSkeillOrder(OrderEntity orderEntity);
+    Result<OrderEntity>  createSkeillOrder(Long spuId);
 
     Result updateOrderAddress(OrderEntity orderEntity);
 

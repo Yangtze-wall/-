@@ -28,15 +28,15 @@ public class OrderEntity implements Serializable {
 	 * 订单id
 	 */
 	@TableId(type = IdType.AUTO)
-	private Long id;
+	private Long      id;
 	/**
 	 * 用户id
 	 */
-	private Long userId;
+	private Long    userId;
 	/**
 	 * 商品单号
 	 */
-	private String orderSn;
+	private String   orderSn;
 	/**
 	 *  总价钱
 	 */
@@ -97,13 +97,15 @@ public class OrderEntity implements Serializable {
 	 * 订单类型
 	 */
 	private Integer type;
-	/**
-	 * 拼团商品id
-	 */
-	private Long seckillId;
+//	/**
+//	 * 拼团商品id
+//	 */
+//	private Long spuId;
 	/**
 	 * 地址id
 	 */
 	private Long addressId;
+	private Long seckillId;
+
 
 }

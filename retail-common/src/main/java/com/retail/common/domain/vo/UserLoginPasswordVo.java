@@ -22,4 +22,7 @@ public class UserLoginPasswordVo {
      * 密码
      */
     private String password;
+
+    private String nonceStr;
+    private String value;
 }
