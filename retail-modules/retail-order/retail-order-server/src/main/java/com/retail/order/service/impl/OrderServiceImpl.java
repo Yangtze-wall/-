@@ -1,8 +1,5 @@
 package com.retail.order.service.impl;
 
-import com.fasterxml.jackson.databind.SerializationFeature;
-import io.seata.rm.datasource.sql.struct.Row;
-import io.seata.rm.datasource.undo.BranchUndoLog;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.RandomUtil;
 import com.alibaba.fastjson.JSON;
@@ -18,14 +15,11 @@ import com.retail.order.feign.ShopFeignService;
 import com.retail.order.feign.UserFeignService;
 import com.retail.order.mapper.OrderMapper;
 import com.retail.order.service.OrderService;
-import io.seata.rm.datasource.undo.SQLUndoLog;
 import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.springframework.transaction.annotation.Transactional;
-
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -64,7 +58,6 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
      * @return
      */
     @Override
-    @GlobalTransactional
     public Result orderInsert(OrderEntityVo orderEntityVo) {
         // 判断 订单里面有没有这个 人 买的砍价物品  userId bargainId
         Long bargainId = orderEntityVo.getBargainId();

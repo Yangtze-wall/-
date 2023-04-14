@@ -21,4 +21,6 @@ public interface AuthService {
 
 
     Result<JwtResponse> loginPassword(UserLoginPasswordVo userLoginPasswordVo);
+
+    Result<JwtResponse> loginPasswordColonel(UserLoginPasswordVo userLoginPasswordVo);
 }
