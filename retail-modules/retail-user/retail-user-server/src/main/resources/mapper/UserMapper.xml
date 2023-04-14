@@ -16,10 +16,7 @@
     </select>
     <select id="selectColonel" resultType="com.retail.user.domain.UserEntity">
          SELECT
-            u.username,
-            u.id,
-            u.PASSWORD,
-            u.salt
+            *
         FROM
             retail_colonel c
                 LEFT JOIN retail_user u ON c.user_id = u.id

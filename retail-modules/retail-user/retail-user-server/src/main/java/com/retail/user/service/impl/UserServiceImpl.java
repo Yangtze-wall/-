@@ -4,14 +4,16 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.lang.Validator;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.crypto.SecureUtil;
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.retail.common.constant.Constants;
+import com.retail.common.constant.TokenConstants;
 import com.retail.common.domain.request.UserEntityRequest;
 import com.retail.common.domain.vo.UserEntityVo;
 import com.retail.common.domain.vo.UserLoginCodeVo;
 import com.retail.common.domain.vo.UserLoginPasswordVo;
-import com.retail.common.exception.BizException;
 import com.retail.common.result.Result;
+import com.retail.common.utils.JwtUtils;
 import com.retail.common.utils.StringUtils;
 import com.retail.user.domain.PowerUserEntity;
 import com.retail.user.domain.UserEntity;
@@ -164,11 +166,43 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     public Result<UserEntity> loginPasswordColonel(UserLoginPasswordVo userLoginPasswordVo) {
         UserEntity user = baseMapper.selectColonel(userLoginPasswordVo.getPhone());
         if (user==null){
-            throw new BizException(403,"还不是团长");
-//            return Result.error("还不是团长");
+            return Result.error("还不是团长");
         }
         user.setStatus(3);
         return Result.success(user);
+    }
+
+    @Override
+    public UserEntityVo findUserById(Long id) {
+        UserEntity userEntity = this.baseMapper.selectById(id);
+        UserEntityVo userEntityVo = new UserEntityVo();
+        BeanUtil.copyProperties(userEntity,userEntityVo);
+        return userEntityVo;
+    }
+
+    @Override
+    public Result updateUser(UserEntityVo userEntityVo) {
+        UserEntity userEntity = new UserEntity();
+        BeanUtil.copyProperties(userEntityVo,userEntity);
+        this.baseMapper.update(userEntity,new QueryWrapper<UserEntity>().lambda().eq(UserEntity::getId,userEntity.getId()));
+        return Result.success();
+    }
+
+    @Override
+    public UserEntityVo findUserInfoById() {
+        UserEntity userEntity = this.baseMapper.selectById(userInfo().getId());
+        UserEntityVo userEntityVo = new UserEntityVo();
+        BeanUtil.copyProperties(userEntity,userEntityVo);
+        return userEntityVo;
+
+    }
+
+    public UserEntityVo userInfo(){
+        String token = request.getHeader("token");
+        String userKey = JwtUtils.getUserKey(token);
+        String s = redisTemplate.opsForValue().get(TokenConstants.LOGIN_TOKEN_KEY + userKey);
+        UserEntityVo user = JSON.parseObject(s, UserEntityVo.class);
+        return user;
     }
 
 

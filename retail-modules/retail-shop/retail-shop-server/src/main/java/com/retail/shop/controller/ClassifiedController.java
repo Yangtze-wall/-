@@ -44,14 +44,31 @@ public class ClassifiedController {
         return Result.success(classifiedVoList);
     }
 
+    /**
+     * 添加
+     * @param classifiedEntity
+     * @return
+     */
     @PostMapping("/insertClassified")
     public Result insertClassified(@RequestBody ClassifiedEntity classifiedEntity){
         return classifiedService.insertClassified(classifiedEntity);
     }
+
+    /**
+     * 删除
+     * @param id
+     * @return
+     */
     @PostMapping("/deleteClassifiedById/{id}")
     public Result deleteClassifiedById(@PathVariable("id") Long id){
         return classifiedService.deleteClassifiedById(id);
     }
+
+    /**
+     * 修改
+     * @param classifiedEntity
+     * @return
+     */
     @PostMapping("/updateClassified")
     public Result updateClassified(@RequestBody ClassifiedEntity classifiedEntity){
         return classifiedService.updateClassified(classifiedEntity);

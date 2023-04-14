@@ -32,6 +32,7 @@ public class MyFilter implements GlobalFilter, Ordered {
     List<String> PATHS=new ArrayList<String>(){{
         add("/auth/**");
         add("/shop/**");
+        add("/order/payment/payed/notify");
     }};
     @Autowired
     private RedisTemplate<String,String> redisTemplate;

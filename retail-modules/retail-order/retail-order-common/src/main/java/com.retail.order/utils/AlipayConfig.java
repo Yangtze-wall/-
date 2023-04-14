@@ -2,12 +2,16 @@ package com.retail.order.utils;
 
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
+import com.retail.common.constant.TokenConstants;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 配置文件读取
@@ -38,13 +42,16 @@ public class AlipayConfig {
     /**
      * 服务器异步通知页面路径需http://格式的完整路径，不能加?id=123这类自定义参数
      */
-    private String notifyUrl = " http://8jpba2.natappfree.cc/pay/success";
+    private String notifyUrl = "http://5ihzby.natappfree.cc/order/payment/payed/notify";
 
     /**
      * 页面跳转同步通知页面路径 需http://格式的完整路径，不能加?id=123这类自定义参数
      */
-    private String returnUrl = "http://localhost:9528/#/order/index";
+//    @Autowired
+//    private HttpServletRequest request;
 
+//    private String returnUrl = "http://localhost:9528/#/payment/payment?token="+request.getHeader(TokenConstants.TOKEN);
+    private String returnUrl ="http://www.baidu.com";
     /**
      * 签名方式
      */

@@ -26,14 +26,10 @@ import java.util.Map;
 @Service
 @Log4j2
 public class SmsServiceImpl implements SmsService {
-
-
     @Value("${sms.appCode}")
     private String appCode;
     @Value("${sms.httpUrl}")
     private String httpUrl;
-
-
     @Override
     public void sendSms(String phone,String code){
 
@@ -54,7 +50,6 @@ public class SmsServiceImpl implements SmsService {
 //            throw new BizException(501,"调用短信接口失败,msg"+smsResultVo.getMsg());
             Result.error("调用短信接口失败,msg"+smsResultVo.getMsg());
         }
-
 
     }
 

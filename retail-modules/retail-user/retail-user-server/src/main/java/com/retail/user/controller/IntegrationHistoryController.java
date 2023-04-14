@@ -1,20 +1,15 @@
 package com.retail.user.controller;
 
-import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 
-import cn.hutool.core.date.DateField;
-import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson.JSON;
 import com.retail.common.constant.TokenConstants;
-import com.retail.common.domain.vo.UserEntityVo;
+import com.retail.common.domain.vo.IntegrationHistoryEntityVo;
 import com.retail.common.result.Result;
 import com.retail.common.utils.JwtUtils;
 import com.retail.user.domain.IntegrationHistoryEntity;
 import com.retail.user.domain.UserEntity;
-import com.retail.user.domain.vo.SignTimeSearchVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
@@ -47,10 +42,21 @@ public class IntegrationHistoryController {
      * @param integrationHistoryEntity
      * @return
      */
-    @PostMapping("/insertSign")
-    public Result insertSign(@RequestBody IntegrationHistoryEntity integrationHistoryEntity){
+    @PostMapping("/insertIntegrationBySign")
+    public Result insertIntegrationBySign(@RequestBody IntegrationHistoryEntity integrationHistoryEntity){
 
-        return integrationHistoryService.insertSign(integrationHistoryEntity);
+        return integrationHistoryService.insertIntegrationBySign(integrationHistoryEntity);
+    }
+
+    /**
+     * 添加积分记录
+     * @param integrationHistoryEntityVo
+     * @return
+     */
+    @PostMapping("/insertIntegrationByOrder")
+    public Result insertIntegrationByOrder(@RequestBody IntegrationHistoryEntityVo integrationHistoryEntityVo){
+
+        return integrationHistoryService.insertIntegrationByOrder(integrationHistoryEntityVo);
     }
 
 

@@ -115,4 +115,5 @@ public class UserEntityVo implements Serializable {
 	 */
 	private String roleRemake;
 
+
 }

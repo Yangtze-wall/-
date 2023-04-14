@@ -13,16 +13,14 @@ import com.retail.common.constant.Constants;
 import com.retail.common.constant.TokenConstants;
 import com.retail.common.domain.request.UserEntityRequest;
 import com.retail.common.domain.response.JwtResponse;
-import com.retail.common.domain.vo.LoginVo;
 import com.retail.common.domain.vo.UserEntityVo;
 import com.retail.common.domain.vo.UserLoginCodeVo;
 import com.retail.common.domain.vo.UserLoginPasswordVo;
-import com.retail.common.exception.BizException;
 import com.retail.common.result.Result;
+import com.retail.common.utils.JwtUtils;
 import com.retail.common.utils.StringUtils;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import com.retail.common.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
@@ -58,12 +56,20 @@ public class AuthController {
     @Autowired
     private HttpServletRequest request;
 
-
+    /**
+     * 注册
+     * @param userEntityRequest
+     * @return
+     */
     @PostMapping("/register")
     public Result register(@RequestBody UserEntityRequest userEntityRequest){
         return authService.register(userEntityRequest);
     }
 
+    /**
+     * 用户信息
+     * @return
+     */
     @GetMapping("/userInfo")
     public Result<UserEntityVo> userInfo(){
         String token = request.getHeader("token");
@@ -144,6 +150,7 @@ public class AuthController {
         redisTemplate.delete(TokenConstants.LOGIN_TOKEN_KEY+userKey);
         return Result.success();
     }
+
     @Autowired
     private CaptchaService captchaService;
 

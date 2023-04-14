@@ -1,15 +1,15 @@
-package com.retail.user.domain;
+package com.retail.common.domain.vo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-
-import java.math.BigDecimal;
-import java.io.Serializable;
-import java.util.Date;
-import lombok.Data;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * 账户记录流水表
@@ -22,13 +22,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName("retail_user_record")
-public class UserRecordEntity implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class UserRecordEntityVo implements Serializable {
 
 	/**
 	 *
 	 */
-	@TableId(type = IdType.AUTO)
 	private Long id;
 	/**
 	 * 用户ID

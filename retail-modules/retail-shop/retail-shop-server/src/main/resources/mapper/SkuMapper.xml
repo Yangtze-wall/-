@@ -9,4 +9,13 @@
   LEFT JOIN retail_spu ON  retail_sku.spu_id= retail_spu.id
 	 where retail_sku.id=#{id}
     </select>
+    <select id="findProductVoById" resultType="com.retail.common.domain.vo.ProductVo">
+SELECT *,retail_sku.id as sku_id,retail_classified.name as classifiedName from retail_sku
+ LEFT JOIN retail_inventory ON  retail_sku.spu_id= retail_inventory.spu_id
+  LEFT JOIN retail_spu ON  retail_sku.spu_id= retail_spu.id
+  LEFT JOIN retail_brand ON  retail_sku.brand_id= retail_brand.id
+  LEFT JOIN retail_classified ON  retail_sku.classified_id= retail_classified.id
+
+	 where retail_sku.id=#{id}
+    </select>
 </mapper>

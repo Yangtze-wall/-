@@ -3,7 +3,6 @@ package com.retail.shop.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.retail.common.constant.TokenConstants;
 import com.retail.common.domain.vo.UserEntityVo;
-import com.retail.common.result.Result;
 import com.retail.common.utils.JwtUtils;
 import com.retail.shop.domain.vo.RetaiUserCouponCenterEntityVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +10,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
+
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 

@@ -1,16 +1,17 @@
 package com.retail.user.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.date.DateField;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.retail.common.constant.TokenConstants;
+import com.retail.common.domain.vo.IntegrationHistoryEntityVo;
 import com.retail.common.domain.vo.UserEntityVo;
 import com.retail.common.result.Result;
 import com.retail.common.utils.JwtUtils;
 import com.retail.user.domain.UserEntity;
-import com.retail.user.domain.vo.SignTimeSearchVo;
 import com.retail.user.mapper.UserMapper;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,15 +24,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
+
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 
 import com.retail.user.mapper.IntegrationHistoryMapper;
 import com.retail.user.domain.IntegrationHistoryEntity;
 import com.retail.user.service.IntegrationHistoryService;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -52,7 +51,7 @@ public class IntegrationHistoryServiceImpl extends ServiceImpl<IntegrationHistor
     private UserMapper userMapper;
 
     @Override
-    public Result insertSign(IntegrationHistoryEntity integrationHistoryEntity) {
+    public Result insertIntegrationBySign(IntegrationHistoryEntity integrationHistoryEntity) {
         //获取用户userId
         Long userId = userInfo().getId();
         if (userId==null){
@@ -80,7 +79,7 @@ public class IntegrationHistoryServiceImpl extends ServiceImpl<IntegrationHistor
         List<IntegrationHistoryEntity> integrationHistoryEntityList1 =
                 selectSign(beginOfDay, endTime, userId);
         //今天已经签到过了 ，不需要再次签到了
-        if(integrationHistoryEntityList1!=null && integrationHistoryEntityList1.size()==1){
+        if(integrationHistoryEntityList1!=null && integrationHistoryEntityList1.size()>=1){
             return Result.error("用户今天已经签到过了，不需要再次签到了");
         }
         //查询用户id在区间范围内 用户签到记录
@@ -118,7 +117,7 @@ public class IntegrationHistoryServiceImpl extends ServiceImpl<IntegrationHistor
         return integrationHistoryEntityList;
     }
 
-    private UserEntityVo userInfo(){
+    public UserEntityVo userInfo(){
         String token = request.getHeader("token");
         String userKey = JwtUtils.getUserKey(token);
         String s = redisTemplate.opsForValue().get(TokenConstants.LOGIN_TOKEN_KEY + userKey);
@@ -166,6 +165,14 @@ public class IntegrationHistoryServiceImpl extends ServiceImpl<IntegrationHistor
         result.put("continuous", continuous);
         result.put("count", count);
         return result;
+    }
+
+    @Override
+    public Result insertIntegrationByOrder(IntegrationHistoryEntityVo integrationHistoryEntityVo) {
+        IntegrationHistoryEntity integrationHistoryEntity = new IntegrationHistoryEntity();
+        BeanUtil.copyProperties(integrationHistoryEntityVo,integrationHistoryEntity);
+        this.baseMapper.insert(integrationHistoryEntity);
+        return Result.success();
     }
 
     /**

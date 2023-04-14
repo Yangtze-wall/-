@@ -9,7 +9,6 @@ import com.retail.common.domain.request.UserEntityRequest;
 import com.retail.common.domain.vo.UserEntityVo;
 import com.retail.common.domain.vo.UserLoginCodeVo;
 import com.retail.common.domain.vo.UserLoginPasswordVo;
-import com.retail.common.exception.BizException;
 import com.retail.common.result.Result;
 import com.retail.common.utils.JwtUtils;
 import com.retail.common.utils.StringUtils;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.retail.user.service.UserService;
 
@@ -150,6 +148,30 @@ public class UserController {
         String s = redisTemplate.opsForValue().get(TokenConstants.LOGIN_TOKEN_KEY + userKey);
         UserEntityVo user = JSON.parseObject(s, UserEntityVo.class);
         return Result.success(user);
+    }
+
+    /**
+     * 查找用户 数据
+     * @param
+     * @return
+     */
+    @PostMapping("/findUserInfoById")
+    public Result<UserEntityVo> findUserInfoById(){
+        UserEntityVo userEntityVo=userService.findUserInfoById();
+        return Result.success(userEntityVo);
+    }
+
+    @PostMapping("/findUserById/{id}")
+    public Result<UserEntityVo> findUserById(@PathVariable("id")Long id){
+        UserEntityVo userEntityVo=userService.findUserById(id);
+        return Result.success(userEntityVo);
+    }
+
+
+    @PostMapping("/updateUser")
+    public Result updateUser(@RequestBody UserEntityVo userEntityVo){
+
+        return userService.updateUser(userEntityVo);
     }
 
 

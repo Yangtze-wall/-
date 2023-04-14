@@ -29,19 +29,14 @@ public interface UserFeignService {
     @PostMapping("user/user/loginPassword")
     Result<UserEntityVo> loginPassword(@RequestBody UserLoginPasswordVo userLoginPasswordVo);
 
-//    @PostMapping("user/user/loginPassword/{phone}")
-//    Result<UserEntityVo> loginPassword(@PathVariable("phone") String phone);
-
     @PostMapping("user/user/loginPasswordColonel")
     Result<UserEntityVo> loginPasswordColonel(@RequestBody UserLoginPasswordVo userLoginPasswordVo);
 
 
     @PostMapping("user/user/loginCode")
-    public Result<UserEntityVo> loginCode(@RequestBody UserLoginCodeVo userLoginCodeVo);
+     Result<UserEntityVo> loginCode(@RequestBody UserLoginCodeVo userLoginCodeVo);
 
-//    @GetMapping("/user/user/colonelLogin/{phone}")
-//    Result<UserEntityVo> loginPasswordColonel(@PathVariable("phone") String phone);
-@PostMapping("/user/user/colonelLogin/{phone}")
-Result<UserEntityVo> loginPasswordColonel(@PathVariable("phone") String phone);
+    @PostMapping("/user/user/colonelLogin/{phone}")
+    Result<UserEntityVo> loginPasswordColonel(@PathVariable("phone") String phone);
 
 }

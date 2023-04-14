@@ -58,4 +58,6 @@ public class SkuEntity implements Serializable {
 	 */
 	private Long classifiedId;
 
+
+
 }

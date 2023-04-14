@@ -124,5 +124,9 @@ public class OrderEntity implements Serializable {
 	 * spuId
 	 */
 	private Long spuId;
+	/**
+	 * 购物车id
+	 */
+	private Long cartId;
 
 }

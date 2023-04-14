@@ -16,11 +16,14 @@ import com.retail.shop.mapper.SkuMapper;
 import com.retail.shop.mapper.SpuMapper;
 import com.retail.shop.service.*;
 import org.apache.http.HttpHost;
+import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHits;
@@ -166,15 +169,19 @@ public class SkuServiceImpl extends ServiceImpl<SkuMapper, SkuEntity> implements
     @Override
     public Result insertSku(ProductVo productVo) {
         //添加商品 spu
-        SpuEntity spuEntity = new SpuEntity();
-        spuEntity.setSort(productVo.getSort());
-        spuEntity.setBrandId(productVo.getBrandId());
-        spuEntity.setClassifiedId(Long.valueOf(productVo.getClassifiedIds()[2]));
-        spuEntity.setSpuLetter(productVo.getSpuLetter());
-        spuEntity.setSpuName(productVo.getSpuName());
-        spuEntity.setSpuCreateTime(new Date());
-        spuEntity.setSpuStatus(1);
-        spuEntity.setSpuUpdateTime(new Date());
+        SpuEntity spuEntity=SpuEntity.insertSpuEntity(productVo);
+
+//        spuEntity.setSort(productVo.getSort());
+//        spuEntity.setBrandId(productVo.getBrandId());
+//        spuEntity.setClassifiedId(Long.valueOf(productVo.getClassifiedIds()[2]));
+//        spuEntity.setSpuLetter(productVo.getSpuLetter());
+//        spuEntity.setSpuName(productVo.getSpuName());
+//        spuEntity.setSpuCreateTime(new Date());
+//        spuEntity.setSpuStatus(1);
+//        spuEntity.setEsStatus(1);
+//        spuEntity.setShopId(1L);
+//        spuEntity.setSpuUpdateTime(new Date());
+
         spuMapper.insert(spuEntity);
         Long spuId= spuEntity.getId();
         //添加库存
@@ -195,6 +202,17 @@ public class SkuServiceImpl extends ServiceImpl<SkuMapper, SkuEntity> implements
         skuEntity.setClassifiedId(Long.valueOf(productVo.getClassifiedIds()[2]));
         this.baseMapper.insert(skuEntity);
 
+        ProductVo productVoById = skuMapper.findProductVoById(skuEntity.getId());
+        productVo.setSkuId(productVoById.getSkuId());
+        try {
+//            实现证件信息同步到ES中，实现增量同步
+            IndexRequest indexRequest = new IndexRequest(INDEX_NAME);
+            indexRequest.id(productVoById.getSkuId()+"");
+            indexRequest.source(JSON.toJSONString(productVoById), XContentType.JSON);
+            client.index(indexRequest, RequestOptions.DEFAULT);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return Result.success();
     }
 
@@ -223,6 +241,17 @@ public class SkuServiceImpl extends ServiceImpl<SkuMapper, SkuEntity> implements
         skuEntity.setSkuSubhead(productVo.getSkuSubhead());
         skuEntity.setClassifiedId(Long.valueOf(productVo.getClassifiedIds()[2]));
         this.baseMapper.update(skuEntity,new UpdateWrapper<SkuEntity>().lambda().eq(SkuEntity::getId,productVo.getSkuId()));
+        try {
+//            实现修改信息同步到ES中
+            UpdateRequest updateRequest = new UpdateRequest();
+            updateRequest.id(skuEntity.getId()+"");
+            updateRequest.doc(JSON.toJSONString(productVo),XContentType.JSON);
+            client.update(updateRequest,RequestOptions.DEFAULT);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         return Result.success();
     }
 
@@ -237,6 +266,7 @@ public class SkuServiceImpl extends ServiceImpl<SkuMapper, SkuEntity> implements
         productVo.setSkuPrice(skuEntity.getSkuPrice());
         productVo.setSkuSell(skuEntity.getSkuSell());
         productVo.setSkuSubhead(skuEntity.getSkuSubhead());
+
         productVo.setSkuTitle(skuEntity.getSkuTitle());
 
         Long spuId = skuEntity.getSpuId();
@@ -244,6 +274,7 @@ public class SkuServiceImpl extends ServiceImpl<SkuMapper, SkuEntity> implements
         productVo.setSort(spuEntity.getSort());
         productVo.setSpuId(skuEntity.getSpuId());
         productVo.setSpuLetter(spuEntity.getSpuLetter());
+        productVo.setSpuStatus(spuEntity.getSpuStatus());
         productVo.setSpuName(spuEntity.getSpuName());
         InventoryEntity inventoryEntity = inventoryMapper.selectOne(new QueryWrapper<InventoryEntity>().lambda().eq(InventoryEntity::getSpuId, spuId));
 

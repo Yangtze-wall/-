@@ -33,6 +33,11 @@ public class StoreCouponController {
     @Autowired
     private StoreCouponService storeCouponService;
 
+    /**
+     * 根据用户id找到所对应 的优惠卷
+     * @param id
+     * @return
+     */
     @PostMapping("/findStoreCouponById/{id}")
     public Result<StoreCouponEntityVo> findStoreCouponById(@PathVariable("id")Long id){
         StoreCouponEntity storeCouponEntity=  storeCouponService.findStoreCouponById(id);

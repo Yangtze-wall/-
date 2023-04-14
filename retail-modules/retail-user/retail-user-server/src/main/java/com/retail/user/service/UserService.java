@@ -30,6 +30,16 @@ public interface UserService extends IService<UserEntity> {
 
     Result<UserEntity> loginPasswordColonel(UserLoginPasswordVo userLoginPasswordVo);
 
+    UserEntityVo findUserById(Long id);
+
+    Result updateUser(UserEntityVo userEntityVo);
+
+    UserEntityVo findUserInfoById();
+
+
+
+
+
 //    UserEntityVo colonelLogin(String phone);
 
 

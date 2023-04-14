@@ -3,6 +3,9 @@ package com.retail.common.domain.vo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.omg.PortableInterceptor.INACTIVE;
+
+import java.math.BigDecimal;
 
 /**
  * @BelongsProject: retail-cloud
@@ -55,7 +58,19 @@ public class OrderEntityVo {
      * skuId
      */
     private Long skuId;
+    /**
+     * 购物车id
+     */
+    private Long cartId;
 
+    /**
+     * 购买商品数量
+     */
+    private Integer buyNum;
+    /**
+     * 总价格
+     */
+    private BigDecimal cartPrice;
 
 
 
