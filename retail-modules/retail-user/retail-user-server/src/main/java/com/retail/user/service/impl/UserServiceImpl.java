@@ -2,6 +2,7 @@ package com.retail.user.service.impl;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.RandomUtil;
@@ -131,6 +132,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         if (userEntity==null){
             throw  new BizException(502,"用户没有注册，请注册");
         }
+
         //写入最后登录时间
         userEntity.setLoginDate(new Date());
         baseMapper.update(userEntity,new QueryWrapper<UserEntity>().lambda().eq(UserEntity::getId,userEntity.getId()));
@@ -149,9 +151,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     }
 
     @Override
-    public Result<UserEntityVo> findByIdUser() {
-        UserEntity userEntity=baseMapper.selectOne(new QueryWrapper<UserEntity>().lambda().eq(UserEntity::getId, userInfo().getId()));
+    public Result<UserEntityVo> findByIdUser(Long userId) {
+        UserEntity userEntity=baseMapper.selectOne(new QueryWrapper<UserEntity>().lambda().eq(UserEntity::getId, userId));
         UserEntityVo userEntityVo = new UserEntityVo();
+
         BeanUtil.copyProperties(userEntity,userEntityVo);
         return Result.success(userEntityVo);
     }

@@ -3,7 +3,9 @@ package com.retail.order.config;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.rabbitmq.client.Channel;
+import com.retail.common.domain.vo.InventoryEntityVo;
 import com.retail.order.domain.OrderEntity;
+import com.retail.order.feign.ShopFeignService;
 import com.retail.order.mapper.OrderMapper;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.amqp.core.*;
@@ -27,6 +29,9 @@ import java.util.List;
 public class OrderRabbitMq {
     @Autowired
     private RedisTemplate<String,String> redisTemplate;
+
+    @Autowired
+    private ShopFeignService shopFeignService;
 
     @Autowired
     private OrderMapper orderMapper;
@@ -98,6 +103,7 @@ public class OrderRabbitMq {
     // 回滚库存
     @RabbitListener(queues = DEAD_QUEUE)
     public void  queueDead(String json, Channel channel, Message message){
+
         long deliveryTag = message.getMessageProperties().getDeliveryTag();
         String messageId = message.getMessageProperties().getMessageId();
         Long add = redisTemplate.opsForSet().add(messageId);
@@ -108,9 +114,14 @@ public class OrderRabbitMq {
                 orderEntityList.stream().forEach(c-> {
                     c.setStatus(3);
                     orderMapper.updateById(c);
+                    Long spuId = c.getSpuId();
+                    // 库存表  锁库存
+                    InventoryEntityVo entityVo = shopFeignService.findByInventoryEntity(spuId).getData();
+                    InventoryEntityVo inventoryEntityVo = new InventoryEntityVo();
+                    inventoryEntityVo.setSpuId(spuId);
+                    inventoryEntityVo.setInventoryLock(entityVo.getInventoryLock()-1);
+                    shopFeignService.updateInventoryLock(inventoryEntityVo);
                 });
-               // 库存表  锁库存
-
             }
             channel.basicAck(deliveryTag,true);
         } catch (IOException e) {

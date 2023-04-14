@@ -19,7 +19,7 @@ public class AliPayConfig {
     public static String alipay_public_key = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAg4byMagduOO4usBeWd0PxCdQ0eqgybcFuMEntuUDAgK3Xqq88WAwZxdQaBdG6mJSLZyaLgR0AzCk8MgoOeap56MEBCZuU/2EcGELS0UJTZWyzQFw8Wx34cMu9KJw4dA1EXVmwJOkgg2y9OT6ST6fNCk0gVmlYHpBVINH2pXcc0HLSZRfvXMiyno+vG2su/Ki20dda+Cb4Ncp+YHIlXcjhl7NFntJ6tOJoJcZRxxzPn5qn+OjbARLl08t4Z4bQHoNVM9ooxHsVvfTdUBTmYKNOm0pTM7RAJhkSdx9Ug+wmwGJnjI//WcxUMiloL/KRuegf6P2JEH0nNLJ0XAJXEexawIDAQAB";
     // 服务器异步通知页面路径  需http://格式的完整路径，不能加?id=123这类自定义参数，其实就是你的一个支付完成后返回的页面URL
 //    public static String notify_url = neturl+"/alipay/notify_url";
-    public static String notify_url ="http://hdcnzf.natappfree.cc/alipay/payed/notify";
+    public static String notify_url ="http://7prfgz.natappfree.cc/alipay/payed/notify";
     // 页面跳转同步通知页面路径 需http://格式的完整路径，不能加?id=123这类自定义参数，其实就是你的一个支付完成后返回的页面URL
 //    public static String return_url = neturl+"/alipay/return_url";
     public static String return_url ="http://www.baidu.com";

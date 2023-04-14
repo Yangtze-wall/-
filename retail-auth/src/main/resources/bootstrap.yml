@@ -19,6 +19,7 @@ spring:
       discovery:
         # 服务注册地址
         server-addr: 139.196.95.132:8848
+        namespace: ed5fc404-61a8-473d-bae1-d3bcf0fb6912
       config:
         # 配置中心地址
         server-addr: 139.196.95.132:8848
@@ -27,4 +28,9 @@ spring:
         # 共享配置
         shared-configs:
           - application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+# 滑块验证码
+# 验证码相关
+sms:
+  appCode: e0d265e5ef02439eaede65cb2a67bb13
+  httpUrl: http://gyytz.market.alicloudapi.com/sms/smsSend
 

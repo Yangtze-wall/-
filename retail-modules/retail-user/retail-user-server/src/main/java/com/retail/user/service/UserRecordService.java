@@ -1,6 +1,8 @@
 package com.retail.user.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.retail.common.domain.vo.UserRecordEntityVo;
+import com.retail.common.result.Result;
 import com.retail.user.domain.UserRecordEntity;
 
 
@@ -16,5 +18,6 @@ import java.util.Map;
 public interface UserRecordService extends IService<UserRecordEntity> {
 
 
+    Result userRecordInsert(UserRecordEntityVo userRecordEntityVo);
 }
 

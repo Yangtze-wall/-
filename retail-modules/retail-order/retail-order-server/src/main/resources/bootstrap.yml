@@ -8,6 +8,8 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
+    serialization:
+      write-dates-as-timestamps: true
   application:
     # 应用名称
     name: retail-order
@@ -28,3 +30,25 @@ spring:
         # 共享配置
         shared-configs:
           - application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+    alibaba:
+      seata:
+        tx-service-group: default_tx_group
+#分布式事务 seata 配置
+seata:
+  enabled: true
+  enable-auto-data-source-proxy: true # 数据源自动代理
+  registry:
+    type: nacos #查找TC服务，参考registry.conf
+    nacos:
+      server-addr: 139.196.95.132:8848
+      namespace: "ed5fc404-61a8-473d-bae1-d3bcf0fb6912"
+      group: DEFAULT_GROUP
+      application: seata-server #TC服务名
+  tx-service-group: default_tx_group #事务组，根据tx-service-group名称获得TC服务cluster名称
+  service:
+    vgroup-mapping: #tx-service-group与TC cluster的映射关系
+      default_tx_group: default
+  client:
+    undo:
+      log-serialization: fastjson
+

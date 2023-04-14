@@ -7,6 +7,9 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.math.BigDecimal;
 import java.io.Serializable;
 import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.Data;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -22,7 +25,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName("retail_order")
-public class OrderEntity implements Serializable {
+ public class OrderEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -93,6 +96,7 @@ public class OrderEntity implements Serializable {
 	/**
 	 * 结账时间
 	 */
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date realityTime;
 	/**
 	 * 类型(1.正常,2.拼团,3秒杀 4.砍价)
@@ -117,6 +121,6 @@ public class OrderEntity implements Serializable {
 
 	private Long spuId;
 
-
+	private Long cartId;
 
 }

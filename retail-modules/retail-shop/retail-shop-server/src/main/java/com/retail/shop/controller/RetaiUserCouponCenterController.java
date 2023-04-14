@@ -30,7 +30,7 @@ public class RetaiUserCouponCenterController {
     @Autowired
     private RetaiUserCouponCenterService retaiUserCouponCenterService;
 
-    @PostMapping("shop/retaiusercouponcenter/isDelRetaiUserCoupon")
+    @PostMapping("/isDelRetaiUserCoupon")
     Result isDelRetaiUserCoupon(@RequestParam("couponId") Long couponId){
         return retaiUserCouponCenterService.isDelRetaiUserCoupon(couponId);
     }

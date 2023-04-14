@@ -36,6 +36,8 @@ public class Aop {
         RequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = ((ServletRequestAttributes) attributes).getRequest();
 
+        // 封装  userInfo()
+
         //记录请求内容
         log.info("URL : " + request.getRequestURL().toString());
         log.info("HTTP_METHOD : " + request.getMethod());

@@ -32,6 +32,6 @@ public class InventoryServiceImpl extends ServiceImpl<InventoryMapper, Inventory
         InventoryEntity inventoryEntity = new InventoryEntity();
         BeanUtil.copyProperties(inventoryEntityVo,inventoryEntity);
         baseMapper.update(inventoryEntity,new QueryWrapper<InventoryEntity>().lambda().eq(InventoryEntity::getSpuId,inventoryEntityVo.getSpuId()));
-        return Result.success("锁定库存成功");
+        return Result.success("成功");
     }
 }

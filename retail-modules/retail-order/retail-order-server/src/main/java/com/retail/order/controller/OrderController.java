@@ -38,15 +38,19 @@ public class OrderController {
     public Result orderInsert(@RequestBody OrderEntityVo orderEntityVo){
         return orderService.orderInsert(orderEntityVo);
     }
-    // order/order/getOrderListSeckill
+    // order/order/getOrderList
     @PostMapping("/getOrderList")
     public Result<List<OrderEntity>> getOrderList(){
         return orderService.getOrderList();
     }
+
+
 
     // order/order/findByOrderSn/
     @GetMapping("/findByOrderSn/{orderSn}")
     public Result findByOrderSn(@PathVariable("orderSn") String orderSn){
         return orderService.findByOrderSn(orderSn);
     }
+
+
 }

@@ -1,9 +1,11 @@
 package com.retail.bargain.feign;
 
+import com.retail.common.domain.vo.IntegrationHistoryEntityVo;
 import com.retail.common.domain.vo.UserAddressEntityVo;
 import com.retail.common.result.Result;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -21,4 +23,7 @@ import java.util.List;
 public interface UserFeignService {
     @PostMapping("/findByUserIdList")
     public Result<List<UserAddressEntityVo>> findByUserIdList(@RequestParam("userId") Long userId);
+
+    @PostMapping("user/integrationhistory/integrationHistoryInsert")
+    public Result integrationHistoryInsert(@RequestBody IntegrationHistoryEntityVo integrationHistoryEntityVo);
 }

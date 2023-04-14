@@ -31,11 +31,16 @@ public class InventoryController {
      * @param spuId
      * @return
      */
-    @PostMapping("/findByInventoryEntity/{spuId}")
+    @GetMapping("/findByInventoryEntity/{spuId}")
     Result<InventoryEntityVo> findByInventoryEntity(@PathVariable("spuId") Long spuId){
         return inventoryService.findByInventoryEntity(spuId);
     }
 
+    /**
+     * 根据spuid 修改库存
+     * @param inventoryEntityVo
+     * @return
+     */
     @PutMapping("/updateInventoryLock")
     public Result updateInventoryLock(@RequestBody InventoryEntityVo inventoryEntityVo){
         return inventoryService.updateInventoryLock(inventoryEntityVo);

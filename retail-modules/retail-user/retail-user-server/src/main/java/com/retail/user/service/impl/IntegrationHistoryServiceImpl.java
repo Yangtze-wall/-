@@ -19,6 +19,7 @@ public class IntegrationHistoryServiceImpl extends ServiceImpl<IntegrationHistor
 
     @Override
     public Result insert(IntegrationHistoryEntity integrationHistoryEntity) {
+
         baseMapper.insert(integrationHistoryEntity);
         return Result.success();
     }

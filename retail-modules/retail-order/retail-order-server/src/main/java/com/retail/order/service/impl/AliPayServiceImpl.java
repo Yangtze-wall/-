@@ -8,12 +8,15 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.retail.common.result.Result;
 import com.retail.order.config.AliPayConfig;
 import com.retail.order.domain.OrderEntity;
+import com.retail.order.domain.PayMentEntity;
 import com.retail.order.mapper.OrderMapper;
+import com.retail.order.mapper.PaymentMapper;
 import com.retail.order.service.AliPayService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import lombok.extern.slf4j.Slf4j;
 import javax.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
 
 /**
  * @author AliPayServiceImpl
@@ -30,9 +33,30 @@ public class AliPayServiceImpl implements AliPayService {
 
     @Autowired
     private HttpServletResponse response;
+    @Autowired
+    private PaymentMapper paymentMapper;
 
+    @Autowired
+    private OrderMapper orderMapper;
     @Override
     public Result<String> aliPay(OrderEntity order)  {
+        // 通过订单编号 查询支付表 是否支付
+        PayMentEntity payMentEntity = paymentMapper.selectOne(new QueryWrapper<PayMentEntity>().lambda().eq(PayMentEntity::getOrderSn, order.getOrderSn()));
+        if (payMentEntity != null){
+            return Result.error("该订单已支付");
+        }
+        // 判断订单 状态
+        OrderEntity selectOne = orderMapper.selectOne(new QueryWrapper<OrderEntity>().lambda().eq(OrderEntity::getOrderSn, order.getOrderSn()));
+        // 订单状态 4 正在支付 稍等
+        if (selectOne.getStatus().equals(2)){
+            return Result.error("该订单已支付");
+        }
+            // 状态 2 支付成功
+        if (selectOne.getStatus().equals(4)){
+            return Result.error("正在支付稍等");
+        }
+
+
         // EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX);
         response.setContentType("text/html;charset=utf-8");
         //获得初始化的AlipayClient
@@ -46,7 +70,7 @@ public class AliPayServiceImpl implements AliPayService {
         String order_number = new String(order.getOrderSn());
 
         //订单名称，必填
-        String subject = new String(order.getOrderSn());
+        String subject = new String("操操操操操");
         aliPayRequest.setBizContent("{\"out_trade_no\":\"" + order_number + "\","
                 + "\"total_amount\":\"" + order.getPayAmount() + "\","
                 + "\"subject\":\"" + subject + "\","
@@ -61,6 +85,5 @@ public class AliPayServiceImpl implements AliPayService {
         System.out.println(result);
 
         return Result.success(result);
-
     }
 }

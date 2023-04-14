@@ -19,6 +19,7 @@ spring:
       discovery:
         # 服务注册地址
         server-addr: 139.196.95.132:8848
+        namespace: ed5fc404-61a8-473d-bae1-d3bcf0fb6912
       config:
         # 配置中心地址
         server-addr: 139.196.95.132:8848
@@ -27,3 +28,22 @@ spring:
         # 共享配置
         shared-configs:
           - application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+#    alibaba:
+#      seata:
+#        tx-service-group: default_tx_group
+#seata:
+#  registry:
+#    type: nacos #查找TC服务，参考registry.conf
+#    nacos:
+#      server-addr: 139.196.95.132:8848
+#      namespace: "ed5fc404-61a8-473d-bae1-d3bcf0fb6912"
+#      group: DEFAULT_GROUP
+#      application: seata-server #TC服务名
+#  tx-service-group: uat_tx_group #事务组，根据tx-service-group名称获得TC服务cluster名称
+#  service:
+#    vgroup-mapping: #tx-service-group与TC cluster的映射关系
+#      default_tx_group: default
+#  client:
+#    undo:
+#      log-serialization: fastjson
+

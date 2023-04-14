@@ -56,6 +56,8 @@ public class JobConfig {
             }
         });
 
+        // 主动查询 百分比  成功人数  修改状态
+        // TODO
 
     }
 }

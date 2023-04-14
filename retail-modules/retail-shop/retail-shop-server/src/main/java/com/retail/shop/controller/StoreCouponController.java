@@ -38,8 +38,8 @@ public class StoreCouponController {
         return storeCouponService.storeCouponList();
     }
 
-    @PostMapping("/findByIdStoreCoupon")
-    public Result<StoreCouponEntityVo> findByIdStoreCoupon(@RequestParam("id") Long id){
+    @GetMapping("/findByIdStoreCoupon/{id}")
+    public Result<StoreCouponEntityVo> findByIdStoreCoupon(@PathVariable("id") Long id){
         return storeCouponService.findByIdStoreCoupon(id);
     }
 

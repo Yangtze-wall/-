@@ -3,10 +3,11 @@ package com.retail.user.controller;
 import java.util.List;
 
 
+import cn.hutool.core.bean.BeanUtil;
+import com.retail.common.domain.vo.IntegrationHistoryEntityVo;
 import com.retail.common.result.Result;
 import com.retail.user.domain.IntegrationHistoryEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,8 +32,11 @@ public class IntegrationHistoryController {
     @Autowired
     private IntegrationHistoryService integrationHistoryService;
 
-    @PostMapping("/insert")
-    public Result insert(@RequestBody IntegrationHistoryEntity integrationHistoryEntity){
+    //  user/integrationhistory/integrationHistoryInsert
+    @PostMapping("/integrationHistoryInsert")
+    public Result integrationHistoryInsert(@RequestBody IntegrationHistoryEntityVo integrationHistoryEntityVo){
+        IntegrationHistoryEntity integrationHistoryEntity = new IntegrationHistoryEntity();
+        BeanUtil.copyProperties(integrationHistoryEntityVo,integrationHistoryEntity);
         return integrationHistoryService.insert(integrationHistoryEntity);
     }
 

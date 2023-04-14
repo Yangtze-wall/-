@@ -25,7 +25,7 @@ public class SkuController {
     @Autowired
     private SkuService skuService;
 
-    @PostMapping("/findBySkuEntry/{spuId}")
+    @GetMapping("/findBySkuEntry/{spuId}")
     public Result<SkuEntityVo> findBySkuEntry(@PathVariable("spuId") Long spuId){
         return skuService.findBySkuEntry(spuId);
     }

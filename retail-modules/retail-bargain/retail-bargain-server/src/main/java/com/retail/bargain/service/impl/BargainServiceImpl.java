@@ -78,6 +78,7 @@ public class  BargainServiceImpl extends ServiceImpl<BargainMapper, BargainEntit
         long l = System.currentTimeMillis()+ 259200000;
         Date date = new Date(l);
         bargainEntity.setTotalExpirationTime(date);
+        //  自动生成 百分比 需要人数
         baseMapper.insert(bargainEntity);
 
         return Result.success();

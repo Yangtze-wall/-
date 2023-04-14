@@ -3,6 +3,9 @@ package com.retail.user.controller;
 import java.util.List;
 
 
+import com.retail.common.domain.vo.UserRecordEntityVo;
+import com.retail.common.result.Result;
+import com.retail.user.domain.UserRecordEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,4 +31,9 @@ public class UserRecordController {
 
     @Autowired
     private UserRecordService userRecordService;
+
+    @PostMapping("/userRecordInsert")
+    public Result userRecordInsert(@RequestBody UserRecordEntityVo userRecordEntityVo){
+        return userRecordService.userRecordInsert(userRecordEntityVo);
+    }
 }

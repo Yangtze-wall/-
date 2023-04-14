@@ -33,7 +33,7 @@ public class SeckillEntity implements Serializable {
 	/**
 	 * 商品id
 	 */
-	private Long spuId;
+	private Long skuId;
 	/**
 	 * 轮播图
 	 */

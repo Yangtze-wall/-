@@ -2,6 +2,7 @@ package com.retail.common.domain.vo;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -88,6 +89,7 @@ public class UserEntityVo implements Serializable {
 	/**
 	 * 注册时间
 	 */
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date createTime;
 	/**
 	 * 用户余额
@@ -96,6 +98,7 @@ public class UserEntityVo implements Serializable {
 	/**
 	 * 最后登录时间
 	 */
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date loginDate;
 	/**
 	 * 备注

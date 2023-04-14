@@ -4,7 +4,9 @@ import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.retail.order.config.OrderRabbitMq;
 import com.retail.order.domain.OrderEntity;
+import com.retail.order.domain.PayMentEntity;
 import com.retail.order.mapper.OrderMapper;
+import com.retail.order.mapper.PaymentMapper;
 import com.xxl.job.core.handler.annotation.XxlJob;
 import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.core.Message;
@@ -32,6 +34,8 @@ public class JobConfig {
 
     @Autowired
     private OrderMapper orderMapper;
+    @Autowired
+    private PaymentMapper paymentMapper;
 
     /**
      * 定时5分钟
@@ -49,5 +53,22 @@ public class JobConfig {
             }
         });
     }
+
+    // 订单信息  补偿     调用支付宝接口 查询订单编号支付的情况根据 状态  TRADE_SUCCESS   不是支付失败
+    @XxlJob("alipayJobStatus")
+    public void alipayJobStatus(){
+        List<OrderEntity> orderEntityList = orderMapper.selectList(null);
+        orderEntityList.stream().forEach(c->{
+            PayMentEntity payMentEntity = paymentMapper.selectOne(new QueryWrapper<PayMentEntity>().lambda().eq(PayMentEntity::getOrderSn, c.getOrderSn()));
+            // 判断状态是否成功 失败 修改订单表状态3 支付失败
+            if (payMentEntity==null || !payMentEntity.getPaymentStatus().equals("TRADE_SUCCESS")){
+                OrderEntity orderEntity = new OrderEntity();
+                orderEntity.setOrderSn(c.getOrderSn());
+                orderEntity.setStatus(3);
+                orderMapper.update(orderEntity,new QueryWrapper<OrderEntity>().lambda().eq(OrderEntity::getOrderSn,c.getOrderSn()));
+            }
+        });
+    }
+
 
 }

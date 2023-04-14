@@ -25,7 +25,7 @@ public interface UserService extends IService<UserEntity> {
 
     UserEntityVo colonelLogin(String phone);
 
-    Result<UserEntityVo> findByIdUser();
+    Result<UserEntityVo> findByIdUser(Long userId);
 
     Result<String> authentication(String realName, String idCard);
 

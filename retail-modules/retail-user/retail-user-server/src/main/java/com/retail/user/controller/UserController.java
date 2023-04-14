@@ -90,9 +90,10 @@ public class UserController {
         return  Result.success(userEntityVo);
     }
 
-    @PostMapping("/findByIdUser")
-    public Result<UserEntityVo> findByIdUser(){
-        return userService.findByIdUser();
+    //   user/user/findByIdUser
+    @GetMapping("/findByIdUser/{userId}")
+    public Result<UserEntityVo> findByIdUser(@PathVariable("userId") Long userId){
+        return userService.findByIdUser(userId);
     }
 
     /**
@@ -110,7 +111,7 @@ public class UserController {
         return userService.biopsy(url);
     }
 
-    @PostMapping("user/user/updateIntegration")
+    @PostMapping("/updateIntegration")
     Result updateIntegration(@RequestBody UserEntityVo userEntityVo){
         UserEntity userEntity = new UserEntity();
         BeanUtil.copyProperties(userEntityVo,userEntity);

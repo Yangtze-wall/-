@@ -1,5 +1,8 @@
 package com.retail.order.service.impl;
 
+import com.fasterxml.jackson.databind.SerializationFeature;
+import io.seata.rm.datasource.sql.struct.Row;
+import io.seata.rm.datasource.undo.BranchUndoLog;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.RandomUtil;
 import com.alibaba.fastjson.JSON;
@@ -15,6 +18,8 @@ import com.retail.order.feign.ShopFeignService;
 import com.retail.order.feign.UserFeignService;
 import com.retail.order.mapper.OrderMapper;
 import com.retail.order.service.OrderService;
+import io.seata.rm.datasource.undo.SQLUndoLog;
+import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -25,6 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.lang.Object;
 
 
 @Service("orderService")
@@ -39,6 +45,9 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
     private HttpServletRequest request;
     @Autowired
     private RedisTemplate<String,String> redisTemplate;
+
+    @Autowired
+    private OrderMapper orderMapper;
 
     public UserEntityVo userInfo(){
         String token = request.getHeader("token");
@@ -55,11 +64,12 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
      * @return
      */
     @Override
-    @Transactional(rollbackFor = Exception.class)
+    @GlobalTransactional
     public Result orderInsert(OrderEntityVo orderEntityVo) {
         // 判断 订单里面有没有这个 人 买的砍价物品  userId bargainId
         Long bargainId = orderEntityVo.getBargainId();
-        baseMapper.selectOne(new QueryWrapper<OrderEntity>().lambda().eq(OrderEntity::getBargainId,bargainId).eq(OrderEntity::getUserId,userInfo().getId()));
+        OrderEntity selectOne = baseMapper.selectOne(new QueryWrapper<OrderEntity>().lambda().eq(OrderEntity::getBargainId, bargainId).eq(OrderEntity::getUserId, userInfo().getId()));
+
         // 判断该用户积分是否足够
         if (userInfo().getIntegration()<orderEntityVo.getIntegration()){
             return Result.error("积分不足");
@@ -80,9 +90,9 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
         }else {
             idString= idString.substring(idString.length()-5);
         }
-        idString = StringUtils.leftPad(idString, 8, "0");
+        idString = StringUtils.leftPad(idString, 5, "0");
         String substring = IdUtil.getSnowflake(1, 1).nextIdStr().substring(6);
-        String orderSn = substring+ StringUtils.leftPad(idString,8,"0");
+        String orderSn = substring+ StringUtils.leftPad(idString,5,"0");
         orderEntity.setOrderSn(orderSn);
 
         //总价钱   BigDecimal totalAmount;
@@ -98,64 +108,58 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
         StoreCouponEntityVo storeCouponEntityVo = byIdStoreCoupon.getData();
         BigDecimal money = storeCouponEntityVo.getMoney();
         orderEntity.setCouponAmount(money);
-
         //运费金额   BigDecimal freightAmount;
         orderEntity.setFreightAmount(BigDecimal.valueOf(0));
-
         //应付价钱    BigDecimal payAmount;
         BigDecimal subtract = skuEntityVo.getSkuPrice().subtract(integrationAmount).subtract(money).subtract(BigDecimal.valueOf(0));
         orderEntity.setPayAmount(subtract);
-
         //状态(1.待支付 2.支付成功 3.支付失败)      Integer status;
         orderEntity.setStatus(0);
-
         //快递公司id   Long corporationId;
         orderEntity.setCorporationId(orderEntityVo.getCorporationId());
-
         // 收件人 id
         Long addressId = orderEntityVo.getAddressId();
         orderEntity.setAddressId(addressId);
-
         //收件人姓名   String name;
         Result<UserAddressEntityVo> byIdAddress = userFeignService.findByIdAddress(addressId);
         UserAddressEntityVo userAddressEntityVo = byIdAddress.getData();
         orderEntity.setName(userAddressEntityVo.getName());
-
         //电话   String phone;
         orderEntity.setPhone(userAddressEntityVo.getPhone());
-
         //收货地址    String address;
         orderEntity.setAddress(userAddressEntityVo.getAddress());
-
         //备注    String remark;
         orderEntity.setRemark(orderEntityVo.getRemark());
-
         //优惠券id   Long couponId;
         orderEntity.setCouponId(couponId);
-
         //下单时间   Date createTime;
         orderEntity.setCreateTime(new Date());
-
         // 砍价id
         orderEntity.setBargainId(orderEntityVo.getBargainId());
-
         // type
         orderEntity.setType(4);
-
         // skuId
         orderEntity.setSkuId(skuEntityVo.getId());
-
         // spuId
         orderEntity.setSpuId(orderEntityVo.getSpuId());
-
-        baseMapper.insert(orderEntity);
+        orderMapper.insert(orderEntity);
+        // 积分记录表 添加
+        IntegrationHistoryEntityVo integrationHistoryEntityVo = new IntegrationHistoryEntityVo();
+        integrationHistoryEntityVo.setCreateTime(new Date());
+        integrationHistoryEntityVo.setCount(orderEntityVo.getIntegration());
+        integrationHistoryEntityVo.setRemark("使用积分");
+        integrationHistoryEntityVo.setUserId(userInfo().getId());
+        integrationHistoryEntityVo.setSourceType(4);
+        userFeignService.integrationHistoryInsert(integrationHistoryEntityVo);
 
         // 修改用户表的积分
         UserEntityVo userEntityVo = userInfo();
         userEntityVo.setIntegration(userEntityVo.getIntegration()-orderEntityVo.getIntegration());
         userFeignService.updateIntegration(userEntityVo);
+
         //　删除　优惠券中间表　用户的优惠券　修改状态 is_del
         shopFeignService.isDelRetaiUserCoupon(couponId);
+
 
         return Result.success("下单成功");
     }
