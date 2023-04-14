@@ -14,7 +14,6 @@ import com.retail.common.domain.response.JwtResponse;
 import com.retail.common.domain.vo.UserEntityVo;
 import com.retail.common.domain.vo.UserLoginCodeVo;
 import com.retail.common.domain.vo.UserLoginPasswordVo;
-import com.retail.common.exception.BizException;
 import com.retail.common.result.Result;
 import com.retail.common.utils.JwtUtils;
 import com.retail.common.utils.StringUtils;
@@ -48,22 +47,22 @@ public class AuthSerivceImpl implements AuthService {
     @Override
     public Result register(UserEntityRequest userEntityRequest) {
         if (StringUtils.isEmpty(userEntityRequest.getUsername())){
-            throw new  BizException(501,"请输入账号");
+            return Result.error("请输入账号");
         }
         if (StringUtils.isEmpty(userEntityRequest.getPassword())){
-            throw new  BizException(501,"请输入密码");
+            return Result.error("请输入密码");
         }
         if (StringUtils.isEmpty(userEntityRequest.getPasswordVerify())){
-            throw new  BizException(501,"确认密码不能为空");
+            return Result.error("确认密码不能为空");
         }
         if (userEntityRequest.getUsername().equals(userEntityRequest.getPasswordVerify())){
-            throw new  BizException(501,"密码与确认密码不同");
+            return Result.error("密码与确认密码不同");
         }
         if (StringUtils.isEmpty(userEntityRequest.getPhone())){
-            throw new  BizException(501,"手机号不能为空");
+            return Result.error("手机号不能为空");
         }
         if (StringUtils.isEmpty(userEntityRequest.getCode())){
-            throw new  BizException(501,"短信不能为空");
+            return Result.error("短信不能为空");
         }
 
         Result result=userFeignService.register(userEntityRequest);
@@ -73,29 +72,26 @@ public class AuthSerivceImpl implements AuthService {
 
     @Override
     public Result<JwtResponse>  loginPassword(UserLoginPasswordVo userLoginPasswordVo) {
-
         //判断不为空
         if (StringUtils.isBlank(userLoginPasswordVo.getPhone())){
-            throw new BizException(502,"手机号不能为空");
+            return Result.error("手机号不能为空");
         }
         //判断是否合法
         if (!Validator.isMobile(userLoginPasswordVo.getPhone())){
-            throw new BizException(502,"手机号不合法");
+            return Result.error("手机号不合法");
         }
-
         if (StringUtils.isBlank(userLoginPasswordVo.getPassword())){
-            throw new BizException(502,"密码不能为空");
+            return Result.error("密码不能为空");
         }
         Result<UserEntityVo> userEntityVoResult = userFeignService.loginPassword(userLoginPasswordVo);
         UserEntityVo entityVo = userEntityVoResult.getData();
         if (entityVo==null){
-            throw new BizException(502,"手机号不存在");
+            return Result.error("手机号不存在，请注册");
         }
-
         //MD5加密
         String passwordMd5 = SecureUtil.md5(userLoginPasswordVo.getPassword() + "|" + entityVo.getSalt());
         if (!entityVo.getPassword().equals(passwordMd5)){
-            throw  new BizException(502,"密码错误，请重新输入");
+            return Result.error("密码错误，请重新输入");
         }
         String userKey = UUID.randomUUID().toString().replaceAll("_", "");
         Map<String, Object> map = new HashMap<>();
@@ -116,31 +112,69 @@ public class AuthSerivceImpl implements AuthService {
     public Result<JwtResponse> loginCode(UserLoginCodeVo userLoginCodeVo) {
         //判断不为空
         if (StringUtils.isBlank(userLoginCodeVo.getPhone())){
-            throw new BizException(502,"手机号不能为空");
+            return Result.error("手机号不能为空");
         }
         //判断是否合法
         if (!Validator.isMobile(userLoginCodeVo.getPhone())){
-            throw new BizException(502,"手机号不合法");
+            return Result.error("手机号不合法");
         }
         if (StringUtils.isBlank(userLoginCodeVo.getCode())){
-            throw new BizException(502,"验证码不能为空");
+            return Result.error("验证码不能为空");
         }
         Result<UserEntityVo> userEntityVoResult = userFeignService.loginCode(userLoginCodeVo);
         UserEntityVo entityVo = userEntityVoResult.getData();
         if (entityVo==null){
-            throw new BizException(502,"手机号不存在");
+            return Result.error("手机号不存在");
         }
         //判断验证码是否存在
         Boolean aBoolean = redisTemplate.hasKey(Constants.CODE_MSG + entityVo.getPhone());
         if (!aBoolean){
-            throw new BizException(502,"验证码不存在");
+            return Result.error("验证码不存在");
         }
         //判断验证码是否正确
         String code = redisTemplate.opsForValue().get(Constants.CODE_MSG + entityVo.getPhone());
        if (!userLoginCodeVo.getCode().equals(code)){
-           throw new BizException(502,"验证码错误");
+           return Result.error("验证码错误");
        }
 
+        String userKey = UUID.randomUUID().toString().replaceAll("_", "");
+        Map<String, Object> map = new HashMap<>();
+        map.put(JwtConstants.DETAILS_USER_ID,entityVo.getId());
+        map.put(JwtConstants.USER_KEY,userKey);
+
+        String token = JwtUtils.createToken(map);
+        System.out.println(token);
+        redisTemplate.opsForValue().set(TokenConstants.LOGIN_TOKEN_KEY+userKey,
+                JSON.toJSONString(entityVo),1, TimeUnit.DAYS);
+        JwtResponse jwtResponse = new JwtResponse();
+        jwtResponse.setToken(token);
+        jwtResponse.setExpireTime("1Days");
+        return Result.success(jwtResponse);
+    }
+
+    @Override
+    public Result<JwtResponse> loginPasswordColonel(UserLoginPasswordVo userLoginPasswordVo) {
+        //判断不为空
+        if (StringUtils.isBlank(userLoginPasswordVo.getPhone())){
+            return Result.error("手机号不能为空");
+        }
+        //判断是否合法
+        if (!Validator.isMobile(userLoginPasswordVo.getPhone())){
+            return Result.error("手机号不合法");
+        }
+        if (StringUtils.isBlank(userLoginPasswordVo.getPassword())){
+            return Result.error("密码不能为空");
+        }
+//        Result<UserEntityVo> userEntityVoResult = userFeignService.loginPasswordColonel(userLoginPasswordVo);
+        Result<UserEntityVo> userEntityVoResult = userFeignService.loginPasswordColonel(userLoginPasswordVo);
+        UserEntityVo entityVo = userEntityVoResult.getData();
+        if (entityVo==null){
+            return Result.error("还不是团长");
+        }
+        String passwordMd5 = SecureUtil.md5(userLoginPasswordVo.getPassword() + "|" + entityVo.getSalt());
+        if (!entityVo.getPassword().equals(passwordMd5)){
+            return Result.error("密码错误，请重新输入");
+        }
         String userKey = UUID.randomUUID().toString().replaceAll("_", "");
         Map<String, Object> map = new HashMap<>();
         map.put(JwtConstants.DETAILS_USER_ID,entityVo.getId());

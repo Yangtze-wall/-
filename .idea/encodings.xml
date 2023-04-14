@@ -5,22 +5,14 @@
     <file url="file://$PROJECT_DIR$/retail-common/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/retail-gateway/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/retail-modules/retail-bargain/retail-bargain-common/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/retail-modules/retail-bargain/retail-bargain-remote/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/retail-modules/retail-bargain/retail-bargain-server/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/retail-modules/retail-colonel/retail-colonel-common/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/retail-modules/retail-colonel/retail-colonel-remote/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/retail-modules/retail-colonel/retail-colonel-server/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/retail-modules/retail-order/retail-order-common/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/retail-modules/retail-order/retail-order-remote/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/retail-modules/retail-order/retail-order-server/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/retail-modules/retail-payment/retail-payment-common/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/retail-modules/retail-payment/retail-payment-remote/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/retail-modules/retail-payment/retail-payment-server/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/retail-modules/retail-shop/retail-shop-common/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/retail-modules/retail-shop/retail-shop-remote/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/retail-modules/retail-shop/retail-shop-server/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/retail-modules/retail-user/retail-user-common/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/retail-modules/retail-user/retail-user-remote/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/retail-modules/retail-user/retail-user-server/src/main/java" charset="UTF-8" />
     <file url="PROJECT" charset="UTF-8" />
   </component>

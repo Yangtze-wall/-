@@ -1,5 +1,8 @@
 package com.retail.user.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
+import com.retail.common.domain.vo.UserRecordEntityVo;
+import com.retail.common.result.Result;
 import com.retail.user.domain.UserRecordEntity;
 import org.springframework.stereotype.Service;
 import java.util.Map;
@@ -16,5 +19,11 @@ import com.retail.user.service.UserRecordService;
 public class UserRecordServiceImpl extends ServiceImpl<UserRecordMapper, UserRecordEntity> implements UserRecordService {
 
 
-
+    @Override
+    public Result insertRecord(UserRecordEntityVo userRecordEntityVo) {
+        UserRecordEntity userRecordEntity = new UserRecordEntity();
+        BeanUtil.copyProperties(userRecordEntityVo,userRecordEntity);
+        this.baseMapper.insert(userRecordEntity);
+        return Result.success();
+    }
 }

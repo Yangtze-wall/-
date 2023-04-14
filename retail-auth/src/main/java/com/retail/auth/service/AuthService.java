@@ -3,6 +3,7 @@ package com.retail.auth.service;
 
 import com.retail.common.domain.request.UserEntityRequest;
 import com.retail.common.domain.response.JwtResponse;
+import com.retail.common.domain.vo.LoginVo;
 import com.retail.common.domain.vo.UserEntityVo;
 import com.retail.common.domain.vo.UserLoginCodeVo;
 import com.retail.common.domain.vo.UserLoginPasswordVo;
@@ -25,5 +26,7 @@ public interface AuthService {
 
     Result<JwtResponse> loginCode(UserLoginCodeVo userLoginCodeVo);
 
+
+    Result<JwtResponse> loginPasswordColonel(UserLoginPasswordVo userLoginPasswordVo);
 
 }

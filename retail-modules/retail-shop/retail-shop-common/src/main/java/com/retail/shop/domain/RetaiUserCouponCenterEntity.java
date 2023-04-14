@@ -36,6 +36,13 @@ public class RetaiUserCouponCenterEntity implements Serializable {
 	/**
 	 * 优惠卷id
 	 */
-	private Integer couponId;
+	private Long couponId;
+
+	/**
+	 * 状态 0. 可以使用 1.被使用
+	 */
+	private Integer isDel;
+
+
 
 }

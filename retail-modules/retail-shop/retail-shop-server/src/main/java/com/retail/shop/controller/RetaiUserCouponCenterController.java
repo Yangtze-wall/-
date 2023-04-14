@@ -3,13 +3,12 @@ package com.retail.shop.controller;
 import java.util.List;
 
 
+import com.retail.common.result.Result;
+import com.retail.shop.domain.vo.RetaiUserCouponCenterEntityVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
+
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.retail.shop.service.RetaiUserCouponCenterService;
@@ -28,4 +27,16 @@ public class RetaiUserCouponCenterController {
 
     @Autowired
     private RetaiUserCouponCenterService retaiUserCouponCenterService;
+
+    /**
+     * 联查 查询用户id 所具有的优惠卷和优惠卷金额
+     * @return
+     */
+    @PostMapping("/selectStoreCouponByUserId")
+    public Result<List<RetaiUserCouponCenterEntityVo>> selectStoreCouponByUserId(){
+
+        List<RetaiUserCouponCenterEntityVo> retaiUserCouponCenterEntityVoList=retaiUserCouponCenterService.selectStoreCouponByUserId();
+        return Result.success(retaiUserCouponCenterEntityVoList);
+    }
+
 }

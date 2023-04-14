@@ -37,7 +37,7 @@ public class UserRecordEntity implements Serializable {
 	/**
 	 * 订单号(账户流水号)
 	 */
-	private String orderId;
+	private String orderSn;
 	/**
 	 * 金额
 	 */
@@ -45,7 +45,7 @@ public class UserRecordEntity implements Serializable {
 	/**
 	 * 类型(1充值，2提现，3消费，4返佣金, 5.退款)
 	 */
-	private String rechargeType;
+	private Integer rechargeType;
 	/**
 	 * 确认时间
 	 */
@@ -57,6 +57,6 @@ public class UserRecordEntity implements Serializable {
 	/**
 	 * 描述
 	 */
-	private String describe;
+	private String remark;
 
 }

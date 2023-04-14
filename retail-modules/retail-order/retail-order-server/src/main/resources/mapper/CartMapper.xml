@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.retail.order.mapper.CartMapper">
+    <update id="updateCartStatus">
+        UPDATE retail_cart SET cart_status=2  where id=#{cartId}
+    </update>
+
+
+    <select id="getCartList" resultType="com.retail.common.domain.vo.CartEntityVo">
+SELECT *from  retail_cart
+LEFT JOIN retail_sku ON  retail_sku.id= retail_cart.sku_id
+ where retail_cart.user_id=#{id}  and retail_cart.cart_status=1
+    </select>
+    <select id="findCartByCartId" resultType="com.retail.common.domain.vo.CartEntityVo">
+        SELECT *from  retail_cart
+LEFT JOIN retail_sku ON  retail_sku.id= retail_cart.sku_id
+ where retail_cart.id=#{id}
+    </select>
+</mapper>

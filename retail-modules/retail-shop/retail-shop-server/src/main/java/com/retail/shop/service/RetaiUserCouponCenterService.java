@@ -2,7 +2,9 @@ package com.retail.shop.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.retail.shop.domain.RetaiUserCouponCenterEntity;
+import com.retail.shop.domain.vo.RetaiUserCouponCenterEntityVo;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -13,6 +15,9 @@ import java.util.Map;
  * @date 2023-03-23 09:56:18
  */
 public interface RetaiUserCouponCenterService extends IService<RetaiUserCouponCenterEntity> {
+
+
+    List<RetaiUserCouponCenterEntityVo> selectStoreCouponByUserId();
 
 
 }

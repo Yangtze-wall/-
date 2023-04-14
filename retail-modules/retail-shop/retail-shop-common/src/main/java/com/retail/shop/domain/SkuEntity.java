@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.math.BigDecimal;
 import java.io.Serializable;
-import java.util.Date;
 import lombok.Data;
 
 /**
@@ -43,10 +42,6 @@ public class SkuEntity implements Serializable {
 	 */
 	private Integer skuSell;
 	/**
-	 * 库存
-	 */
-	private Integer skuStock;
-	/**
 	 * 价格
 	 */
 	private BigDecimal skuPrice;
@@ -62,5 +57,7 @@ public class SkuEntity implements Serializable {
 	 * 分类id
 	 */
 	private Long classifiedId;
+
+
 
 }

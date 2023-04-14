@@ -5,25 +5,22 @@ import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.RandomUtil;
 import com.alibaba.fastjson.JSON;
 import com.retail.auth.service.AuthService;
+import com.retail.auth.service.CaptchaService;
 import com.retail.auth.service.SmsService;
+import com.retail.auth.vo.Captcha;
 import com.retail.auth.vo.SmsParamVo;
 import com.retail.common.constant.Constants;
-import com.alibaba.fastjson.JSON;
-import com.retail.auth.service.AuthService;
 import com.retail.common.constant.TokenConstants;
 import com.retail.common.domain.request.UserEntityRequest;
 import com.retail.common.domain.response.JwtResponse;
 import com.retail.common.domain.vo.UserEntityVo;
 import com.retail.common.domain.vo.UserLoginCodeVo;
 import com.retail.common.domain.vo.UserLoginPasswordVo;
-import com.retail.common.exception.BizException;
 import com.retail.common.result.Result;
+import com.retail.common.utils.JwtUtils;
 import com.retail.common.utils.StringUtils;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-=======
-import com.retail.common.utils.JwtUtils;
->>>>>>> master
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
@@ -56,17 +53,23 @@ public class AuthController {
     @Autowired
     private RedisTemplate<String,String>  redisTemplate;
 
-
+    @Autowired
     private HttpServletRequest request;
 
-    @Autowired
-    private RedisTemplate<String,String> redisTemplate;
-
+    /**
+     * 注册
+     * @param userEntityRequest
+     * @return
+     */
     @PostMapping("/register")
     public Result register(@RequestBody UserEntityRequest userEntityRequest){
         return authService.register(userEntityRequest);
     }
 
+    /**
+     * 用户信息
+     * @return
+     */
     @GetMapping("/userInfo")
     public Result<UserEntityVo> userInfo(){
         String token = request.getHeader("token");
@@ -76,14 +79,25 @@ public class AuthController {
         return Result.success(user);
     }
 
+
     /**
      * 手机号密码登录
      * @param userLoginPasswordVo
      * @return
      */
+
     @PostMapping("/loginPassword")
     public Result<JwtResponse> loginPassword(@RequestBody UserLoginPasswordVo userLoginPasswordVo){
+        String msg = captchaService.checkImageCode(userLoginPasswordVo.getNonceStr(),userLoginPasswordVo.getValue());
+        if (StringUtils.isNotBlank(msg)) {
+            return Result.error(msg);
+        }
         Result<JwtResponse> jwtResponseResult =  authService.loginPassword(userLoginPasswordVo);
+        return jwtResponseResult;
+    }
+    @PostMapping("/loginPasswordColonel")
+    public Result<JwtResponse> loginPasswordColonel(@RequestBody UserLoginPasswordVo userLoginPasswordVo){
+        Result<JwtResponse> jwtResponseResult =  authService.loginPasswordColonel(userLoginPasswordVo);
         return jwtResponseResult;
     }
 
@@ -98,18 +112,20 @@ public class AuthController {
         return jwtResponseResult;
     }
 
+
     /**
      * 发送短信验证码
      * @param phone
      * @return
      */
-    @PostMapping("/sendSms")
-    public Result sendSms(String phone){
+    @PostMapping("/sendSms/{phone}")
+    public Result sendSms(@PathVariable("phone") String phone){
         if (StringUtils.isBlank(phone)){
-            throw new BizException(501,"手机号不能为空");
+
+            return Result.error("手机号不能为空");
         }
         if (!Validator.isMobile(phone)){
-            throw new BizException(501,"手机号不合法");
+            return Result.error("手机号不合法");
         }
         //随机生成验证码
         String code = RandomUtil.randomNumbers(6);
@@ -127,4 +143,20 @@ public class AuthController {
 
     }
 
+    @PostMapping("/logout")
+    public Result  logout(){
+        String token = request.getHeader("token");
+        String userKey = JwtUtils.getUserKey(token);
+        redisTemplate.delete(TokenConstants.LOGIN_TOKEN_KEY+userKey);
+        return Result.success();
+    }
+
+    @Autowired
+    private CaptchaService captchaService;
+
+    @PostMapping("get-captcha")
+    public Result<Captcha> getCaptcha(@RequestBody Captcha captcha) {
+        Captcha captcha1 = captchaService.getCaptcha(captcha);
+        return Result.success(captcha1);
+    }
 }

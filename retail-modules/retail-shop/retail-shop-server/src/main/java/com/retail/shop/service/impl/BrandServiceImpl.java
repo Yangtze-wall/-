@@ -1,5 +1,7 @@
 package com.retail.shop.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.retail.common.result.Result;
 import com.retail.shop.domain.BrandEntity;
 import com.retail.shop.mapper.BrandMapper;
 import com.retail.shop.service.BrandService;

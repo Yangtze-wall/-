@@ -15,5 +15,7 @@ import java.util.Map;
 public interface StoreCouponService extends IService<StoreCouponEntity> {
 
 
+    StoreCouponEntity findStoreCouponById(Long id);
+
 }
 

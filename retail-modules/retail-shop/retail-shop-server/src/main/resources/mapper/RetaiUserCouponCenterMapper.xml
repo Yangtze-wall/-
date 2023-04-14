@@ -2,4 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.retail.shop.mapper.RetaiUserCouponCenterMapper">
 
+    <select id="selectStoreCouponByUserId"
+            resultType="com.retail.shop.domain.vo.RetaiUserCouponCenterEntityVo">
+SELECT *  from   retail_store_coupon
+LEFT JOIN retai_user_coupon_center on retail_store_coupon.id=retai_user_coupon_center.coupon_id
+
+where  retai_user_coupon_center.user_id=#{id}
+    </select>
 </mapper>

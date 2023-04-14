@@ -1,5 +1,6 @@
 package com.retail.user.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.lang.Validator;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.crypto.SecureUtil;
@@ -8,18 +9,16 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.retail.common.constant.Constants;
 import com.retail.common.constant.TokenConstants;
 import com.retail.common.domain.request.UserEntityRequest;
+import com.retail.common.domain.vo.UserEntityVo;
 import com.retail.common.domain.vo.UserLoginCodeVo;
 import com.retail.common.domain.vo.UserLoginPasswordVo;
-import com.retail.common.exception.BizException;
 import com.retail.common.result.Result;
 import com.retail.common.utils.JwtUtils;
 import com.retail.common.utils.StringUtils;
 import com.retail.user.domain.PowerUserEntity;
-import com.retail.user.domain.RoleEntity;
 import com.retail.user.domain.UserEntity;
 import com.retail.user.domain.UserRoleEntity;
 import com.retail.user.service.PowerUserService;
-import com.retail.user.service.RoleService;
 import com.retail.user.service.UserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -39,6 +38,8 @@ import java.util.Date;
 public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> implements UserService {
 
     @Autowired
+    private UserMapper userMapper;
+    @Autowired
     private RedisTemplate<String,String> redisTemplate;
 
     @Autowired
@@ -54,37 +55,47 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     @Transactional(rollbackFor = Exception.class)
     public Result register(UserEntityRequest userEntityRequest) {
         if (StringUtils.isEmpty(userEntityRequest.getUsername())){
-            throw new BizException(501,"请输入账号");
+//            throw new BizException(501,"请输入账号");
+            return Result.error("请输入账号");
         }
         if (StringUtils.isEmpty(userEntityRequest.getPassword())){
-            throw new  BizException(501,"请输入密码");
+//            throw new  BizException(501,"请输入密码");
+            return Result.error("请输入密码");
         }
         if (StringUtils.isEmpty(userEntityRequest.getPasswordVerify())){
-            throw new  BizException(501,"确认密码不能为空");
+//            throw new  BizException(501,"确认密码不能为空");
+            return Result.error("确认密码不能为空");
         }
         if (userEntityRequest.getUsername().equals(userEntityRequest.getPasswordVerify())){
-            throw new  BizException(501,"密码与确认密码不同");
+//            throw new  BizException(501,"密码与确认密码不同");
+            return Result.error("密码与确认密码不同");
         }
         if (StringUtils.isEmpty(userEntityRequest.getPhone())){
-            throw new  BizException(501,"手机号不能为空");
+//            throw new  BizException(501,"手机号不能为空");
+            return Result.error("手机号不能为空");
         }
         if (!Validator.isMobile(userEntityRequest.getPhone())){
-            throw new  BizException(501,"手机号不合法");
+//            throw new  BizException(501,"手机号不合法");
+            return Result.error("手机号不合法");
         }
         if (StringUtils.isEmpty(userEntityRequest.getCode())){
-            throw new  BizException(501,"短信不能为空");
+//            throw new  BizException(501,"短信不能为空");
+            return Result.error("短信不能为空");
         }
         String s = redisTemplate.opsForValue().get(Constants.CODE_MSG + userEntityRequest.getPhone());
         if (!userEntityRequest.getCode().equals(s)){
-            throw new  BizException(501,"短信不一致");
+//            throw new  BizException(501,"短信不一致");
+            return Result.error("短信不一致");
         }
         UserEntity userEntityUserName = baseMapper.selectOne(new QueryWrapper<UserEntity>().lambda().eq(UserEntity::getUsername, userEntityRequest.getUsername()));
         if (userEntityUserName!=null){
-            throw new  BizException(501,"账号存在,请重新注册");
+//            throw new  BizException(501,"账号存在,请重新注册");
+            return Result.error("账号存在,请重新注册");
         }
         UserEntity userEntityPhone = baseMapper.selectOne(new QueryWrapper<UserEntity>().lambda().eq(UserEntity::getPhone, userEntityRequest.getPhone()));
         if (userEntityPhone!=null){
-            throw new  BizException(501,"手机号已经注册,请重新注册");
+//            throw new  BizException(501,"手机号已经注册,请重新注册");
+            return Result.error("用户没有注册，请注册");
         }
         //new 出对象
         UserEntity userEntity = new UserEntity();
@@ -127,8 +138,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         //判断用户是否存在
         UserEntity userEntity = baseMapper.selectOne(new QueryWrapper<UserEntity>().lambda()
                 .eq(UserEntity::getPhone, userLoginPasswordVo.getPhone()));
+//        userMapper.selectByPhone(userLoginPasswordVo.getPhone());
         if (userEntity==null){
-            throw  new BizException(502,"用户没有注册，请注册");
+//            throw  new BizException(502,"用户没有注册，请注册");
+            return Result.error("用户没有注册，请注册");
         }
         //写入最后登录时间
         userEntity.setLoginDate(new Date());
@@ -143,10 +156,66 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         UserEntity userEntity = baseMapper.selectOne(new QueryWrapper<UserEntity>().lambda()
                 .eq(UserEntity::getPhone, userLoginCodeVo.getPhone()));
         if (userEntity==null){
-            throw  new BizException(502,"用户没有注册，请注册");
+//            throw  new BizException(502,"用户没有注册，请注册");
+            return Result.error("用户没有注册，请注册");
         }
         return Result.success(userEntity);
     }
+
+    @Override
+    public Result<UserEntity> loginPasswordColonel(UserLoginPasswordVo userLoginPasswordVo) {
+        UserEntity user = baseMapper.selectColonel(userLoginPasswordVo.getPhone());
+        if (user==null){
+            return Result.error("还不是团长");
+        }
+        user.setStatus(3);
+        return Result.success(user);
+    }
+
+    @Override
+    public UserEntityVo findUserById(Long id) {
+        UserEntity userEntity = this.baseMapper.selectById(id);
+        UserEntityVo userEntityVo = new UserEntityVo();
+        BeanUtil.copyProperties(userEntity,userEntityVo);
+        return userEntityVo;
+    }
+
+    @Override
+    public Result updateUser(UserEntityVo userEntityVo) {
+        UserEntity userEntity = new UserEntity();
+        BeanUtil.copyProperties(userEntityVo,userEntity);
+        this.baseMapper.update(userEntity,new QueryWrapper<UserEntity>().lambda().eq(UserEntity::getId,userEntity.getId()));
+        return Result.success();
+    }
+
+    @Override
+    public UserEntityVo findUserInfoById() {
+        UserEntity userEntity = this.baseMapper.selectById(userInfo().getId());
+        UserEntityVo userEntityVo = new UserEntityVo();
+        BeanUtil.copyProperties(userEntity,userEntityVo);
+        return userEntityVo;
+
+    }
+
+    public UserEntityVo userInfo(){
+        String token = request.getHeader("token");
+        String userKey = JwtUtils.getUserKey(token);
+        String s = redisTemplate.opsForValue().get(TokenConstants.LOGIN_TOKEN_KEY + userKey);
+        UserEntityVo user = JSON.parseObject(s, UserEntityVo.class);
+        return user;
+    }
+
+
+//    @Override
+//    public UserEntityVo colonelLogin(String phone) {
+//        UserEntityVo user = baseMapper.selectColonel(phone);
+//        if (StringUtils.isNull(user)){
+//            throw new BizException(403,"还不是团长");
+//        }
+//        user.setStatus(3);
+//        return user;
+//    }
+//
 
 
 
